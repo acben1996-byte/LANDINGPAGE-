@@ -1,0 +1,598 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="language" content="English">
+    <link rel="canonical" href="https://ariorms.com/api-docs">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARIO — API &amp; Developer Documentation</title>
+    <meta name="description" content="ARIO API documentation — programmatic access to forecasts, decision journal, rate publishes, and webhooks. Issued to enterprise customers under contract.">    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box }
+        :root {
+            --navy: #0f1e3c; --navy2: #152d56; --navy3: #1e3a6e;
+            --gold: #c8a84b; --gold2: #e8c96b;
+            --white: #fff; --off: #f7f5f0; --cream: #faf8f4;
+            --border: #dde3ef; --text: #0f1e3c; --mid: #3d5080; --dim: #7a8aaa;
+        }
+        html { scroll-behavior: smooth }
+        body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; -webkit-font-smoothing: antialiased }
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(15,30,60,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(200,168,75,0.2); padding: 0 48px; height: 64px; display: flex; align-items: center; justify-content: space-between }
+        .nav-brand a { display: flex; align-items: center; gap: 12px; text-decoration: none }
+        .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 31px; font-weight: 700; letter-spacing: 1px; line-height: 1; background: linear-gradient(158deg, #ffffff 0%, #fff4d6 18%, #f0d080 38%, #c8a84b 58%, #8a6200 82%, #4a3000 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.55)); }
+        .nav-sub { font-size: 9px; font-weight: 600; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; border-left: 1px solid rgba(200,168,75,0.4); padding-left: 12px; margin-left: 4px }
+        .nav-links { display: flex; align-items: center; gap: 28px }
+        .nav-links a { font-size: 13px; color: rgba(255,255,255,0.65); text-decoration: none; font-weight: 500; transition: color 0.2s }
+        .nav-links a:hover { color: var(--white) }
+        .nav-cta { background: var(--gold); color: var(--navy) !important; font-weight: 700 !important; padding: 10px 22px; border-radius: 4px; font-size: 13px !important }
+        .nav-cta:hover { background: var(--gold2) !important; transform: translateY(-1px) }
+
+        /* ── Professional micro-animations ─── */
+        @keyframes ario-cta-shimmer {
+            0%   { background-position: -200% center }
+            100% { background-position: 200% center }
+        }
+        .nav-cta {
+            background: linear-gradient(90deg, #c8a84b 0%, #e8c96b 40%, #c8a84b 60%, #a07820 100%) !important;
+            background-size: 200% auto !important;
+            animation: ario-cta-shimmer 3.5s linear infinite !important;
+            color: #0f1e3c !important;
+            font-weight: 700 !important;
+            padding: 10px 22px;
+            border-radius: 4px;
+            font-size: 13px !important;
+            transition: opacity 0.15s ease, transform 0.12s ease !important;
+            text-decoration: none;
+        }
+        .nav-cta:hover {
+            opacity: 0.9 !important;
+            transform: translateY(-1px) !important;
+        }
+
+        /* Megadrop item stagger on open */
+        @keyframes ario-drop-item-in {
+            from { opacity: 0; transform: translateY(-4px) }
+            to   { opacity: 1; transform: translateY(0) }
+        }
+        .nav-item:hover .drop-item {
+            animation: ario-drop-item-in 0.18s ease both;
+        }
+        .nav-item:hover .drop-item:nth-child(2) { animation-delay: 0.04s }
+        .nav-item:hover .drop-item:nth-child(3) { animation-delay: 0.08s }
+        .nav-item:hover .drop-item:nth-child(4) { animation-delay: 0.12s }
+        .nav-item:hover .drop-item:nth-child(5) { animation-delay: 0.16s }
+
+        /* Nav trigger hover underline draw */
+        .nav-trigger {
+            position: relative;
+        }
+        .nav-trigger::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: -2px;
+            width: 0; height: 1px;
+            background: var(--gold, #c8a84b);
+            transition: width 0.2s ease;
+        }
+        .nav-item:hover .nav-trigger::after { width: 100% }
+
+        /* Drop item arrow on hover */
+        .drop-item::after {
+            content: '';
+            display: block;
+            width: 5px; height: 5px;
+            border-right: 1.5px solid rgba(200,168,75,0);
+            border-top: 1.5px solid rgba(200,168,75,0);
+            transform: rotate(45deg) translateX(-3px);
+            transition: transform 0.15s ease, border-color 0.15s ease;
+            margin-left: auto;
+            flex-shrink: 0;
+            align-self: center;
+        }
+        .drop-item:hover::after {
+            transform: rotate(45deg) translateX(0);
+            border-color: rgba(200,168,75,0.7);
+        }
+
+        /* Megadrop feature panel subtle gradient shift */
+        .megadrop-feature {
+            background: linear-gradient(160deg, #0f1e3c 0%, #152d56 100%);
+        }
+
+        /* ── MEGADROPDOWN SYSTEM ─────────────────────────── */
+        .nav-item { position: relative; display: flex; align-items: center }
+        .nav-item > .nav-trigger {
+            display: flex; align-items: center; gap: 5px;
+            font-size: 13px; color: rgba(255,255,255,0.65);
+            text-decoration: none; font-weight: 500;
+            transition: color 0.2s; cursor: pointer; background: none;
+            border: none; padding: 0; font-family: inherit;
+        }
+        .nav-item:hover > .nav-trigger { color: #fff }
+        .nav-chevron {
+            display: inline-block; width: 10px; height: 10px;
+            border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+            transform: rotate(45deg) translateY(-2px);
+            transition: transform 0.2s ease;
+        }
+        .nav-item:hover .nav-chevron { transform: rotate(225deg) translateY(2px) }
+        .megadrop {
+            position: absolute;
+            top: calc(100% + 14px);
+            left: 50%; transform: translateX(-50%) translateY(-10px);
+            background: #fff;
+            border: 1px solid rgba(15,30,60,0.09);
+            border-radius: 10px;
+            box-shadow: 0 24px 64px rgba(15,30,60,0.13), 0 4px 16px rgba(15,30,60,0.07);
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s;
+            pointer-events: none; z-index: 200; min-width: 560px; max-width: calc(100vw - 80px);
+        }
+        .megadrop::before { content: ''; position: absolute; top: -18px; left: 0; right: 0; height: 18px; }
+        .nav-item:hover .megadrop {
+            opacity: 1; visibility: visible;
+            transform: translateX(-50%) translateY(0); pointer-events: all;
+            transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0s;
+        }
+        .megadrop-inner { display: grid; gap: 0; border-radius: 10px; overflow: hidden }
+        .megadrop-cols { display: grid; grid-template-columns: 1fr 1fr; }
+        .megadrop-col { padding: 20px 4px }
+        .megadrop-col + .megadrop-col { border-left: 1px solid #eef0f6 }
+        .megadrop-col-label { font-size: 10px; font-weight: 700; color: #94a3b8; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 20px 10px; display: block; }
+        .drop-item { display: flex; align-items: flex-start; gap: 13px; padding: 10px 20px; text-decoration: none; border-radius: 6px; margin: 0 6px; transition: background 0.12s ease; }
+        .drop-item:hover { background: #f7f9fc }
+        .drop-icon { width: 34px; height: 34px; border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #0f1e3c; border: 1px solid rgba(200,168,75,0.18); transition: background 0.15s ease, border-color 0.15s ease; }
+        .drop-item:hover .drop-icon { background: #152d56; border-color: rgba(200,168,75,0.4); }
+        .drop-label { font-size: 13px; font-weight: 600; color: #0f1e3c; line-height: 1.3; margin-bottom: 3px; }
+        .drop-desc { font-size: 11.5px; color: #7a8aaa; line-height: 1.45 }
+        .megadrop-feature { background: #0f1e3c; padding: 24px; border-radius: 0 10px 10px 0; display: flex; flex-direction: column; justify-content: space-between; }
+        .megadrop-feature-tag { font-size: 9px; font-weight: 700; color: #c8a84b; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+        .megadrop-feature-h { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: #fff; line-height: 1.3; letter-spacing: -0.3px; margin-bottom: 10px; }
+        .megadrop-feature-p { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.55; margin-bottom: 18px; flex: 1 }
+        .megadrop-feature-cta { display: inline-flex; align-items: center; gap: 7px; background: #c8a84b; color: #0f1e3c; padding: 9px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; text-decoration: none; letter-spacing: 0.02em; align-self: flex-start; transition: background 0.15s, transform 0.12s; }
+        .megadrop-feature-cta:hover { background: #e8c96b; transform: translateY(-1px) }
+        .simpledrop { position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%) translateY(-10px); background: #fff; border: 1px solid rgba(15,30,60,0.09); border-radius: 8px; box-shadow: 0 20px 56px rgba(15,30,60,0.12); opacity: 0; visibility: hidden; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s; pointer-events: none; z-index: 200; min-width: 230px; padding: 8px; }
+        .simpledrop::before { content: ''; position: absolute; top: -18px; left: 0; right: 0; height: 18px; }
+        .nav-item:hover .simpledrop { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: all; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0s; }
+        .drop-simple-item { display: flex; align-items: center; gap: 10px; padding: 9px 14px; text-decoration: none; border-radius: 5px; transition: background 0.1s ease; }
+        .drop-simple-item:hover { background: #f7f9fc }
+        .drop-simple-dot { width: 6px; height: 6px; border-radius: 50%; background: #c8a84b; flex-shrink: 0 }
+        .drop-simple-label { font-size: 13px; font-weight: 500; color: #0f1e3c }
+        .drop-simple-divider { height: 1px; background: #eef0f6; margin: 4px 8px }
+        /* Drop item with photography */
+        .drop-photo { width: 68px; height: 50px; border-radius: 5px; overflow: hidden; flex-shrink: 0; background: #0f1e3c; }
+        .drop-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; }
+        .drop-item:hover .drop-photo img { transform: scale(1.06); }
+        .drop-simple-photo { width: 52px; height: 40px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+        .drop-simple-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .hero { min-height: 50vh; background: var(--navy); position: relative; padding: 140px 80px 60px; overflow: hidden; text-align: center }
+        .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(200,168,75,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.04) 1px,transparent 1px); background-size: 60px 60px; opacity: 0.5 }
+        .hero-glow { position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 600px; background: radial-gradient(ellipse, rgba(200,168,75,0.12), transparent 70%); pointer-events: none }
+        .hero-content { max-width: 760px; margin: 0 auto; position: relative; z-index: 2 }
+        .hero-eyebrow { font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 22px }
+        .hero-h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 6vw, 72px); font-weight: 600; color: var(--white); line-height: 1.06; letter-spacing: -1.5px; margin-bottom: 24px }
+        .hero-h1 em { font-style: italic; color: var(--gold) }
+        .hero-p { font-size: 17px; line-height: 1.6; color: rgba(255,255,255,0.7); max-width: 640px; margin: 0 auto }
+
+        section.content { padding: 90px 80px; max-width: 1280px; margin: 0 auto }
+        .section-eyebrow { font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 12px }
+        .section-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--gold) }
+        .section-h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 4.8vw, 52px); font-weight: 600; color: var(--text); line-height: 1.08; letter-spacing: -1px; margin-bottom: 18px; max-width: 720px }
+        .section-h2 em { font-style: italic; color: var(--navy3) }
+        .section-p { font-size: 16px; line-height: 1.65; color: var(--mid); max-width: 720px; margin-bottom: 16px }
+
+        /* ACCESS NOTICE */
+        .notice { background: linear-gradient(135deg, var(--navy), var(--navy3)); color: var(--white); padding: 36px 40px; border-radius: 12px; margin-top: 40px; display: grid; grid-template-columns: 56px 1fr auto; gap: 28px; align-items: center; position: relative; overflow: hidden }
+        .notice::before { content: ''; position: absolute; top: -100px; right: -100px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(200,168,75,0.12), transparent 70%); pointer-events: none }
+        .notice-icon { width: 56px; height: 56px; background: rgba(200,168,75,0.12); border: 1px solid rgba(200,168,75,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gold); position: relative }
+        .notice-text h4 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 4px; color: var(--white); position: relative }
+        .notice-text p { font-size: 14px; line-height: 1.55; color: rgba(255,255,255,0.7); margin: 0; position: relative }
+        .notice-cta { background: var(--gold); color: var(--navy); padding: 12px 22px; border-radius: 4px; text-decoration: none; font-size: 13px; font-weight: 700; letter-spacing: 0.3px; position: relative; white-space: nowrap }
+        .notice-cta:hover { background: var(--gold2) }
+
+        /* CAPABILITY CARDS */
+        .cap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px }
+        .cap-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 32px 28px; transition: transform 0.3s ease, box-shadow 0.3s ease }
+        .cap-card:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(15,30,60,0.06); border-color: rgba(200,168,75,0.4) }
+        .cap-icon { width: 44px; height: 44px; background: rgba(200,168,75,0.1); border: 1px solid rgba(200,168,75,0.25); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--gold); margin-bottom: 18px }
+        .cap-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; line-height: 1.2; letter-spacing: -0.4px; margin-bottom: 10px }
+        .cap-card h3 em { font-style: italic; color: var(--navy3) }
+        .cap-card p { font-size: 14px; line-height: 1.6; color: var(--mid) }
+
+        /* CODE BLOCKS */
+        .code-section { background: var(--navy); padding: 80px 80px; position: relative; overflow: hidden }
+        .code-section::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(200,168,75,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.025) 1px,transparent 1px); background-size: 60px 60px; opacity: 0.6; pointer-events: none }
+        .code-inner { max-width: 1280px; margin: 0 auto; position: relative }
+        .code-section .section-h2 { color: var(--white) }
+        .code-section .section-h2 em { color: var(--gold) }
+        .code-section .section-p { color: rgba(255,255,255,0.65) }
+        .code-block { background: rgba(255,255,255,0.04); border: 1px solid rgba(200,168,75,0.2); border-radius: 10px; margin-top: 28px; overflow: hidden }
+        .code-header { background: rgba(0,0,0,0.25); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 14px 22px; display: flex; align-items: center; justify-content: space-between }
+        .code-method { display: flex; align-items: center; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 13px }
+        .code-verb { background: var(--gold); color: var(--navy); padding: 3px 10px; border-radius: 3px; font-weight: 700; font-size: 11px; letter-spacing: 0.5px }
+        .code-verb.get { background: rgba(120,200,180,0.85) }
+        .code-verb.delete { background: rgba(220,120,120,0.9); color: var(--white) }
+        .code-path { color: rgba(255,255,255,0.85); font-weight: 500 }
+        .code-tag { font-size: 10px; color: var(--gold); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600 }
+        .code-body { padding: 24px 22px; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.7; color: rgba(255,255,255,0.85); white-space: pre-wrap; overflow-x: auto }
+        .code-body .key { color: var(--gold) }
+        .code-body .str { color: #b8d4ff }
+        .code-body .num { color: #f0c97a }
+        .code-body .com { color: rgba(255,255,255,0.4); font-style: italic }
+
+        /* ENDPOINTS TABLE */
+        .endpoints { margin-top: 40px; background: var(--white); border: 1px solid var(--border); border-radius: 10px; overflow: hidden }
+        .endpoint-row { display: grid; grid-template-columns: 80px 280px 1fr 120px; gap: 24px; padding: 18px 28px; align-items: center; border-bottom: 1px solid var(--border); font-size: 14px }
+        .endpoint-row:last-child { border-bottom: 0 }
+        .endpoint-row.head { background: var(--off); font-size: 11px; color: var(--dim); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600 }
+        .verb-pill { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.5px }
+        .verb-pill.get { background: rgba(120,180,160,0.15); color: #4a8a72 }
+        .verb-pill.post { background: rgba(200,168,75,0.15); color: var(--gold) }
+        .verb-pill.delete { background: rgba(200,100,100,0.12); color: #b25555 }
+        .endpoint-path { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--navy) }
+        .endpoint-desc { color: var(--mid); font-size: 13px }
+        .endpoint-tier { font-size: 11px; color: var(--dim); letter-spacing: 1px; text-transform: uppercase; font-weight: 600; text-align: right }
+
+        /* RATE LIMITS */
+        .limits-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 48px }
+        .limit-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 28px 24px; text-align: center }
+        .limit-num { font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 600; color: var(--navy); line-height: 1 }
+        .limit-num em { font-style: italic; color: var(--gold) }
+        .limit-label { font-size: 10px; color: var(--dim); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 8px; font-weight: 600 }
+        .limit-desc { font-size: 12px; color: var(--mid); margin-top: 14px; line-height: 1.5 }
+
+        /* PRINCIPLES */
+        .principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 48px }
+        .principle { padding: 28px 0 0; border-top: 2px solid var(--gold) }
+        .principle h4 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 10px }
+        .principle h4 em { font-style: italic; color: var(--navy3) }
+        .principle p { font-size: 14px; line-height: 1.65; color: var(--mid) }
+
+        /* CTA STRIP */
+        .cta-strip { padding: 80px 48px; background: linear-gradient(135deg, var(--navy), var(--navy3)); color: var(--white); text-align: center; position: relative; overflow: hidden }
+        .cta-strip::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 800px; height: 800px; background: radial-gradient(circle, rgba(200,168,75,0.1), transparent 70%); pointer-events: none }
+        .cta-h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 48px); font-weight: 600; margin-bottom: 16px; letter-spacing: -0.5px; position: relative }
+        .cta-strip em { font-style: italic; color: var(--gold) }
+        .cta-strip p { font-size: 15px; color: rgba(255,255,255,0.65); margin-bottom: 32px; max-width: 540px; margin-left: auto; margin-right: auto; position: relative }
+        .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--navy); padding: 16px 32px; border-radius: 4px; text-decoration: none; font-size: 14px; font-weight: 700; letter-spacing: 0.3px; position: relative }
+        .btn-primary:hover { background: var(--gold2); transform: translateY(-1px) }
+
+        footer { background: #060d1c; color: rgba(255,255,255,0.5); padding: 64px 80px 32px }
+        .footer-top { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; margin-bottom: 48px }
+        .footer-rule { width: 32px; height: 1px; background: var(--gold); margin-bottom: 18px }
+        .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 32px; color: var(--white); font-weight: 700; margin-bottom: 8px }
+        .footer-tagline { font-size: 12px; line-height: 1.6; max-width: 320px }
+        .footer-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px }
+        .footer-col h4 { font-size: 11px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; font-weight: 600 }
+        .footer-col a { display: block; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; padding: 4px 0; transition: color 0.2s }
+        .footer-col a:hover { color: var(--white) }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px }
+        .footer-copy { font-size: 11px; color: rgba(255,255,255,0.4) }
+
+        @media (max-width: 1100px) {
+            .cap-grid { grid-template-columns: 1fr 1fr } .principles { grid-template-columns: 1fr } .limits-grid { grid-template-columns: 1fr 1fr }
+            .endpoint-row { grid-template-columns: 70px 1fr; gap: 14px } .endpoint-row .endpoint-desc, .endpoint-row .endpoint-tier { display: none } .endpoint-row.head { display: none }
+            .notice { grid-template-columns: 1fr; text-align: left; gap: 18px } .notice-cta { justify-self: start }
+        }
+        @media (max-width: 900px) {
+            nav { padding: 0 20px } .nav-links a:not(.nav-cta) { display: none }
+            .hero { padding: 120px 24px 40px } section.content { padding: 50px 24px } .code-section { padding: 50px 24px }
+            .cap-grid { grid-template-columns: 1fr } .limits-grid { grid-template-columns: 1fr 1fr }
+            .code-body { font-size: 11.5px } .code-header { padding: 12px 16px } .code-body { padding: 18px 16px }
+            footer { padding: 48px 24px 24px } .footer-top { grid-template-columns: 1fr; gap: 32px } .footer-links { grid-template-columns: 1fr 1fr }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+    <div class="nav-brand"><a href="/" style="text-decoration:none;display:flex;align-items:center;gap:12px"><div class="nav-logo">ARIO</div><div class="nav-sub">Revenue OS</div></a></div>
+    <div class="nav-links" style="display:flex;align-items:center;gap:22px">
+
+        <div class="nav-item">
+            <span class="nav-trigger">Platform <span class="nav-chevron"></span></span>
+            <div class="megadrop" style="min-width:760px;left:0;transform:translateX(0) translateY(-10px)">
+                <div class="megadrop-cols" style="grid-template-columns:1fr 1fr 1.1fr">
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Pricing intelligence</span>
+                        <a href="/platform#forecast" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12l3-3.5 2.5 2L11 5l3 3" stroke="rgba(200,168,75,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 14h12" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Demand Forecasting</div><div class="drop-desc">Proprietary ensemble, confidence scoring, 365-day horizon</div></div></a>
+                        <a href="/intelligence" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M8 2v1.5M8 12.5V14M2 8h1.5M12.5 8H14M3.5 3.5l1.1 1.1M11.4 11.4l1.1 1.1M12.5 3.5l-1.1 1.1M4.6 11.4l-1.1 1.1" stroke="rgba(255,255,255,0.5)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Intelligence Engine</div><div class="drop-desc">How the forecasting architecture works</div></div></a>
+                        <a href="/platform#group" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13V6l5-3 5 3v7H3z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><rect x="6.5" y="9" width="3" height="4" rx="0.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><path d="M6 7h1M9 7h1" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Group Displacement</div><div class="drop-desc">Monte Carlo RFP evaluation — net displacement maths</div></div></a>
+                    </div>
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Distribution &amp; operations</span>
+                        <a href="/platform#autopilot" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.5 2.5L2 7l5 1.5L8.5 14l5-11.5z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><path d="M7 8.5l2.5-3" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Autopilot Distribution</div><div class="drop-desc">Rate pushes to all major channels — confirmed by read-back</div></div></a>
+                        <a href="/platform#journal" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="2" width="9" height="12" rx="1.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M6 5.5h4M6 8h4M6 10.5h2.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Decision Journal</div><div class="drop-desc">Every decision logged, attributed, and audit-ready</div></div></a>
+                        <a href="/implementation" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M4.5 6.5L8 3l3.5 3.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 13h9" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Implementation</div><div class="drop-desc">14-day deployment — gate-controlled, named manager</div></div></a>
+                    </div>
+                    <div class="megadrop-feature">
+                        <div><div class="megadrop-feature-tag">Full platform</div><div class="megadrop-feature-h">Institutional-grade revenue management. Independent scale.</div><p class="megadrop-feature-p">Ensemble forecasting. Tamper-evident audit trail. Full OTA distribution. Gate-controlled autonomy. Operational within 14 days.</p></div>
+                        <a href="/platform" class="megadrop-feature-cta">Explore the platform <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <span class="nav-trigger">Why ARIO <span class="nav-chevron"></span></span>
+            <div class="megadrop" style="min-width:600px">
+                <div class="megadrop-cols" style="grid-template-columns:1fr 1.15fr">
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">The case for ARIO</span>
+                        <a href="/why-ario" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=140&q=80" alt="Revenue management strategy"></div><div><div class="drop-label">Why ARIO</div><div class="drop-desc">The structural RMS market gap — and where we sit</div></div></a>
+                        <a href="/why-ario#compare" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=140&q=80" alt="Enterprise software comparison"></div><div><div class="drop-label">ARIO vs enterprise RMS</div><div class="drop-desc">Capability comparison — without the enterprise price</div></div></a>
+                        <a href="/roi" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12.5h12" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round"/><rect x="3" y="7.5" width="2.5" height="5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="6.75" y="4.5" width="2.5" height="8" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="10.5" y="6" width="2.5" height="6.5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/></svg></div><div><div class="drop-label">ROI Framework</div><div class="drop-desc">Build the business case for your property</div></div></a>
+                        <a href="/case-studies" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6a1 1 0 011-1h3l1.5 1.5H13a1 1 0 011 1v4.5a1 1 0 01-1 1H3a1 1 0 01-1-1V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div><div class="drop-label">Deployment Profiles</div><div class="drop-desc">Property types, PMS configurations, operating models</div></div></a>
+                    </div>
+                    <div class="megadrop-feature">
+                        <div><div class="megadrop-feature-tag">Deployment programme</div><div class="megadrop-feature-h">Enterprise-class deployment. Configured to your property within 14 days.</div><p class="megadrop-feature-p">Named implementation manager. Gate-controlled go-live. ARIO handles PMS integration, data validation, and channel configuration end to end.</p></div>
+                        <a href="/implementation" class="megadrop-feature-cta">View implementation <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <span class="nav-trigger">Resources <span class="nav-chevron"></span></span>
+            <div class="megadrop" style="min-width:800px">
+                <div class="megadrop-cols" style="grid-template-columns:1fr 1fr 1fr">
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Insights</span>
+                        <a href="/blog/overpaying-rms" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=140&q=80" alt="Revenue data analysis"></div><div><div class="drop-label">Why hotels overpay their RMS</div><div class="drop-desc">The real cost of ownership · 14 min</div></div></a>
+                        <a href="/blog/ota-commission" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=140&q=80" alt="Revenue analytics dashboard"></div><div><div class="drop-label">The OTA commission cliff</div><div class="drop-desc">When 18% becomes your largest cost · 11 min</div></div></a>
+                        <a href="/blog/group-displacement" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13V6l5-3 5 3v7H3z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><rect x="6.5" y="9" width="3" height="4" rx="0.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><path d="M6 7h1M9 7h1" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Group displacement explained</div><div class="drop-desc">Evaluate any RFP in 5 minutes · 8 min</div></div></a>
+                        <a href="/resources" class="drop-item" style="opacity:0.7"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6a1 1 0 011-1h3l1.5 1.5H13a1 1 0 011 1v4.5a1 1 0 01-1 1H3a1 1 0 01-1-1V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div><div class="drop-label">All articles →</div><div class="drop-desc">Full resource library</div></div></a>
+                    </div>
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Frameworks &amp; tools</span>
+                        <a href="/roi" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12.5h12" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round"/><rect x="3" y="7.5" width="2.5" height="5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="6.75" y="4.5" width="2.5" height="8" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="10.5" y="6" width="2.5" height="6.5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/></svg></div><div><div class="drop-label">ROI Framework</div><div class="drop-desc">Business case methodology for any property</div></div></a>
+                        <a href="/why-ario" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="12" width="12" height="1.5" rx="0.5" fill="rgba(200,168,75,0.8)"/><rect x="2" y="3" width="12" height="1.5" rx="0.5" fill="rgba(200,168,75,0.8)"/><rect x="4" y="4.5" width="1.5" height="7.5" rx="0.5" fill="rgba(255,255,255,0.55)"/><rect x="7.25" y="4.5" width="1.5" height="7.5" rx="0.5" fill="rgba(255,255,255,0.55)"/><rect x="10.5" y="4.5" width="1.5" height="7.5" rx="0.5" fill="rgba(255,255,255,0.55)"/></svg></div><div><div class="drop-label">Why ARIO</div><div class="drop-desc">Market positioning and competitive context</div></div></a>
+                        <a href="/implementation" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M4.5 6.5L8 3l3.5 3.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 13h9" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Implementation guide</div><div class="drop-desc">The full 4-phase deployment programme</div></div></a>
+                        <a href="/intelligence" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M8 2v1.5M8 12.5V14M2 8h1.5M12.5 8H14M3.5 3.5l1.1 1.1M11.4 11.4l1.1 1.1M12.5 3.5l-1.1 1.1M4.6 11.4l-1.1 1.1" stroke="rgba(255,255,255,0.5)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Intelligence Engine</div><div class="drop-desc">How the forecasting architecture works</div></div></a>
+                    </div>
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">About ARIO</span>
+                        <a href="/case-studies" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6a1 1 0 011-1h3l1.5 1.5H13a1 1 0 011 1v4.5a1 1 0 01-1 1H3a1 1 0 01-1-1V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div><div class="drop-label">Deployment profiles</div><div class="drop-desc">Property types and integration configurations</div></div></a>
+                        <a href="/security" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L3 4.5v4C3 11.5 5.5 14 8 14s5-2.5 5-5.5v-4L8 2z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><path d="M5.5 8.5l2 2 3-3" stroke="rgba(255,255,255,0.65)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="drop-label">Security &amp; compliance</div><div class="drop-desc">AES-256, GDPR, data architecture</div></div></a>
+                        <a href="/integrations" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10.5 2v4M5.5 2v4M3.5 6h9v2a4.5 4.5 0 01-9 0V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 12.5V15" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round"/></svg></div><div><div class="drop-label">Integrations</div><div class="drop-desc">Opera, Mews, SiteMinder, RateGain &amp; more</div></div></a>
+                        <a href="/contact" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="2" width="9" height="12" rx="1.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M6 5.5h4M6 8h4M6 10.5h2.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Contact</div><div class="drop-desc">Speak with our implementation team</div></div></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <span class="nav-trigger">Company <span class="nav-chevron"></span></span>
+            <div class="simpledrop">
+                <a href="/about" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">About ARIO</span></a>
+                <a href="/security" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Security &amp; compliance</span></a>
+                <div class="drop-simple-divider"></div>
+                <a href="/case-studies" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Deployment profiles</span></a>
+                <a href="/integrations" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Integrations</span></a>
+                <div class="drop-simple-divider"></div>
+                <a href="/contact" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Contact</span></a>
+            </div>
+        </div>
+
+        <a href="/pricing" style="font-size:13px;color:rgba(255,255,255,0.65);text-decoration:none;font-weight:500;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">Pricing</a>
+        <a href="/contact" class="nav-cta">Request a Demo →</a>
+    </div>
+</nav>
+
+    <section class="hero">
+        <div class="hero-grid"></div><div class="hero-glow"></div>
+        <div class="hero-content">
+            <div class="hero-eyebrow">API &amp; Developers</div>
+            <h1 class="hero-h1">Programmatic access to <em>your revenue stack</em>.</h1>
+            <p class="hero-p">REST API for forecasts, decision-journal exports, rate publishes, and webhook events. Stable contracts, signed payloads, full audit trail — built for ownership groups, BI teams, and platform integrators.</p>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="section-eyebrow">Overview</div>
+        <h2 class="section-h2">Built for <em>ownership groups, BI teams, and integrators</em></h2>
+        <p class="section-p">Most ARIO customers never touch the API — the operator UI, OHIP write-back and Channel-Manager publish handle the daily workflow end-to-end. The API exists for ownership groups that want forecast feeds in their data warehouse, BI teams that want the decision journal exported nightly, and platform integrators building bespoke tooling on top of the Revenue OS.</p>
+
+        <div class="notice">
+            <div class="notice-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 2L3 6v5c0 5 3.5 8.5 8 9 4.5-.5 8-4 8-9V6l-8-4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 11l2.5 2.5L15 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="notice-text">
+                <h4>Access by request, under contract</h4>
+                <p>API keys are issued only to customers on the Standard, Premium, or Enterprise tier, against a signed Data &amp; API Addendum. We do not publish a public sandbox — every key is bound to a named property and rate-limited per environment.</p>
+            </div>
+            <a href="/contact" class="notice-cta">Request API access</a>
+        </div>
+
+        <div class="cap-grid">
+            <div class="cap-card">
+                <div class="cap-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 17V8l8-5 8 5v9" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 13h16" stroke="currentColor" stroke-width="1.5"/></svg></div>
+                <h3>Forecast <em>endpoints</em></h3>
+                <p>Pull demand and revenue forecasts at any granularity — by-room-type, by-segment, by-day, up to a 365-day horizon. Stable JSON contracts, ETag-based caching, includes confidence intervals.</p>
+            </div>
+            <div class="cap-card">
+                <div class="cap-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 9h8M7 13h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+                <h3>Decision <em>journal export</em></h3>
+                <p>Every pricing decision, every override, every group quote — exportable as a hash-chained, tamper-evident log. CSV, JSON, or streamed via webhook.</p>
+            </div>
+            <div class="cap-card">
+                <div class="cap-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 11l4 4 12-12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 11v6a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+                <h3>Rate <em>publish API</em></h3>
+                <p>Push approved rates back into your PMS or Channel Manager from the same audited payload that the operator approved. Idempotent, retried, every call logged.</p>
+            </div>
+            <div class="cap-card">
+                <div class="cap-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M11 6v5l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+                <h3>Pace &amp; pickup <em>feeds</em></h3>
+                <p>Real-time pace, OTB, and pickup deltas — exposed both as polled endpoints and streamed via signed webhook. Ideal for ownership dashboards.</p>
+            </div>
+            <div class="cap-card">
+                <div class="cap-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 3v8M11 11l5 3M11 11l-5 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.5"/></svg></div>
+                <h3>Webhook <em>events</em></h3>
+                <p>Subscribe to high-signal events: rate.published, decision.committed, group.quoted, autopilot.flagged. Every payload signed and replay-safe.</p>
+            </div>
+            <div class="cap-card">
+                <div class="cap-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="12" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="3" y="12" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="12" y="12" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/></svg></div>
+                <h3>Multi-property <em>roll-up</em></h3>
+                <p>Boutique groups can scope a single key to all properties or sub-scope per property. Aggregate forecasts roll up across the portfolio without N+1 calls.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content" style="padding-top: 0">
+        <div class="section-eyebrow">Authentication</div>
+        <h2 class="section-h2">Signed requests, <em>scoped keys</em>, no shared secrets</h2>
+        <p class="section-p">Every request is authenticated with a long-lived API key bound to a property scope, paired with a per-request signature over the body and timestamp. Keys are rotated on a schedule defined in your contract, revocable instantly, and never travel through query strings.</p>
+
+        <div class="principles">
+            <div class="principle">
+                <h4>Property-scoped <em>keys</em></h4>
+                <p>Every key is bound to one or more property IDs. Cross-tenant access is structurally impossible — a London key cannot read a Paris forecast.</p>
+            </div>
+            <div class="principle">
+                <h4>Signed <em>payloads</em></h4>
+                <p>Bodies and timestamps are signed using industry-standard HMAC. Replay protection is enforced via timestamp skew limits.</p>
+            </div>
+            <div class="principle">
+                <h4>Audit-traced <em>access</em></h4>
+                <p>Every API call is recorded in the same tamper-evident journal as operator actions. You can reconstruct exactly what your integration did, when, and with what payload.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="code-section">
+        <div class="code-inner">
+            <div class="section-eyebrow">Request example</div>
+            <h2 class="section-h2">Pull a <em>30-day forecast</em></h2>
+            <p class="section-p">Stable JSON, ETag caching, confidence intervals included. Same payload the Cockpit renders.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-method">
+                        <span class="code-verb get">GET</span>
+                        <span class="code-path">/v1/properties/{propertyId}/forecast</span>
+                    </div>
+                    <div class="code-tag">JSON · 200 OK</div>
+                </div>
+                <div class="code-body"><span class="com">// curl example — Authorization header carries the signed key</span>
+curl -X GET https://api.ario.io/v1/properties/PRP_001/forecast \
+  -H <span class="str">"Authorization: Bearer ario_live_..."</span> \
+  -H <span class="str">"X-Ario-Signature: t=1714060800,v1=..."</span> \
+  -H <span class="str">"Accept: application/json"</span> \
+  -d <span class="str">'{ "horizon": 30, "granularity": "daily", "segment": "all" }'</span>
+
+<span class="com">// Response</span>
+{
+  <span class="key">"propertyId"</span>: <span class="str">"PRP_001"</span>,
+  <span class="key">"horizon"</span>: <span class="num">30</span>,
+  <span class="key">"generatedAt"</span>: <span class="str">"2026-04-26T08:00:00Z"</span>,
+  <span class="key">"forecast"</span>: [
+    {
+      <span class="key">"date"</span>: <span class="str">"2026-04-27"</span>,
+      <span class="key">"demand"</span>: <span class="num">87.4</span>,
+      <span class="key">"adr"</span>: <span class="num">214.50</span>,
+      <span class="key">"revenue"</span>: <span class="num">18747.30</span>,
+      <span class="key">"confidence"</span>: { <span class="key">"lo"</span>: <span class="num">82.1</span>, <span class="key">"hi"</span>: <span class="num">92.8</span> }
+    }
+    <span class="com">// ... 29 more days</span>
+  ]
+}</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="section-eyebrow">Endpoints</div>
+        <h2 class="section-h2">Available <em>endpoints</em></h2>
+        <p class="section-p">A complete reference is provided in the API addendum at contract signing. The table below summarises the surface area.</p>
+
+        <div class="endpoints">
+            <div class="endpoint-row head"><div>Method</div><div>Path</div><div>Description</div><div>Tier</div></div>
+            <div class="endpoint-row"><div><span class="verb-pill get">GET</span></div><div class="endpoint-path">/v1/properties/{id}/forecast</div><div class="endpoint-desc">Demand &amp; revenue forecast, daily granularity, up to 365d horizon.</div><div class="endpoint-tier">Standard+</div></div>
+            <div class="endpoint-row"><div><span class="verb-pill get">GET</span></div><div class="endpoint-path">/v1/properties/{id}/pace</div><div class="endpoint-desc">Real-time pace, OTB, and pickup deltas vs same-time-last-year.</div><div class="endpoint-tier">Standard+</div></div>
+            <div class="endpoint-row"><div><span class="verb-pill get">GET</span></div><div class="endpoint-path">/v1/properties/{id}/journal</div><div class="endpoint-desc">Decision-journal export — pricing decisions, overrides, group quotes.</div><div class="endpoint-tier">Premium+</div></div>
+            <div class="endpoint-row"><div><span class="verb-pill post">POST</span></div><div class="endpoint-path">/v1/properties/{id}/rates/publish</div><div class="endpoint-desc">Approved rate publish back to PMS / Channel Manager. Idempotent.</div><div class="endpoint-tier">Premium+</div></div>
+            <div class="endpoint-row"><div><span class="verb-pill post">POST</span></div><div class="endpoint-path">/v1/properties/{id}/groups/quote</div><div class="endpoint-desc">Generate a group quote with displacement maths, returns auditable PDF + JSON.</div><div class="endpoint-tier">Premium+</div></div>
+            <div class="endpoint-row"><div><span class="verb-pill get">GET</span></div><div class="endpoint-path">/v1/groups/{group}/rollup</div><div class="endpoint-desc">Aggregated portfolio forecast across multiple properties (boutique groups).</div><div class="endpoint-tier">Enterprise</div></div>
+            <div class="endpoint-row"><div><span class="verb-pill post">POST</span></div><div class="endpoint-path">/v1/webhooks</div><div class="endpoint-desc">Register a webhook endpoint; event subscriptions configurable per topic.</div><div class="endpoint-tier">Standard+</div></div>
+            <div class="endpoint-row"><div><span class="verb-pill delete">DELETE</span></div><div class="endpoint-path">/v1/webhooks/{id}</div><div class="endpoint-desc">Remove a webhook subscription. Hash-chained audit entry created.</div><div class="endpoint-tier">Standard+</div></div>
+        </div>
+    </section>
+
+    <section class="content" style="padding-top: 0">
+        <div class="section-eyebrow">Rate limits &amp; SLAs</div>
+        <h2 class="section-h2">Predictable limits, <em>predictable behaviour</em></h2>
+        <p class="section-p">Every customer gets a per-key rate budget sized to their tier. Limits are exposed in response headers (X-RateLimit-Remaining, X-RateLimit-Reset). Bursts are absorbed; sustained overage queues with backoff.</p>
+
+        <div class="limits-grid">
+            <div class="limit-card"><div class="limit-num"><em>60</em>/min</div><div class="limit-label">Standard tier</div><div class="limit-desc">Sufficient for nightly BI exports and ownership dashboards.</div></div>
+            <div class="limit-card"><div class="limit-num"><em>300</em>/min</div><div class="limit-label">Premium tier</div><div class="limit-desc">Headroom for hourly polling across a multi-property roll-up.</div></div>
+            <div class="limit-card"><div class="limit-num"><em>Custom</em></div><div class="limit-label">Enterprise tier</div><div class="limit-desc">Negotiated limits, dedicated capacity, named SRE contact.</div></div>
+            <div class="limit-card"><div class="limit-num"><em>99.9</em>%</div><div class="limit-label">API uptime SLA</div><div class="limit-desc">Standard contractual SLA. Status page subscribed via RSS.</div></div>
+        </div>
+    </section>
+
+    <section class="cta-strip">
+        <h3 class="cta-h3">Ready to <em>integrate</em>?</h3>
+        <p>API access is part of the Standard, Premium, and Enterprise tiers. Talk to the team about your integration and we'll issue keys with your contract.</p>
+        <a href="/contact" class="btn-primary">Request API access
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </section>
+
+    <footer>
+        <div class="footer-top">
+            <div><div class="footer-rule"></div><div class="footer-brand">ARIO</div><div class="footer-tagline">Revenue Operating System · Institutional-grade intelligence for independent hotels</div></div>
+            <div class="footer-links">
+                <div class="footer-col"><h4>Product</h4><a href="/platform">Capabilities</a><a href="/integrations">Integrations</a><a href="/api-docs">API &amp; Developers</a><a href="/pricing">Pricing</a></div>
+                <div class="footer-col"><h4>Trust</h4><a href="/security">Security &amp; compliance</a><a href="/about">About ARIO</a><a href="/contact">Request Deployment</a></div>
+                <div class="footer-col"><h4>Resources</h4><a href="/resources">Resources</a><a href="/case-studies">Case studies</a><a href="/contact">Contact</a></div>
+            </div>
+        </div>
+        <div class="footer-bottom"><div class="footer-copy">© 2026 ARIO Technologies Ltd. All rights reserved.</div><div class="footer-copy" style="letter-spacing: 0.08em; font-size: 10px; opacity: 0.5">Every signal. A clear decision.</div></div>
+    </footer>
+
+    <script>
+    (function(){
+        document.querySelectorAll('.nav-item').forEach(function(item){
+            item.addEventListener('mouseenter', function(){
+                var drop = item.querySelector('.megadrop');
+                if(!drop) return;
+                // reset any previous correction
+                drop.style.left = '';
+                drop.style.right = '';
+                requestAnimationFrame(function(){
+                    var r = drop.getBoundingClientRect();
+                    var overflow = r.right - (window.innerWidth - 16);
+                    if(overflow > 0){
+                        // shift left by how much it overflows
+                        var curLeft = parseFloat(drop.style.left) || 0;
+                        drop.style.left = (curLeft - overflow) + 'px';
+                    }
+                });
+            });
+        });
+    })();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

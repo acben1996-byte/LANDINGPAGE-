@@ -1,0 +1,970 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="language" content="English">
+    <link rel="canonical" href="https://ariorms.com/intelligence">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARIO — The Intelligence Engine</title>
+    <meta name="description" content="ARIO's pricing intelligence is built on the same class of statistical methodology as enterprise RMS vendors. Proprietary multi-model ensemble forecasting, performance-weighted model selection, tamper-evident Decision Journal, Monte Carlo group displacement, and gate-controlled distribution — explained.">    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box }
+        :root {
+            --navy: #0f1e3c; --navy2: #152d56; --navy3: #1e3a6e;
+            --gold: #c8a84b; --gold2: #e8c96b;
+            --white: #fff; --off: #f7f5f0; --cream: #faf8f4;
+            --border: #dde3ef; --text: #0f1e3c; --mid: #3d5080; --dim: #7a8aaa;
+            --green: #16a34a; --amber: #d97706; --red: #dc2626;
+        }
+        html { scroll-behavior: smooth }
+        body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; -webkit-font-smoothing: antialiased }
+
+        /* ── NAV ─────────────────────────────────────────── */
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(15,30,60,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(200,168,75,0.2); padding: 0 48px; height: 64px; display: flex; align-items: center; justify-content: space-between }
+        .nav-brand a { display: flex; align-items: center; gap: 12px; text-decoration: none }
+        .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 31px; font-weight: 700; letter-spacing: 1px; line-height: 1; background: linear-gradient(158deg, #ffffff 0%, #fff4d6 18%, #f0d080 38%, #c8a84b 58%, #8a6200 82%, #4a3000 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.55)); }
+        .nav-sub { font-size: 9px; font-weight: 600; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; border-left: 1px solid rgba(200,168,75,0.4); padding-left: 12px; margin-left: 4px }
+        .nav-links { display: flex; align-items: center; gap: 28px }
+        .nav-links a { font-size: 13px; color: rgba(255,255,255,0.65); text-decoration: none; font-weight: 500; transition: color 0.2s }
+        .nav-links a:hover { color: var(--white) }
+        .nav-links a.active { color: var(--gold) }
+        .nav-cta { background: var(--gold); color: var(--navy) !important; font-weight: 700 !important; padding: 10px 22px; border-radius: 4px; font-size: 13px !important; transition: background 0.2s, transform 0.1s !important }
+        .nav-cta:hover { background: var(--gold2) !important; transform: translateY(-1px) }
+
+        /* ── Professional micro-animations ─── */
+        @keyframes ario-cta-shimmer {
+            0%   { background-position: -200% center }
+            100% { background-position: 200% center }
+        }
+        .nav-cta {
+            background: linear-gradient(90deg, #c8a84b 0%, #e8c96b 40%, #c8a84b 60%, #a07820 100%) !important;
+            background-size: 200% auto !important;
+            animation: ario-cta-shimmer 3.5s linear infinite !important;
+            color: #0f1e3c !important;
+            font-weight: 700 !important;
+            padding: 10px 22px;
+            border-radius: 4px;
+            font-size: 13px !important;
+            transition: opacity 0.15s ease, transform 0.12s ease !important;
+            text-decoration: none;
+        }
+        .nav-cta:hover {
+            opacity: 0.9 !important;
+            transform: translateY(-1px) !important;
+        }
+
+        /* Megadrop item stagger on open */
+        @keyframes ario-drop-item-in {
+            from { opacity: 0; transform: translateY(-4px) }
+            to   { opacity: 1; transform: translateY(0) }
+        }
+        .nav-item:hover .drop-item {
+            animation: ario-drop-item-in 0.18s ease both;
+        }
+        .nav-item:hover .drop-item:nth-child(2) { animation-delay: 0.04s }
+        .nav-item:hover .drop-item:nth-child(3) { animation-delay: 0.08s }
+        .nav-item:hover .drop-item:nth-child(4) { animation-delay: 0.12s }
+        .nav-item:hover .drop-item:nth-child(5) { animation-delay: 0.16s }
+
+        /* Nav trigger hover underline draw */
+        .nav-trigger {
+            position: relative;
+        }
+        .nav-trigger::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: -2px;
+            width: 0; height: 1px;
+            background: var(--gold, #c8a84b);
+            transition: width 0.2s ease;
+        }
+        .nav-item:hover .nav-trigger::after { width: 100% }
+
+        /* Drop item arrow on hover */
+        .drop-item::after {
+            content: '';
+            display: block;
+            width: 5px; height: 5px;
+            border-right: 1.5px solid rgba(200,168,75,0);
+            border-top: 1.5px solid rgba(200,168,75,0);
+            transform: rotate(45deg) translateX(-3px);
+            transition: transform 0.15s ease, border-color 0.15s ease;
+            margin-left: auto;
+            flex-shrink: 0;
+            align-self: center;
+        }
+        .drop-item:hover::after {
+            transform: rotate(45deg) translateX(0);
+            border-color: rgba(200,168,75,0.7);
+        }
+
+        /* Megadrop feature panel subtle gradient shift */
+        .megadrop-feature {
+            background: linear-gradient(160deg, #0f1e3c 0%, #152d56 100%);
+        }
+
+        /* ── MEGADROPDOWN SYSTEM ─────────────────────────── */
+        .nav-item { position: relative; display: flex; align-items: center }
+        .nav-item > .nav-trigger {
+            display: flex; align-items: center; gap: 5px;
+            font-size: 13px; color: rgba(255,255,255,0.65);
+            text-decoration: none; font-weight: 500;
+            transition: color 0.2s; cursor: pointer; background: none;
+            border: none; padding: 0; font-family: inherit;
+        }
+        .nav-item:hover > .nav-trigger { color: #fff }
+        .nav-chevron {
+            display: inline-block; width: 10px; height: 10px;
+            border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+            transform: rotate(45deg) translateY(-2px);
+            transition: transform 0.2s ease;
+        }
+        .nav-item:hover .nav-chevron { transform: rotate(225deg) translateY(2px) }
+        .megadrop {
+            position: absolute;
+            top: calc(100% + 14px);
+            left: 50%; transform: translateX(-50%) translateY(-10px);
+            background: #fff;
+            border: 1px solid rgba(15,30,60,0.09);
+            border-radius: 10px;
+            box-shadow: 0 24px 64px rgba(15,30,60,0.13), 0 4px 16px rgba(15,30,60,0.07);
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s;
+            pointer-events: none; z-index: 200; min-width: 560px; max-width: calc(100vw - 80px);
+        }
+        .megadrop::before { content: ''; position: absolute; top: -18px; left: 0; right: 0; height: 18px; }
+        .nav-item:hover .megadrop {
+            opacity: 1; visibility: visible;
+            transform: translateX(-50%) translateY(0); pointer-events: all;
+            transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0s;
+        }
+        .megadrop-inner { display: grid; gap: 0; border-radius: 10px; overflow: hidden }
+        .megadrop-cols { display: grid; grid-template-columns: 1fr 1fr; }
+        .megadrop-col { padding: 20px 4px }
+        .megadrop-col + .megadrop-col { border-left: 1px solid #eef0f6 }
+        .megadrop-col-label { font-size: 10px; font-weight: 700; color: #94a3b8; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 20px 10px; display: block; }
+        .drop-item { display: flex; align-items: flex-start; gap: 13px; padding: 10px 20px; text-decoration: none; border-radius: 6px; margin: 0 6px; transition: background 0.12s ease; }
+        .drop-item:hover { background: #f7f9fc }
+        .drop-icon { width: 34px; height: 34px; border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #0f1e3c; border: 1px solid rgba(200,168,75,0.18); transition: background 0.15s ease, border-color 0.15s ease; }
+        .drop-item:hover .drop-icon { background: #152d56; border-color: rgba(200,168,75,0.4); }
+        .drop-label { font-size: 13px; font-weight: 600; color: #0f1e3c; line-height: 1.3; margin-bottom: 3px; }
+        .drop-desc { font-size: 11.5px; color: #7a8aaa; line-height: 1.45 }
+        .megadrop-feature { background: #0f1e3c; padding: 24px; border-radius: 0 10px 10px 0; display: flex; flex-direction: column; justify-content: space-between; }
+        .megadrop-feature-tag { font-size: 9px; font-weight: 700; color: #c8a84b; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+        .megadrop-feature-h { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: #fff; line-height: 1.3; letter-spacing: -0.3px; margin-bottom: 10px; }
+        .megadrop-feature-p { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.55; margin-bottom: 18px; flex: 1 }
+        .megadrop-feature-cta { display: inline-flex; align-items: center; gap: 7px; background: #c8a84b; color: #0f1e3c; padding: 9px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; text-decoration: none; letter-spacing: 0.02em; align-self: flex-start; transition: background 0.15s, transform 0.12s; }
+        .megadrop-feature-cta:hover { background: #e8c96b; transform: translateY(-1px) }
+        .simpledrop { position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%) translateY(-10px); background: #fff; border: 1px solid rgba(15,30,60,0.09); border-radius: 8px; box-shadow: 0 20px 56px rgba(15,30,60,0.12); opacity: 0; visibility: hidden; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s; pointer-events: none; z-index: 200; min-width: 230px; padding: 8px; }
+        .simpledrop::before { content: ''; position: absolute; top: -18px; left: 0; right: 0; height: 18px; }
+        .nav-item:hover .simpledrop { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: all; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0s; }
+        .drop-simple-item { display: flex; align-items: center; gap: 10px; padding: 9px 14px; text-decoration: none; border-radius: 5px; transition: background 0.1s ease; }
+        .drop-simple-item:hover { background: #f7f9fc }
+        .drop-simple-dot { width: 6px; height: 6px; border-radius: 50%; background: #c8a84b; flex-shrink: 0 }
+        .drop-simple-label { font-size: 13px; font-weight: 500; color: #0f1e3c }
+        .drop-simple-divider { height: 1px; background: #eef0f6; margin: 4px 8px }
+        /* Drop item with photography */
+        .drop-photo { width: 68px; height: 50px; border-radius: 5px; overflow: hidden; flex-shrink: 0; background: #0f1e3c; }
+        .drop-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; }
+        .drop-item:hover .drop-photo img { transform: scale(1.06); }
+        .drop-simple-photo { width: 52px; height: 40px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+        .drop-simple-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* ── HERO ─────────────────────────────────────────── */
+        .hero { min-height: 56vh; background: var(--navy); position: relative; padding: 148px 80px 72px; overflow: hidden }
+        .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(200,168,75,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.04) 1px,transparent 1px); background-size: 60px 60px; opacity: 0.5 }
+        .hero-glow { position: absolute; top: -200px; right: -200px; width: 700px; height: 700px; background: radial-gradient(circle, rgba(200,168,75,0.14), transparent 70%); pointer-events: none }
+        .hero-glow-left { position: absolute; bottom: -150px; left: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(30,58,110,0.6), transparent 70%); pointer-events: none }
+        .hero-content { max-width: 1280px; margin: 0 auto; position: relative; z-index: 2 }
+        .hero-eyebrow { font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 22px }
+        .hero-h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(42px, 6.5vw, 84px); font-weight: 600; color: var(--white); line-height: 1.03; letter-spacing: -2px; margin-bottom: 28px; max-width: 980px }
+        .hero-h1 em { font-style: italic; color: var(--gold) }
+        .hero-p { font-size: 17.5px; line-height: 1.65; color: rgba(255,255,255,0.68); max-width: 760px }
+        .hero-divider { width: 56px; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); margin: 36px 0 0 }
+
+        /* ── SECTION WRAPPER ─────────────────────────────── */
+        .section-white { background: var(--white); padding: 100px 80px }
+        .section-cream { background: var(--cream); padding: 100px 80px }
+        .section-dark { background: var(--navy); padding: 100px 80px; position: relative; overflow: hidden }
+        .section-dark::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(200,168,75,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.025) 1px,transparent 1px); background-size: 80px 80px; pointer-events: none }
+        .section-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1 }
+
+        .section-eyebrow { font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 12px }
+        .section-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--gold) }
+        .section-h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 58px); font-weight: 600; color: var(--text); line-height: 1.07; letter-spacing: -1.2px; margin-bottom: 20px; max-width: 820px }
+        .section-h2.white { color: var(--white) }
+        .section-h2 em { font-style: italic; color: var(--navy3) }
+        .section-h2.white em { color: var(--gold) }
+        .section-lead { font-size: 16.5px; line-height: 1.68; color: var(--mid); max-width: 760px }
+        .section-lead.white { color: rgba(255,255,255,0.65) }
+
+        /* ── FADE-UP ANIMATION ───────────────────────────── */
+        .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease }
+        .fade-up.visible { opacity: 1; transform: translateY(0) }
+        .fade-up.delay-1 { transition-delay: 0.1s }
+        .fade-up.delay-2 { transition-delay: 0.2s }
+        .fade-up.delay-3 { transition-delay: 0.3s }
+        .fade-up.delay-4 { transition-delay: 0.4s }
+        .fade-up.delay-5 { transition-delay: 0.5s }
+
+        /* ── SECTION 1: FORECASTING ──────────────────────── */
+        .model-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-top: 60px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--white) }
+        .model-card { padding: 32px 24px; border-right: 1px solid var(--border); transition: background 0.2s }
+        .model-card:last-child { border-right: none }
+        .model-card:hover { background: #f7f9fc }
+        .model-tag { font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; display: block }
+        .model-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--text); line-height: 1.2; margin-bottom: 10px; letter-spacing: -0.3px }
+        .model-desc { font-size: 12.5px; line-height: 1.6; color: var(--mid) }
+
+        .bates-block { margin-top: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center }
+        .bates-text {}
+        .bates-text h3 { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600; color: var(--text); line-height: 1.15; letter-spacing: -0.6px; margin-bottom: 16px }
+        .bates-text h3 em { font-style: italic; color: var(--navy3) }
+        .bates-text p { font-size: 15px; line-height: 1.7; color: var(--mid); margin-bottom: 14px }
+        .bates-visual { background: var(--navy); border-radius: 10px; padding: 36px; }
+        .bates-vis-title { font-size: 10px; font-weight: 700; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 24px }
+        .model-weight-row { display: flex; align-items: center; gap: 14px; margin-bottom: 14px }
+        .model-weight-label { font-size: 12px; color: rgba(255,255,255,0.75); width: 140px; flex-shrink: 0; font-weight: 500 }
+        .model-weight-bar-wrap { flex: 1; background: rgba(255,255,255,0.07); border-radius: 3px; height: 6px; overflow: hidden }
+        .model-weight-bar { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)) }
+        .model-weight-pct { font-size: 11px; font-weight: 700; color: var(--gold); width: 32px; text-align: right; flex-shrink: 0 }
+        .bates-note { margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 11px; color: rgba(255,255,255,0.4); line-height: 1.55 }
+
+        .confidence-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px }
+        .conf-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 28px; transition: border-color 0.25s, box-shadow 0.25s }
+        .conf-card:hover { border-color: rgba(200,168,75,0.4); box-shadow: 0 20px 52px rgba(15,30,60,0.07) }
+        .conf-icon { width: 40px; height: 40px; border-radius: 8px; background: linear-gradient(135deg, var(--navy), var(--navy3)); display: flex; align-items: center; justify-content: center; margin-bottom: 18px }
+        .conf-h4 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 10px; letter-spacing: -0.3px }
+        .conf-p { font-size: 13.5px; line-height: 1.65; color: var(--mid) }
+
+        /* ── SECTION 2: DECISION JOURNAL ─────────────────── */
+        .journal-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; margin-top: 56px }
+        .journal-copy p { font-size: 15px; line-height: 1.72; color: rgba(255,255,255,0.68); margin-bottom: 18px }
+        .journal-copy p:last-child { margin-bottom: 0 }
+        .journal-record { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden }
+        .journal-record-header { padding: 16px 22px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-between }
+        .journal-record-title { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold) }
+        .journal-record-ts { font-size: 10px; color: rgba(255,255,255,0.4); font-family: monospace }
+        .journal-field { padding: 14px 22px; border-bottom: 1px solid rgba(255,255,255,0.06); display: grid; grid-template-columns: 160px 1fr; gap: 16px; align-items: baseline }
+        .journal-field:last-child { border-bottom: none }
+        .journal-field-key { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.35) }
+        .journal-field-val { font-size: 13px; color: rgba(255,255,255,0.82); line-height: 1.5 }
+        .journal-field-val.mono { font-family: monospace; font-size: 11.5px; color: var(--gold) }
+        .journal-field-val.green { color: #4ade80 }
+
+        .lineage-row { display: flex; align-items: center; gap: 0; margin-top: 48px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden }
+        .lineage-step { flex: 1; padding: 20px 18px; text-align: center; position: relative }
+        .lineage-step + .lineage-step::before { content: '→'; position: absolute; left: -10px; top: 50%; transform: translateY(-50%); color: rgba(200,168,75,0.5); font-size: 16px }
+        .lineage-num { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: rgba(200,168,75,0.3); line-height: 1; margin-bottom: 6px }
+        .lineage-label { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.7); margin-bottom: 4px }
+        .lineage-detail { font-size: 10px; color: rgba(255,255,255,0.38); line-height: 1.4 }
+
+        /* ── SECTION 3: DISTRIBUTION ─────────────────────── */
+        .dist-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 56px }
+        .dist-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 40px 32px; transition: border-color 0.25s, box-shadow 0.25s }
+        .dist-card:hover { border-color: rgba(200,168,75,0.45); box-shadow: 0 24px 60px rgba(15,30,60,0.07) }
+        .dist-number { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 600; color: rgba(200,168,75,0.25); line-height: 1; margin-bottom: 20px; letter-spacing: -1px }
+        .dist-h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: var(--text); margin-bottom: 14px; letter-spacing: -0.4px; line-height: 1.15 }
+        .dist-p { font-size: 14px; line-height: 1.68; color: var(--mid) }
+        .dist-detail { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 12px; color: var(--dim); line-height: 1.6 }
+
+        /* ── SECTION 4: GROUP DISPLACEMENT ──────────────── */
+        .monte-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; margin-top: 56px }
+        .monte-copy h3 { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 600; color: var(--text); letter-spacing: -0.5px; line-height: 1.18; margin-bottom: 18px }
+        .monte-copy h3 em { font-style: italic; color: var(--navy3) }
+        .monte-copy p { font-size: 15px; line-height: 1.7; color: var(--mid); margin-bottom: 16px }
+        .monte-copy p:last-child { margin-bottom: 0 }
+        .monte-output { background: var(--navy); border-radius: 10px; padding: 32px }
+        .monte-output-title { font-size: 10px; font-weight: 700; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 24px }
+        .monte-metric { margin-bottom: 22px; padding-bottom: 22px; border-bottom: 1px solid rgba(255,255,255,0.08) }
+        .monte-metric:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none }
+        .monte-metric-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: rgba(255,255,255,0.35); margin-bottom: 6px }
+        .monte-metric-value { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 600; color: var(--white); line-height: 1; letter-spacing: -0.5px }
+        .monte-metric-value.gold { color: var(--gold) }
+        .monte-metric-sub { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 4px }
+
+        .displacement-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 48px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden }
+        .disp-step { padding: 28px 24px; border-right: 1px solid var(--border); background: var(--white) }
+        .disp-step:last-child { border-right: none }
+        .disp-num { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 600; color: rgba(200,168,75,0.3); line-height: 1; margin-bottom: 12px }
+        .disp-h4 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 8px }
+        .disp-p { font-size: 12.5px; line-height: 1.6; color: var(--mid) }
+
+        /* ── SECTION 5: SAFETY ───────────────────────────── */
+        .safety-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 56px }
+        .safety-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 40px 32px; transition: border-color 0.25s, background 0.25s }
+        .safety-card:hover { border-color: rgba(200,168,75,0.35); background: rgba(255,255,255,0.06) }
+        .safety-icon { width: 48px; height: 48px; border-radius: 10px; background: rgba(200,168,75,0.1); border: 1px solid rgba(200,168,75,0.25); display: flex; align-items: center; justify-content: center; margin-bottom: 24px }
+        .safety-h3 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; color: var(--white); margin-bottom: 14px; letter-spacing: -0.3px; line-height: 1.2 }
+        .safety-p { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.62) }
+        .safety-detail { margin-top: 22px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08) }
+        .safety-detail-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px }
+        .safety-detail-item:last-child { margin-bottom: 0 }
+        .safety-check { width: 16px; height: 16px; border-radius: 50%; background: rgba(200,168,75,0.15); border: 1px solid rgba(200,168,75,0.4); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px }
+        .safety-check svg { width: 8px; height: 8px }
+        .safety-detail-text { font-size: 12px; line-height: 1.55; color: rgba(255,255,255,0.5) }
+
+        /* ── CTA BLOCK ───────────────────────────────────── */
+        .cta-section { background: var(--white); padding: 80px }
+        .cta-block { background: linear-gradient(135deg, var(--navy) 0%, var(--navy3) 100%); border-radius: 12px; padding: 72px 64px; display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center; position: relative; overflow: hidden }
+        .cta-block::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(200,168,75,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.03) 1px,transparent 1px); background-size: 60px 60px }
+        .cta-block-glow { position: absolute; right: -120px; top: -120px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(200,168,75,0.12), transparent 70%); pointer-events: none }
+        .cta-inner { position: relative; z-index: 1 }
+        .cta-eyebrow { font-size: 10px; font-weight: 700; color: var(--gold); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 16px }
+        .cta-h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 3.5vw, 42px); font-weight: 600; color: var(--white); line-height: 1.15; letter-spacing: -0.8px; margin-bottom: 14px }
+        .cta-p { font-size: 15px; line-height: 1.65; color: rgba(255,255,255,0.62); max-width: 560px }
+        .cta-btn { position: relative; z-index: 1; flex-shrink: 0 }
+        .cta-btn a { display: inline-flex; align-items: center; gap: 10px; background: var(--gold); color: var(--navy); font-weight: 700; font-size: 15px; padding: 18px 36px; border-radius: 6px; text-decoration: none; white-space: nowrap; transition: background 0.2s, transform 0.15s }
+        .cta-btn a:hover { background: var(--gold2); transform: translateY(-2px) }
+
+        /* ── FOOTER ──────────────────────────────────────── */
+        footer { background: #060d1c; color: rgba(255,255,255,0.5); padding: 64px 80px 32px }
+        .footer-top { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; margin-bottom: 48px }
+        .footer-rule { width: 32px; height: 1px; background: var(--gold); margin-bottom: 18px }
+        .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 32px; color: var(--white); font-weight: 700; margin-bottom: 8px }
+        .footer-tagline { font-size: 12px; line-height: 1.6; max-width: 320px }
+        .footer-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px }
+        .footer-col h4 { font-size: 11px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; font-weight: 600 }
+        .footer-col a { display: block; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; padding: 4px 0; transition: color 0.2s }
+        .footer-col a:hover { color: var(--white) }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px }
+        .footer-copy { font-size: 11px; color: rgba(255,255,255,0.4) }
+
+        /* ── RESPONSIVE ──────────────────────────────────── */
+        @media (max-width: 1200px) {
+            .model-grid { grid-template-columns: repeat(3, 1fr) }
+            .model-card:nth-child(3) { border-right: none }
+            .displacement-steps { grid-template-columns: repeat(2, 1fr) }
+            .disp-step:nth-child(2) { border-right: none }
+        }
+        @media (max-width: 1000px) {
+            .bates-block { grid-template-columns: 1fr }
+            .monte-layout { grid-template-columns: 1fr }
+            .journal-layout { grid-template-columns: 1fr }
+            .cta-block { grid-template-columns: 1fr }
+        }
+        @media (max-width: 900px) {
+            nav { padding: 0 20px }
+            .nav-links .nav-item,
+            .nav-links > a:not(.nav-cta) { display: none }
+            .hero { padding: 120px 24px 48px }
+            .section-white,
+            .section-cream,
+            .section-dark,
+            .cta-section { padding: 60px 24px }
+            .cta-block { padding: 44px 28px }
+            .model-grid { grid-template-columns: 1fr 1fr }
+            .model-card:nth-child(2) { border-right: none }
+            .model-card:nth-child(3) { border-right: 1px solid var(--border) }
+            .model-card:nth-child(4) { border-right: none }
+            .confidence-row { grid-template-columns: 1fr }
+            .dist-cards { grid-template-columns: 1fr }
+            .safety-grid { grid-template-columns: 1fr }
+            .displacement-steps { grid-template-columns: 1fr }
+            .disp-step { border-right: none; border-bottom: 1px solid var(--border) }
+            .disp-step:last-child { border-bottom: none }
+            .lineage-row { flex-direction: column }
+            .lineage-step + .lineage-step::before { content: '↓'; left: 50%; top: -14px; transform: translateX(-50%) }
+            footer { padding: 48px 24px 24px }
+            .footer-top { grid-template-columns: 1fr; gap: 32px }
+            .footer-links { grid-template-columns: 1fr 1fr }
+        }
+        @media (max-width: 640px) {
+            .model-grid { grid-template-columns: 1fr }
+            .model-card { border-right: none; border-bottom: 1px solid var(--border) }
+            .model-card:last-child { border-bottom: none }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ── NAV ─────────────────────────────────────────── -->
+    <nav>
+    <div class="nav-brand"><a href="/" style="text-decoration:none;display:flex;align-items:center;gap:12px"><div class="nav-logo">ARIO</div><div class="nav-sub">Revenue OS</div></a></div>
+    <div class="nav-links" style="display:flex;align-items:center;gap:22px">
+
+        <div class="nav-item">
+            <span class="nav-trigger">Platform <span class="nav-chevron"></span></span>
+            <div class="megadrop" style="min-width:760px;left:0;transform:translateX(0) translateY(-10px)">
+                <div class="megadrop-cols" style="grid-template-columns:1fr 1fr 1.1fr">
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Pricing intelligence</span>
+                        <a href="/platform#forecast" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12l3-3.5 2.5 2L11 5l3 3" stroke="rgba(200,168,75,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 14h12" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Demand Forecasting</div><div class="drop-desc">Proprietary ensemble, confidence scoring, 365-day horizon</div></div></a>
+                        <a href="/intelligence" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M8 2v1.5M8 12.5V14M2 8h1.5M12.5 8H14M3.5 3.5l1.1 1.1M11.4 11.4l1.1 1.1M12.5 3.5l-1.1 1.1M4.6 11.4l-1.1 1.1" stroke="rgba(255,255,255,0.5)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Intelligence Engine</div><div class="drop-desc">How the forecasting architecture works</div></div></a>
+                        <a href="/platform#group" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13V6l5-3 5 3v7H3z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><rect x="6.5" y="9" width="3" height="4" rx="0.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><path d="M6 7h1M9 7h1" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Group Displacement</div><div class="drop-desc">Monte Carlo RFP evaluation — net displacement maths</div></div></a>
+                    </div>
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Distribution &amp; operations</span>
+                        <a href="/platform#autopilot" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.5 2.5L2 7l5 1.5L8.5 14l5-11.5z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><path d="M7 8.5l2.5-3" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Autopilot Distribution</div><div class="drop-desc">Rate pushes to all major channels — confirmed by read-back</div></div></a>
+                        <a href="/platform#journal" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="2" width="9" height="12" rx="1.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M6 5.5h4M6 8h4M6 10.5h2.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Decision Journal</div><div class="drop-desc">Every decision logged, attributed, and audit-ready</div></div></a>
+                        <a href="/implementation" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M4.5 6.5L8 3l3.5 3.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 13h9" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Implementation</div><div class="drop-desc">14-day deployment — gate-controlled, named manager</div></div></a>
+                    </div>
+                    <div class="megadrop-feature">
+                        <div><div class="megadrop-feature-tag">Full platform</div><div class="megadrop-feature-h">Institutional-grade revenue management. Independent scale.</div><p class="megadrop-feature-p">Ensemble forecasting. Tamper-evident audit trail. Full OTA distribution. Gate-controlled autonomy. Operational within 14 days.</p></div>
+                        <a href="/platform" class="megadrop-feature-cta">Explore the platform <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <span class="nav-trigger">Why ARIO <span class="nav-chevron"></span></span>
+            <div class="megadrop" style="min-width:600px">
+                <div class="megadrop-cols" style="grid-template-columns:1fr 1.15fr">
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">The case for ARIO</span>
+                        <a href="/why-ario" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=140&q=80" alt="Revenue management strategy"></div><div><div class="drop-label">Why ARIO</div><div class="drop-desc">The structural RMS market gap — and where we sit</div></div></a>
+                        <a href="/why-ario#compare" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=140&q=80" alt="Enterprise software comparison"></div><div><div class="drop-label">ARIO vs enterprise RMS</div><div class="drop-desc">Capability comparison — without the enterprise price</div></div></a>
+                        <a href="/roi" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12.5h12" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round"/><rect x="3" y="7.5" width="2.5" height="5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="6.75" y="4.5" width="2.5" height="8" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="10.5" y="6" width="2.5" height="6.5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/></svg></div><div><div class="drop-label">ROI Framework</div><div class="drop-desc">Build the business case for your property</div></div></a>
+                        <a href="/case-studies" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6a1 1 0 011-1h3l1.5 1.5H13a1 1 0 011 1v4.5a1 1 0 01-1 1H3a1 1 0 01-1-1V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div><div class="drop-label">Deployment Profiles</div><div class="drop-desc">Property types, PMS configurations, operating models</div></div></a>
+                    </div>
+                    <div class="megadrop-feature">
+                        <div><div class="megadrop-feature-tag">Deployment programme</div><div class="megadrop-feature-h">Enterprise-class deployment. Configured to your property within 14 days.</div><p class="megadrop-feature-p">Named implementation manager. Gate-controlled go-live. ARIO handles PMS integration, data validation, and channel configuration end to end.</p></div>
+                        <a href="/implementation" class="megadrop-feature-cta">View implementation <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <span class="nav-trigger">Resources <span class="nav-chevron"></span></span>
+            <div class="megadrop" style="min-width:800px">
+                <div class="megadrop-cols" style="grid-template-columns:1fr 1fr 1fr">
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Insights</span>
+                        <a href="/blog/overpaying-rms" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=140&q=80" alt="Revenue data analysis"></div><div><div class="drop-label">Why hotels overpay their RMS</div><div class="drop-desc">The real cost of ownership · 14 min</div></div></a>
+                        <a href="/blog/ota-commission" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=140&q=80" alt="Revenue analytics dashboard"></div><div><div class="drop-label">The OTA commission cliff</div><div class="drop-desc">When 18% becomes your largest cost · 11 min</div></div></a>
+                        <a href="/blog/group-displacement" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13V6l5-3 5 3v7H3z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><rect x="6.5" y="9" width="3" height="4" rx="0.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><path d="M6 7h1M9 7h1" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Group displacement explained</div><div class="drop-desc">Evaluate any RFP in 5 minutes · 8 min</div></div></a>
+                        <a href="/resources" class="drop-item" style="opacity:0.7"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6a1 1 0 011-1h3l1.5 1.5H13a1 1 0 011 1v4.5a1 1 0 01-1 1H3a1 1 0 01-1-1V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div><div class="drop-label">All articles →</div><div class="drop-desc">Full resource library</div></div></a>
+                    </div>
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Frameworks &amp; tools</span>
+                        <a href="/roi" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12.5h12" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round"/><rect x="3" y="7.5" width="2.5" height="5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="6.75" y="4.5" width="2.5" height="8" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="10.5" y="6" width="2.5" height="6.5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/></svg></div><div><div class="drop-label">ROI Framework</div><div class="drop-desc">Business case methodology for any property</div></div></a>
+                        <a href="/why-ario" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="12" width="12" height="1.5" rx="0.5" fill="rgba(200,168,75,0.8)"/><rect x="2" y="3" width="12" height="1.5" rx="0.5" fill="rgba(200,168,75,0.8)"/><rect x="4" y="4.5" width="1.5" height="7.5" rx="0.5" fill="rgba(255,255,255,0.55)"/><rect x="7.25" y="4.5" width="1.5" height="7.5" rx="0.5" fill="rgba(255,255,255,0.55)"/><rect x="10.5" y="4.5" width="1.5" height="7.5" rx="0.5" fill="rgba(255,255,255,0.55)"/></svg></div><div><div class="drop-label">Why ARIO</div><div class="drop-desc">Market positioning and competitive context</div></div></a>
+                        <a href="/implementation" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M4.5 6.5L8 3l3.5 3.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 13h9" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Implementation guide</div><div class="drop-desc">The full 4-phase deployment programme</div></div></a>
+                        <a href="/intelligence" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M8 2v1.5M8 12.5V14M2 8h1.5M12.5 8H14M3.5 3.5l1.1 1.1M11.4 11.4l1.1 1.1M12.5 3.5l-1.1 1.1M4.6 11.4l-1.1 1.1" stroke="rgba(255,255,255,0.5)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Intelligence Engine</div><div class="drop-desc">How the forecasting architecture works</div></div></a>
+                    </div>
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">About ARIO</span>
+                        <a href="/case-studies" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6a1 1 0 011-1h3l1.5 1.5H13a1 1 0 011 1v4.5a1 1 0 01-1 1H3a1 1 0 01-1-1V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div><div class="drop-label">Deployment profiles</div><div class="drop-desc">Property types and integration configurations</div></div></a>
+                        <a href="/security" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L3 4.5v4C3 11.5 5.5 14 8 14s5-2.5 5-5.5v-4L8 2z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><path d="M5.5 8.5l2 2 3-3" stroke="rgba(255,255,255,0.65)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="drop-label">Security &amp; compliance</div><div class="drop-desc">AES-256, GDPR, data architecture</div></div></a>
+                        <a href="/integrations" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10.5 2v4M5.5 2v4M3.5 6h9v2a4.5 4.5 0 01-9 0V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 12.5V15" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round"/></svg></div><div><div class="drop-label">Integrations</div><div class="drop-desc">Opera, Mews, SiteMinder, RateGain &amp; more</div></div></a>
+                        <a href="/contact" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="2" width="9" height="12" rx="1.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M6 5.5h4M6 8h4M6 10.5h2.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Contact</div><div class="drop-desc">Speak with our implementation team</div></div></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <span class="nav-trigger">Company <span class="nav-chevron"></span></span>
+            <div class="simpledrop">
+                <a href="/about" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">About ARIO</span></a>
+                <a href="/security" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Security &amp; compliance</span></a>
+                <div class="drop-simple-divider"></div>
+                <a href="/case-studies" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Deployment profiles</span></a>
+                <a href="/integrations" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Integrations</span></a>
+                <div class="drop-simple-divider"></div>
+                <a href="/contact" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Contact</span></a>
+            </div>
+        </div>
+
+        <a href="/pricing" style="font-size:13px;color:rgba(255,255,255,0.65);text-decoration:none;font-weight:500;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">Pricing</a>
+        <a href="/contact" class="nav-cta">Request a Demo →</a>
+    </div>
+</nav>
+
+    <!-- ── HERO ─────────────────────────────────────────── -->
+    <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-glow"></div>
+        <div class="hero-glow-left"></div>
+        <div class="hero-content">
+            <div class="hero-eyebrow">The Intelligence Engine</div>
+            <h1 class="hero-h1">Institutional-grade revenue science. <em>Explained.</em></h1>
+            <p class="hero-p">ARIO's pricing intelligence is built on the same class of statistical methodology as enterprise RMS vendors. The difference is transparency — every model, every weight, every decision is attributable and auditable.</p>
+            <div class="hero-divider"></div>
+        </div>
+    </section>
+
+    <!-- ── SECTION 1: FORECASTING ARCHITECTURE ──────────── -->
+    <section class="section-white" id="forecast">
+        <div class="section-inner">
+            <div class="section-eyebrow fade-up">Forecasting architecture</div>
+            <h2 class="section-h2 fade-up delay-1">Multiple models. One forecast. <em>Continuously re-weighted.</em></h2>
+            <p class="section-lead fade-up delay-2">Rather than selecting a single forecasting approach and betting on its performance, ARIO runs a proprietary ensemble of complementary models across a 365-day forward horizon. Each model is suited to a distinct aspect of hotel demand behaviour. The ensemble produces a single per-date, per-room-type recommendation — with each model's contribution weighted by its recent predictive accuracy for that specific property.</p>
+
+            <div class="model-grid fade-up delay-2">
+                <div class="model-card">
+                    <span class="model-tag">Time-series baseline</span>
+                    <div class="model-name">Structural demand</div>
+                    <p class="model-desc">Captures the structural day-of-week seasonality and recent trend direction in booking demand. Provides the stable baseline against which all other models are evaluated — resistant to short-term noise, sensitive to multi-week trend shifts.</p>
+                </div>
+                <div class="model-card">
+                    <span class="model-tag">Market-adjusted</span>
+                    <div class="model-name">Signal-enriched</div>
+                    <p class="model-desc">Extends the baseline with exogenous demand inputs — external search pressure, event proximity, competitor rate posture — overlaid on the time-series foundation. Responds to market signals the baseline cannot observe.</p>
+                </div>
+                <div class="model-card">
+                    <span class="model-tag">Pace-responsive</span>
+                    <div class="model-name">Booking velocity</div>
+                    <p class="model-desc">Responds rapidly to current booking pace shifts without over-fitting to short-term noise. Particularly effective at detecting early demand acceleration — the first signal that a date is filling faster than historical curve.</p>
+                </div>
+                <div class="model-card">
+                    <span class="model-tag">State-space model</span>
+                    <div class="model-name">Seasonal decomposition</div>
+                    <p class="model-desc">Performs explicit decomposition of trend, seasonality, and irregular demand components. Isolates structural seasonal patterns across multiple time dimensions — particularly effective for properties with complex multi-seasonal profiles.</p>
+                </div>
+                <div class="model-card">
+                    <span class="model-tag">Machine learning</span>
+                    <div class="model-name">Pattern learner</div>
+                    <p class="model-desc">Trained on property-specific historical booking patterns. Captures non-linear interactions between lead time, channel mix, room type, and occupancy outcomes that regression models cannot represent. Earns weight only after a verified track record on that property.</p>
+                </div>
+            </div>
+
+            <div class="bates-block fade-up delay-1">
+                <div class="bates-text">
+                    <h3>Performance-weighted ensemble combination — <em>not a fixed average</em></h3>
+                    <p>ARIO's ensemble weighting methodology — drawing on academic frameworks for forecast combination — allocates weight to each model based on its recent predictive accuracy for that specific property. Models that have produced smaller forecast errors in recent periods receive proportionally more influence in the combined output.</p>
+                    <p>The ensemble adapts to property-level dynamics. A property with highly seasonal demand may see the structural decomposition model carry elevated weight. A property with strong market sensitivity may favour the signal-enriched model. The system discovers this dynamically — it is not configured manually.</p>
+                    <p>Models with insufficient data history are excluded from the ensemble until they have accumulated a meaningful track record. A model that has not had the opportunity to demonstrate accuracy does not receive influence over live recommendations.</p>
+                </div>
+                <div class="bates-visual">
+                    <div class="bates-vis-title">Illustrative weight distribution — adapted per property</div>
+                    <div class="model-weight-row">
+                        <div class="model-weight-label">Structural demand</div>
+                        <div class="model-weight-bar-wrap"><div class="model-weight-bar" style="width:18%"></div></div>
+                        <div class="model-weight-pct">18%</div>
+                    </div>
+                    <div class="model-weight-row">
+                        <div class="model-weight-label">Signal-enriched</div>
+                        <div class="model-weight-bar-wrap"><div class="model-weight-bar" style="width:24%"></div></div>
+                        <div class="model-weight-pct">24%</div>
+                    </div>
+                    <div class="model-weight-row">
+                        <div class="model-weight-label">Booking velocity</div>
+                        <div class="model-weight-bar-wrap"><div class="model-weight-bar" style="width:21%"></div></div>
+                        <div class="model-weight-pct">21%</div>
+                    </div>
+                    <div class="model-weight-row">
+                        <div class="model-weight-label">Seasonal decomposition</div>
+                        <div class="model-weight-bar-wrap"><div class="model-weight-bar" style="width:27%"></div></div>
+                        <div class="model-weight-pct">27%</div>
+                    </div>
+                    <div class="model-weight-row">
+                        <div class="model-weight-label">Pattern learner</div>
+                        <div class="model-weight-bar-wrap"><div class="model-weight-bar" style="width:10%"></div></div>
+                        <div class="model-weight-pct">10%</div>
+                    </div>
+                    <div class="bates-note">Weights update continuously as nightly grading compares forecast outputs against actual booking outcomes. The distribution shown is representative; each property's weight profile differs.</div>
+                </div>
+            </div>
+
+            <div class="confidence-row">
+                <div class="conf-card fade-up delay-1">
+                    <div class="conf-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.7"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </div>
+                    <div class="conf-h4">Confidence scoring</div>
+                    <p class="conf-p">Every forecast recommendation carries a confidence score derived from three inputs: the volume of historical data available for that date pattern, the recency of that data, and the recent predictive accuracy of the models contributing to the ensemble. A 365-day horizon date with limited comparable history scores lower than a date with three years of precedent.</p>
+                </div>
+                <div class="conf-card fade-up delay-2">
+                    <div class="conf-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+                    </div>
+                    <div class="conf-h4">Low-confidence handling</div>
+                    <p class="conf-p">Dates that fall below the minimum confidence threshold are not transmitted with degraded confidence. They are suppressed entirely, flagged in the Decision Journal, and presented to operators as requiring manual review. ARIO does not forward a weak recommendation with a disclaimer; it withholds the recommendation and says why.</p>
+                </div>
+                <div class="conf-card fade-up delay-3">
+                    <div class="conf-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M17 17h.01M14 17h3v3"/></svg>
+                    </div>
+                    <div class="conf-h4">Per-date, per-room-type granularity</div>
+                    <p class="conf-p">Forecasts are produced at the intersection of arrival date and room type — not as property-wide averages. A Friday Standard King and a Friday Superior King facing a park have different demand curves, different booking pace profiles, and different confidence scores. ARIO resolves them independently.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── SECTION 2: DECISION JOURNAL ───────────────────── -->
+    <section class="section-dark" id="journal">
+        <div class="section-inner">
+            <div class="section-eyebrow fade-up" style="color:var(--gold)">Decision Journal</div>
+            <h2 class="section-h2 white fade-up delay-1">Not a log file. <em>A structured audit record.</em></h2>
+            <p class="section-lead white fade-up delay-2">The Decision Journal captures the complete decision context for every pricing recommendation ARIO produces — not as a human-readable note, but as a structured, tamper-evident record with cryptographic integrity. Any rate that has ever passed through ARIO can be reconstructed in full: the model weights active on that date, the demand signals that were live, the comp-set position at the moment of decision, the forecast occupancy that drove the confidence score, and the guardrail checks applied before distribution.</p>
+
+            <div class="journal-layout">
+                <div class="journal-copy fade-up delay-1">
+                    <p>This is the standard of record-keeping expected of institutional revenue management. When ownership asks why rates moved during a high-demand weekend, the answer is not a revenue manager's recollection — it is a structured record with millisecond timestamps, model attribution, and the specific numerical inputs that produced each recommendation.</p>
+                    <p>The Decision Journal is tamper-evident by construction. Records are written with cryptographic content integrity at the point of decision, and database-level controls prevent retroactive modification. No operator, including platform administrators, can quietly alter a past decision. The audit chain is permanent by architecture, not by policy.</p>
+                    <p>Decision rationale is rendered in plain English alongside the technical record. Owners and GMs read the rationale; revenue managers and auditors read the underlying data. Both views are always available for the same decision.</p>
+                </div>
+                <div class="journal-record fade-up delay-2">
+                    <div class="journal-record-header">
+                        <div class="journal-record-title">Decision record — illustrative</div>
+                        <div class="journal-record-ts">2026-05-01T14:32:07.419Z</div>
+                    </div>
+                    <div class="journal-field">
+                        <div class="journal-field-key">Decision ID</div>
+                        <div class="journal-field-val mono">d-7f3a9c2e-8b1d</div>
+                    </div>
+                    <div class="journal-field">
+                        <div class="journal-field-key">Room type</div>
+                        <div class="journal-field-val">Superior King · arrival 2026-06-14</div>
+                    </div>
+                    <div class="journal-field">
+                        <div class="journal-field-key">Recommended rate</div>
+                        <div class="journal-field-val mono">£189.00</div>
+                    </div>
+                    <div class="journal-field">
+                        <div class="journal-field-key">Confidence score</div>
+                        <div class="journal-field-val green">0.84 — high</div>
+                    </div>
+                    <div class="journal-field">
+                        <div class="journal-field-key">Forecast occupancy</div>
+                        <div class="journal-field-val">78.3% at time of decision</div>
+                    </div>
+                    <div class="journal-field">
+                        <div class="journal-field-key">Demand score</div>
+                        <div class="journal-field-val">0.71 (market above baseline)</div>
+                    </div>
+                    <div class="journal-field">
+                        <div class="journal-field-key">Lead model</div>
+                        <div class="journal-field-val">Seasonal decomposition model — highest weight</div>
+                    </div>
+                    <div class="journal-field">
+                        <div class="journal-field-key">Comp-set position</div>
+                        <div class="journal-field-val">£14 below median (3 of 5 comps)</div>
+                    </div>
+                    <div class="journal-field">
+                        <div class="journal-field-key">Guardrail check</div>
+                        <div class="journal-field-val green">Passed — floor £110 / ceiling £280</div>
+                    </div>
+                    <div class="journal-field">
+                        <div class="journal-field-key">Rationale</div>
+                        <div class="journal-field-val">Demand above baseline for this Saturday; comp-set pricing above current rate supports upward move. Confidence sufficient for autopilot. Rate within guardrail range.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lineage-row fade-up delay-2">
+                <div class="lineage-step">
+                    <div class="lineage-num">01</div>
+                    <div class="lineage-label">Signals ingested</div>
+                    <div class="lineage-detail">PMS OTB, market demand, comp-set rates, events</div>
+                </div>
+                <div class="lineage-step">
+                    <div class="lineage-num">02</div>
+                    <div class="lineage-label">Models run</div>
+                    <div class="lineage-detail">All five models produce per-date outputs; weights updated continuously by nightly accuracy grading</div>
+                </div>
+                <div class="lineage-step">
+                    <div class="lineage-num">03</div>
+                    <div class="lineage-label">Confidence scored</div>
+                    <div class="lineage-detail">Data volume, recency, and model accuracy produce a confidence value</div>
+                </div>
+                <div class="lineage-step">
+                    <div class="lineage-num">04</div>
+                    <div class="lineage-label">Journal stamped</div>
+                    <div class="lineage-detail">Decision record written with content hash; tamper-evident from this point</div>
+                </div>
+                <div class="lineage-step">
+                    <div class="lineage-num">05</div>
+                    <div class="lineage-label">Guardrails applied</div>
+                    <div class="lineage-detail">Floor/ceiling, mode gate, NaN guard, confidence threshold</div>
+                </div>
+                <div class="lineage-step">
+                    <div class="lineage-num">06</div>
+                    <div class="lineage-label">Distribution</div>
+                    <div class="lineage-detail">Rate push with idempotency key; confirmation read-back recorded</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── SECTION 3: DISTRIBUTION INTEGRITY ─────────────── -->
+    <section class="section-cream" id="distribution">
+        <div class="section-inner">
+            <div class="section-eyebrow fade-up">Distribution architecture</div>
+            <h2 class="section-h2 fade-up delay-1">Rate recommendations that reach the channel <em>exactly once</em>, <em>confirmed</em>, and <em>stable</em>.</h2>
+            <p class="section-lead fade-up delay-2">A pricing decision that cannot be reliably distributed is a recommendation that does not exist. ARIO's distribution layer treats channel delivery as a mission-critical operation — not as a best-effort API call.</p>
+
+            <div class="dist-cards">
+                <div class="dist-card fade-up delay-1">
+                    <div class="dist-number">01</div>
+                    <h3 class="dist-h3">Idempotency</h3>
+                    <p class="dist-p">Every rate push carries a unique transaction identifier — an Idempotency-Key header transmitted to the channel manager on every call. Re-sending the same instruction, whether due to a network retry or a system restart, produces the same result at the channel: the rate is set once, not duplicated. Channel managers that support idempotency keys receive them on every call without exception.</p>
+                    <div class="dist-detail">The idempotency key is derived from the decision record identifier, ensuring that the same Decision Journal entry cannot produce two separate distribution events — even if the distribution pipeline is invoked twice for the same decision.</div>
+                </div>
+                <div class="dist-card fade-up delay-2">
+                    <div class="dist-number">02</div>
+                    <h3 class="dist-h3">Confirmation</h3>
+                    <p class="dist-p">ARIO marks a push as successful only after receiving a positive confirmation response from the channel manager that the rate has been applied. A timeout is recorded as a failure, not a success. A network error is recorded as a failure. An ambiguous response is investigated, not assumed successful. The distribution record in the Decision Journal reflects the actual channel state — not the intent to push.</p>
+                    <div class="dist-detail">Failed pushes are logged with the failure reason and flagged for operator review. The system does not silently retry indefinitely — retry logic is bounded, audited, and observable from the dashboard.</div>
+                </div>
+                <div class="dist-card fade-up delay-3">
+                    <div class="dist-number">03</div>
+                    <h3 class="dist-h3">Stability window</h3>
+                    <p class="dist-p">Consecutive rate changes to the same room type within the stability window are consolidated before transmission. If demand signals update rapidly — during a high-activity period or following an event announcement — ARIO holds the outbound change until the window closes and transmits the final consolidated rate. This prevents channel instability, OTA rate oscillation, and the guest-facing rate confusion that results from rapid consecutive changes.</p>
+                    <div class="dist-detail">The stability window is configurable per property. A kill switch halts all outbound distribution within 45 seconds of activation and is accessible from the ARIO dashboard at any time by any authorised user on the property.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── SECTION 4: GROUP DISPLACEMENT ─────────────────── -->
+    <section class="section-white" id="group">
+        <div class="section-inner">
+            <div class="section-eyebrow fade-up">Group displacement science</div>
+            <h2 class="section-h2 fade-up delay-1">Monte Carlo simulation against <em>the actual demand distribution</em>.</h2>
+            <p class="section-lead fade-up delay-2">When an RFP arrives, ARIO does not apply a static displacement formula. Every group enquiry is evaluated against a simulated representation of what transient demand would realistically have generated across those dates — including the uncertainty inherent in any forecast.</p>
+
+            <div class="monte-layout">
+                <div class="monte-copy fade-up delay-1">
+                    <h3>Probability, not a single number with <em>false precision</em></h3>
+                    <p>ARIO simulates the transient demand distribution for the requested dates across 1,000 iterations. Each iteration draws from the uncertainty range of the forecast — the upper and lower confidence bounds produced by the ensemble — and calculates the net transient revenue for that particular realisation of demand. Across all 1,000 iterations, the simulation produces a distribution of transient revenue outcomes.</p>
+                    <p>The group's net revenue — room revenue less the commission differential between group and transient channels — is then compared against this distribution. The output is the probability that the group is accretive: the share of simulated transient demand scenarios in which the group generates more net revenue than the displaced transient opportunity would have.</p>
+                    <p>The break-even rate calculation identifies the group rate at which expected group revenue equals expected transient revenue at the median of the simulated distribution. This is the rate at which accepting the group becomes revenue-neutral — and the natural anchor point for any RFP negotiation.</p>
+                </div>
+                <div class="monte-output fade-up delay-2">
+                    <div class="monte-output-title">Group evaluation output — illustrative</div>
+                    <div class="monte-metric">
+                        <div class="monte-metric-label">P(group is accretive)</div>
+                        <div class="monte-metric-value gold">68%</div>
+                        <div class="monte-metric-sub">Group net revenue exceeds transient in 681 of 1,000 simulated scenarios</div>
+                    </div>
+                    <div class="monte-metric">
+                        <div class="monte-metric-label">Break-even rate</div>
+                        <div class="monte-metric-value">£128.50</div>
+                        <div class="monte-metric-sub">Per occupied room night; revenue-neutral vs. expected transient at this rate</div>
+                    </div>
+                    <div class="monte-metric">
+                        <div class="monte-metric-label">Commission differential</div>
+                        <div class="monte-metric-value">£9.40</div>
+                        <div class="monte-metric-sub">Group channel saves vs. OTA transient at median scenario (incorporated into break-even)</div>
+                    </div>
+                    <div class="monte-metric">
+                        <div class="monte-metric-label">Confidence range</div>
+                        <div class="monte-metric-value" style="font-size:24px">£118 – £141</div>
+                        <div class="monte-metric-sub">Break-even across 10th–90th percentile of transient scenarios</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="displacement-steps fade-up delay-2">
+                <div class="disp-step">
+                    <div class="disp-num">01</div>
+                    <div class="disp-h4">Forecast the dates</div>
+                    <p class="disp-p">The ensemble produces a transient demand forecast for the RFP dates, with upper and lower confidence bounds derived from model variance and historical accuracy.</p>
+                </div>
+                <div class="disp-step">
+                    <div class="disp-h4">Run 1,000 simulations</div>
+                    <div class="disp-num">02</div>
+                    <p class="disp-p">Each iteration draws occupancy and rate from within the forecast confidence range, producing a plausible transient revenue scenario. The distribution of outcomes captures genuine demand uncertainty.</p>
+                </div>
+                <div class="disp-step">
+                    <div class="disp-num">03</div>
+                    <div class="disp-h4">Apply commission differential</div>
+                    <p class="disp-p">Group revenue is adjusted for the commission saving relative to the OTA-weighted transient channel mix. The group is compared net, not gross.</p>
+                </div>
+                <div class="disp-step">
+                    <div class="disp-num">04</div>
+                    <div class="disp-h4">Output probability + break-even</div>
+                    <p class="disp-p">The probability of accretion, the break-even rate, and the confidence range across simulated scenarios are returned to the operator — ready for RFP negotiation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── SECTION 5: SAFETY ──────────────────────────────── -->
+    <section class="section-dark" id="safety">
+        <div class="section-inner">
+            <div class="section-eyebrow fade-up" style="color:var(--gold)">Safety by architecture</div>
+            <h2 class="section-h2 white fade-up delay-1">Safety is not a setting. <em>It is the operating structure.</em></h2>
+            <p class="section-lead white fade-up delay-2">Every safeguard in ARIO is architectural, not procedural. The system cannot be configured into an unsafe state — it can only be promoted through gates that enforce documented preconditions.</p>
+
+            <!-- Rate intelligence additions -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px">
+                <div class="safety-card fade-up delay-1" style="background:rgba(255,255,255,0.04);border:1px solid rgba(200,168,75,0.15);border-radius:8px;padding:28px">
+                    <h3 class="safety-h3" style="color:#fff;font-size:17px;font-weight:600;margin-bottom:10px">Rate parity enforcement</h3>
+                    <p class="safety-p">Any proposed rate that would undercut the property's direct channel or Booking.com anchor rate beyond configured tolerance is refused at the distribution boundary — before it reaches the channel manager. Parity protection is structural, not a monitoring alert. Violations never enter the channel.</p>
+                </div>
+                <div class="safety-card fade-up delay-2" style="background:rgba(255,255,255,0.04);border:1px solid rgba(200,168,75,0.15);border-radius:8px;padding:28px">
+                    <h3 class="safety-h3" style="color:#fff;font-size:17px;font-weight:600;margin-bottom:10px">Demand calibration from outcomes</h3>
+                    <p class="safety-p">The pricing engine updates its demand model from the outcomes of every rate push — not just from historical booking data. When a rate change produces a measurable booking response, the system incorporates that outcome into its property-level demand calibration. Recommendations improve as the property accumulates operating history with ARIO.</p>
+                </div>
+            </div>
+
+            <div class="safety-grid">
+                <div class="safety-card fade-up delay-1">
+                    <div class="safety-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.7"><path d="M12 2L4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z"/></svg>
+                    </div>
+                    <h3 class="safety-h3">Gate-controlled operations</h3>
+                    <p class="safety-p">Shadow, Review, and Autopilot are not configuration settings. They are operational modes enforced at the system level. Moving between modes requires documented signoff from both the property operator and the ARIO platform — dual authorisation that is logged, timestamped, and irreversible without explicit acknowledgement. The system cannot be promoted to Autopilot by a single configuration change or by an administrator override.</p>
+                    <div class="safety-detail">
+                        <div class="safety-detail-item">
+                            <div class="safety-check"><svg viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="#c8a84b" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                            <div class="safety-detail-text">Shadow mode: recommendations computed and logged, no rate changes transmitted to channel</div>
+                        </div>
+                        <div class="safety-detail-item">
+                            <div class="safety-check"><svg viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="#c8a84b" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                            <div class="safety-detail-text">Review mode: recommendations require explicit operator approval before transmission</div>
+                        </div>
+                        <div class="safety-detail-item">
+                            <div class="safety-check"><svg viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="#c8a84b" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                            <div class="safety-detail-text">Autopilot: dual signoff required; high-confidence recommendations only; guardrails always enforced</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="safety-card fade-up delay-2">
+                    <div class="safety-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.7"><path d="M9 12l2 2 4-4"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/></svg>
+                    </div>
+                    <h3 class="safety-h3">Numerical integrity</h3>
+                    <p class="safety-p">Every calculation output is validated before it reaches the distribution layer. NaN values, infinite values, negative rates, and values outside the property's configured guardrail range are rejected at the validation boundary and logged in the Decision Journal as suppressed recommendations. No invalid output propagates forward — the distribution layer never receives a value that the guardrail system has not approved.</p>
+                    <div class="safety-detail">
+                        <div class="safety-detail-item">
+                            <div class="safety-check"><svg viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="#c8a84b" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                            <div class="safety-detail-text">NaN and infinite value guards at every calculation layer — not just at distribution</div>
+                        </div>
+                        <div class="safety-detail-item">
+                            <div class="safety-check"><svg viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="#c8a84b" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                            <div class="safety-detail-text">Configurable rate floors and ceilings per room type — the system cannot recommend outside these bounds</div>
+                        </div>
+                        <div class="safety-detail-item">
+                            <div class="safety-check"><svg viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="#c8a84b" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                            <div class="safety-detail-text">Suppressed recommendations are logged with reason — low confidence, out-of-range, or invalid output</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="safety-card fade-up delay-3">
+                    <div class="safety-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.7"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 7V5a4 4 0 00-8 0v2"/><line x1="12" y1="12" x2="12" y2="16"/></svg>
+                    </div>
+                    <h3 class="safety-h3">Kill switch</h3>
+                    <p class="safety-p">A single control that stops all outbound rate activity within 45 seconds of activation. The kill switch is accessible from the ARIO dashboard at any time, by any authorised user on the property — it does not require administrator access, a support call, or a configuration change. When activated, in-flight distribution is halted, the queue is suspended, and a kill switch event is written to the Decision Journal with the activating user's identity and timestamp.</p>
+                    <div class="safety-detail">
+                        <div class="safety-detail-item">
+                            <div class="safety-check"><svg viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="#c8a84b" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                            <div class="safety-detail-text">45-second maximum halt time from activation to full distribution stop</div>
+                        </div>
+                        <div class="safety-detail-item">
+                            <div class="safety-check"><svg viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="#c8a84b" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                            <div class="safety-detail-text">Accessible to any authorised user — not administrator-gated</div>
+                        </div>
+                        <div class="safety-detail-item">
+                            <div class="safety-check"><svg viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="#c8a84b" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                            <div class="safety-detail-text">Kill switch activation is permanently recorded in the tamper-evident audit chain</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── CTA ────────────────────────────────────────────── -->
+    <section class="cta-section">
+        <div class="cta-block">
+            <div class="cta-block-glow"></div>
+            <div class="cta-inner">
+                <div class="cta-eyebrow">Evaluation programme</div>
+                <h2 class="cta-h2">ARIO's intelligence engine is available for evaluation during the implementation programme.</h2>
+                <p class="cta-p">Speak with our team about the forecasting methodology, the Decision Journal record format, the distribution architecture, or anything else covered on this page. We answer technical questions directly — no sales intermediary.</p>
+            </div>
+            <div class="cta-btn">
+                <a href="/contact">Speak with our team <svg width="14" height="14" viewBox="0 0 12 12" fill="none" style="flex-shrink:0"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FOOTER ─────────────────────────────────────────── -->
+    <footer>
+        <div class="footer-top">
+            <div>
+                <div class="footer-rule"></div>
+                <div class="footer-brand">ARIO</div>
+                <div class="footer-tagline">Revenue Operating System · Institutional-grade intelligence for independent hotels</div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <a href="/platform">Capabilities</a>
+                    <a href="/intelligence">Intelligence engine</a>
+                    <a href="/#demo">Live Demo</a>
+                    <a href="/pricing">Pricing</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Trust</h4>
+                    <a href="/security">Security &amp; compliance</a>
+                    <a href="/about">About ARIO</a>
+                    <a href="/contact">Request Deployment</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <a href="mailto:hello@ariorms.com">hello@ariorms.com</a>
+                    <a href="/contact">Contact form</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-copy">© 2026 ARIO Technologies Ltd. All rights reserved.</div>
+            <div class="footer-copy" style="letter-spacing: 0.08em; font-size: 10px; opacity: 0.5">Every signal. A clear decision.</div>
+        </div>
+    </footer>
+
+    <!-- ── INTERSECTION OBSERVER ──────────────────────────── -->
+    <script>
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+    </script>
+
+
+    <script>
+    (function(){
+        document.querySelectorAll('.nav-item').forEach(function(item){
+            item.addEventListener('mouseenter', function(){
+                var drop = item.querySelector('.megadrop');
+                if(!drop) return;
+                // reset any previous correction
+                drop.style.left = '';
+                drop.style.right = '';
+                requestAnimationFrame(function(){
+                    var r = drop.getBoundingClientRect();
+                    var overflow = r.right - (window.innerWidth - 16);
+                    if(overflow > 0){
+                        // shift left by how much it overflows
+                        var curLeft = parseFloat(drop.style.left) || 0;
+                        drop.style.left = (curLeft - overflow) + 'px';
+                    }
+                });
+            });
+        });
+    })();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

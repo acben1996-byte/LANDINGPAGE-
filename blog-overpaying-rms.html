@@ -1,0 +1,984 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="language" content="English">
+    <link rel="canonical" href="https://ariorms.com/blog/overpaying-rms">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why independent hotels overpay their RMS — ARIO</title>
+    <meta name="description" content="Enterprise RMS pricing was built for 500-room chains. A worked framework for understanding your real cost-per-decision and what a fair RMS purchase looks like.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #0f1e3c;
+            --navy2: #152d56;
+            --navy3: #1e3a6e;
+            --gold: #c8a84b;
+            --gold2: #e8c96b;
+            --white: #ffffff;
+            --cream: #faf8f4;
+            --border: #dde3ef;
+            --text: #0f1e3c;
+            --mid: #3d5080;
+            --dim: #7a8aaa;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(15,30,60,0.96);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(200,168,75,0.2);
+            padding: 0 48px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-brand { display: flex; align-items: center; gap: 12px; }
+        .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 31px; font-weight: 700; letter-spacing: 1px; line-height: 1; background: linear-gradient(158deg, #ffffff 0%, #fff4d6 18%, #f0d080 38%, #c8a84b 58%, #8a6200 82%, #4a3000 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.55)); }
+        .nav-sub {
+            font-size: 9px; font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 3px; text-transform: uppercase;
+            border-left: 1px solid rgba(200,168,75,0.4);
+            padding-left: 12px; margin-left: 4px;
+        }
+        .nav-links { display: flex; align-items: center; gap: 28px; }
+        .nav-links a {
+            font-size: 13px;
+            color: rgba(255,255,255,0.65);
+            text-decoration: none; font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--white); }
+        .nav-cta {
+            background: var(--gold) !important;
+            color: var(--navy) !important;
+            font-weight: 700 !important;
+            padding: 10px 22px;
+            border-radius: 4px;
+            font-size: 13px !important;
+            transition: background 0.2s, transform 0.1s !important;
+        }
+        .nav-cta:hover { background: var(--gold2) !important; transform: translateY(-1px); }
+
+        /* ── Professional micro-animations ─── */
+        @keyframes ario-cta-shimmer {
+            0%   { background-position: -200% center }
+            100% { background-position: 200% center }
+        }
+        .nav-cta {
+            background: linear-gradient(90deg, #c8a84b 0%, #e8c96b 40%, #c8a84b 60%, #a07820 100%) !important;
+            background-size: 200% auto !important;
+            animation: ario-cta-shimmer 3.5s linear infinite !important;
+            color: #0f1e3c !important;
+            font-weight: 700 !important;
+            padding: 10px 22px;
+            border-radius: 4px;
+            font-size: 13px !important;
+            transition: opacity 0.15s ease, transform 0.12s ease !important;
+            text-decoration: none;
+        }
+        .nav-cta:hover {
+            opacity: 0.9 !important;
+            transform: translateY(-1px) !important;
+        }
+
+        /* Megadrop item stagger on open */
+        @keyframes ario-drop-item-in {
+            from { opacity: 0; transform: translateY(-4px) }
+            to   { opacity: 1; transform: translateY(0) }
+        }
+        .nav-item:hover .drop-item {
+            animation: ario-drop-item-in 0.18s ease both;
+        }
+        .nav-item:hover .drop-item:nth-child(2) { animation-delay: 0.04s }
+        .nav-item:hover .drop-item:nth-child(3) { animation-delay: 0.08s }
+        .nav-item:hover .drop-item:nth-child(4) { animation-delay: 0.12s }
+        .nav-item:hover .drop-item:nth-child(5) { animation-delay: 0.16s }
+
+        /* Nav trigger hover underline draw */
+        .nav-trigger {
+            position: relative;
+        }
+        .nav-trigger::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: -2px;
+            width: 0; height: 1px;
+            background: var(--gold, #c8a84b);
+            transition: width 0.2s ease;
+        }
+        .nav-item:hover .nav-trigger::after { width: 100% }
+
+        /* Drop item arrow on hover */
+        .drop-item::after {
+            content: '';
+            display: block;
+            width: 5px; height: 5px;
+            border-right: 1.5px solid rgba(200,168,75,0);
+            border-top: 1.5px solid rgba(200,168,75,0);
+            transform: rotate(45deg) translateX(-3px);
+            transition: transform 0.15s ease, border-color 0.15s ease;
+            margin-left: auto;
+            flex-shrink: 0;
+            align-self: center;
+        }
+        .drop-item:hover::after {
+            transform: rotate(45deg) translateX(0);
+            border-color: rgba(200,168,75,0.7);
+        }
+
+        /* Megadrop feature panel subtle gradient shift */
+        .megadrop-feature {
+            background: linear-gradient(160deg, #0f1e3c 0%, #152d56 100%);
+        }
+
+        /* ── MEGADROPDOWN SYSTEM ─────────────────────────── */
+        .nav-item { position: relative; display: flex; align-items: center }
+        .nav-item > .nav-trigger {
+            display: flex; align-items: center; gap: 5px;
+            font-size: 13px; color: rgba(255,255,255,0.65);
+            text-decoration: none; font-weight: 500;
+            transition: color 0.2s; cursor: pointer; background: none;
+            border: none; padding: 0; font-family: inherit;
+        }
+        .nav-item:hover > .nav-trigger { color: #fff }
+        .nav-chevron {
+            display: inline-block; width: 10px; height: 10px;
+            border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+            transform: rotate(45deg) translateY(-2px);
+            transition: transform 0.2s ease;
+        }
+        .nav-item:hover .nav-chevron { transform: rotate(225deg) translateY(2px) }
+        .megadrop {
+            position: absolute;
+            top: calc(100% + 14px);
+            left: 50%; transform: translateX(-50%) translateY(-10px);
+            background: #fff;
+            border: 1px solid rgba(15,30,60,0.09);
+            border-radius: 10px;
+            box-shadow: 0 24px 64px rgba(15,30,60,0.13), 0 4px 16px rgba(15,30,60,0.07);
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s;
+            pointer-events: none; z-index: 200; min-width: 560px; max-width: calc(100vw - 80px);
+        }
+        .megadrop::before { content: ''; position: absolute; top: -18px; left: 0; right: 0; height: 18px; }
+        .nav-item:hover .megadrop {
+            opacity: 1; visibility: visible;
+            transform: translateX(-50%) translateY(0); pointer-events: all;
+            transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0s;
+        }
+        .megadrop-inner { display: grid; gap: 0; border-radius: 10px; overflow: hidden }
+        .megadrop-cols { display: grid; grid-template-columns: 1fr 1fr; }
+        .megadrop-col { padding: 20px 4px }
+        .megadrop-col + .megadrop-col { border-left: 1px solid #eef0f6 }
+        .megadrop-col-label { font-size: 10px; font-weight: 700; color: #94a3b8; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 20px 10px; display: block; }
+        .drop-item { display: flex; align-items: flex-start; gap: 13px; padding: 10px 20px; text-decoration: none; border-radius: 6px; margin: 0 6px; transition: background 0.12s ease; }
+        .drop-item:hover { background: #f7f9fc }
+        .drop-icon { width: 34px; height: 34px; border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #0f1e3c; border: 1px solid rgba(200,168,75,0.18); transition: background 0.15s ease, border-color 0.15s ease; }
+        .drop-item:hover .drop-icon { background: #152d56; border-color: rgba(200,168,75,0.4); }
+        .drop-label { font-size: 13px; font-weight: 600; color: #0f1e3c; line-height: 1.3; margin-bottom: 3px; }
+        .drop-desc { font-size: 11.5px; color: #7a8aaa; line-height: 1.45 }
+        .megadrop-feature { background: #0f1e3c; padding: 24px; border-radius: 0 10px 10px 0; display: flex; flex-direction: column; justify-content: space-between; }
+        .megadrop-feature-tag { font-size: 9px; font-weight: 700; color: #c8a84b; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+        .megadrop-feature-h { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: #fff; line-height: 1.3; letter-spacing: -0.3px; margin-bottom: 10px; }
+        .megadrop-feature-p { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.55; margin-bottom: 18px; flex: 1 }
+        .megadrop-feature-cta { display: inline-flex; align-items: center; gap: 7px; background: #c8a84b; color: #0f1e3c; padding: 9px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; text-decoration: none; letter-spacing: 0.02em; align-self: flex-start; transition: background 0.15s, transform 0.12s; }
+        .megadrop-feature-cta:hover { background: #e8c96b; transform: translateY(-1px) }
+        .simpledrop { position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%) translateY(-10px); background: #fff; border: 1px solid rgba(15,30,60,0.09); border-radius: 8px; box-shadow: 0 20px 56px rgba(15,30,60,0.12); opacity: 0; visibility: hidden; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s; pointer-events: none; z-index: 200; min-width: 230px; padding: 8px; }
+        .simpledrop::before { content: ''; position: absolute; top: -18px; left: 0; right: 0; height: 18px; }
+        .nav-item:hover .simpledrop { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: all; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0s; }
+        .drop-simple-item { display: flex; align-items: center; gap: 10px; padding: 9px 14px; text-decoration: none; border-radius: 5px; transition: background 0.1s ease; }
+        .drop-simple-item:hover { background: #f7f9fc }
+        .drop-simple-dot { width: 6px; height: 6px; border-radius: 50%; background: #c8a84b; flex-shrink: 0 }
+        .drop-simple-label { font-size: 13px; font-weight: 500; color: #0f1e3c }
+        .drop-simple-divider { height: 1px; background: #eef0f6; margin: 4px 8px }
+        /* Drop item with photography */
+        .drop-photo { width: 68px; height: 50px; border-radius: 5px; overflow: hidden; flex-shrink: 0; background: #0f1e3c; }
+        .drop-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; }
+        .drop-item:hover .drop-photo img { transform: scale(1.06); }
+        .drop-simple-photo { width: 52px; height: 40px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+        .drop-simple-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* ── ARTICLE HERO ── */
+        .article-hero {
+            background: var(--navy);
+            padding: 130px 24px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .article-hero-grid {
+            position: absolute; inset: 0;
+            background-image:
+                linear-gradient(rgba(200,168,75,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(200,168,75,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+        .article-hero-glow {
+            position: absolute; top: -150px; right: -150px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(200,168,75,0.07) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .article-hero-inner {
+            position: relative; z-index: 2;
+            max-width: 720px; margin: 0 auto;
+        }
+        .article-category {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 10px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 24px;
+        }
+        .article-category::before {
+            content: ''; display: block;
+            width: 20px; height: 1px; background: var(--gold);
+        }
+        .article-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(34px, 5vw, 52px);
+            font-weight: 600; line-height: 1.1;
+            color: var(--white);
+            letter-spacing: -1px;
+            margin-bottom: 32px;
+        }
+        .article-byline {
+            display: flex; align-items: center; gap: 16px;
+            flex-wrap: wrap;
+        }
+        .byline-avatar {
+            width: 44px; height: 44px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--navy3), var(--gold));
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px; font-weight: 700; color: var(--white);
+            flex-shrink: 0;
+        }
+        .byline-text { display: flex; flex-direction: column; gap: 2px; }
+        .byline-name { font-size: 14px; font-weight: 600; color: var(--white); }
+        .byline-meta { font-size: 12px; color: var(--dim); }
+        .byline-divider {
+            width: 1px; height: 32px; background: rgba(200,168,75,0.3);
+            margin: 0 4px;
+        }
+        .byline-stat { font-size: 12px; color: var(--dim); }
+
+        /* ── ARTICLE BODY ── */
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 72px 24px 48px;
+        }
+
+        .article-body p {
+            font-size: 17px; line-height: 1.8;
+            color: #1e2f50;
+            margin-bottom: 24px;
+            font-weight: 400;
+        }
+
+        .article-body h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(24px, 3vw, 32px);
+            font-weight: 600;
+            color: var(--navy);
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            margin-top: 56px;
+            margin-bottom: 20px;
+        }
+
+        .article-body h2::before {
+            content: '';
+            display: block;
+            width: 32px; height: 2px;
+            background: var(--gold);
+            margin-bottom: 14px;
+        }
+
+        /* Pull quote */
+        blockquote.pull-quote {
+            border-left: 3px solid var(--gold);
+            padding: 24px 32px;
+            margin: 48px 0;
+            background: rgba(200,168,75,0.04);
+            border-radius: 0 8px 8px 0;
+        }
+        blockquote.pull-quote p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(20px, 2.5vw, 26px);
+            font-style: italic;
+            font-weight: 400;
+            color: var(--navy);
+            line-height: 1.5;
+            margin-bottom: 0;
+        }
+
+        /* Callout box */
+        .callout-box {
+            background: var(--navy);
+            border-radius: 10px;
+            padding: 36px 40px;
+            margin: 48px 0;
+            border: 1px solid rgba(200,168,75,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .callout-box::before {
+            content: '';
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--gold), transparent);
+        }
+        .callout-box-label {
+            font-size: 10px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 16px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .callout-box-label::before {
+            content: ''; display: block;
+            width: 16px; height: 1px; background: var(--gold);
+        }
+        .callout-box p {
+            font-size: 15px; line-height: 1.7;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 0;
+        }
+        .callout-box strong { color: var(--gold2); }
+        .callout-formula {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 18px; font-weight: 600;
+            color: var(--white);
+            text-align: center;
+            margin: 20px 0 12px;
+            padding: 16px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 6px;
+            border: 1px solid rgba(200,168,75,0.15);
+            letter-spacing: 0.02em;
+        }
+
+        /* Article numbered list */
+        .article-body ol {
+            margin: 0 0 24px 0;
+            padding-left: 0;
+            list-style: none;
+            counter-reset: article-counter;
+        }
+        .article-body ol li {
+            font-size: 17px; line-height: 1.8;
+            color: #1e2f50;
+            margin-bottom: 16px;
+            padding-left: 36px;
+            position: relative;
+            counter-increment: article-counter;
+        }
+        .article-body ol li::before {
+            content: counter(article-counter);
+            position: absolute; left: 0;
+            width: 24px; height: 24px;
+            background: var(--gold);
+            color: var(--navy);
+            border-radius: 50%;
+            font-size: 11px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            top: 4px;
+        }
+
+        .article-body ul {
+            margin: 0 0 24px 0;
+            padding-left: 0;
+            list-style: none;
+        }
+        .article-body ul li {
+            font-size: 17px; line-height: 1.8;
+            color: #1e2f50;
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+        .article-body ul li::before {
+            content: '';
+            position: absolute; left: 0; top: 12px;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+
+        /* Article closing */
+        .article-closing {
+            border-top: 1px solid var(--border);
+            margin-top: 56px; padding-top: 40px;
+        }
+        .article-closing p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(20px, 2.5vw, 24px);
+            font-style: italic;
+            line-height: 1.6;
+            color: var(--navy);
+        }
+
+        /* ── CTA STRIP ── */
+        .article-cta {
+            background: var(--navy2);
+            border-top: 1px solid rgba(200,168,75,0.15);
+            border-bottom: 1px solid rgba(200,168,75,0.15);
+            padding: 72px 24px;
+            text-align: center;
+        }
+        .article-cta-inner { max-width: 600px; margin: 0 auto; }
+        .article-cta-eyebrow {
+            font-size: 10px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 20px;
+        }
+        .article-cta h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(28px, 4vw, 40px);
+            font-weight: 600; color: var(--white);
+            line-height: 1.15; letter-spacing: -0.5px;
+            margin-bottom: 16px;
+        }
+        .article-cta p {
+            font-size: 16px; color: rgba(255,255,255,0.6);
+            line-height: 1.6; margin-bottom: 36px;
+        }
+        .btn-gold {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--navy);
+            font-weight: 700; font-size: 14px;
+            padding: 16px 36px;
+            border-radius: 4px;
+            text-decoration: none;
+            letter-spacing: 0.02em;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+        }
+        .btn-gold:hover {
+            background: var(--gold2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(200,168,75,0.25);
+        }
+
+        /* ── RELATED ARTICLES ── */
+        .related-section {
+            padding: 80px 24px;
+            max-width: 1100px; margin: 0 auto;
+        }
+        .related-header {
+            display: flex; align-items: center; gap: 16px;
+            margin-bottom: 40px;
+        }
+        .related-header span {
+            font-size: 10px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--dim);
+        }
+        .related-header::after {
+            content: '';
+            flex: 1; height: 1px; background: var(--border);
+        }
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .related-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 32px;
+            text-decoration: none;
+            display: block;
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+        }
+        .related-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 8px 32px rgba(15,30,60,0.08);
+            transform: translateY(-3px);
+        }
+        .related-card-tag {
+            font-size: 9px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 12px;
+        }
+        .related-card h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px; font-weight: 600;
+            color: var(--navy); line-height: 1.3;
+            margin-bottom: 12px;
+        }
+        .related-card p {
+            font-size: 13px; color: var(--dim);
+            line-height: 1.6; margin-bottom: 20px;
+        }
+        .related-card-read {
+            font-size: 12px; font-weight: 600;
+            color: var(--mid);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: #060d1c;
+            border-top: 1px solid rgba(200,168,75,0.1);
+        }
+        .footer-top {
+            max-width: 1200px; margin: 0 auto;
+            padding: 64px 48px 48px;
+            display: flex; justify-content: space-between;
+            gap: 48px; flex-wrap: wrap;
+        }
+        .footer-rule { width: 32px; height: 2px; background: var(--gold); margin-bottom: 16px; }
+        .footer-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px; font-weight: 700;
+            color: var(--white); letter-spacing: -0.5px;
+        }
+        .footer-tagline {
+            font-size: 12px; color: var(--dim);
+            margin-top: 8px; max-width: 280px; line-height: 1.6;
+        }
+        .footer-links {
+            display: flex; gap: 64px; flex-wrap: wrap;
+        }
+        .footer-col { display: flex; flex-direction: column; gap: 10px; }
+        .footer-col h4 {
+            font-size: 10px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 6px;
+        }
+        .footer-col a {
+            font-size: 13px; color: var(--dim);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-col a:hover { color: var(--white); }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 24px 48px;
+            max-width: 1200px; margin: 0 auto;
+            display: flex; justify-content: space-between;
+            align-items: center; flex-wrap: wrap; gap: 12px;
+        }
+        .footer-copy { font-size: 12px; color: var(--dim); }
+
+        /* ── SCROLL ANIMATIONS ── */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.65s ease, transform 0.65s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            nav { padding: 0 20px; }
+            .nav-links a:not(.nav-cta) { display: none; }
+            .article-hero { padding: 110px 20px 60px; }
+            .article-body { padding: 48px 20px 32px; }
+            .related-grid { grid-template-columns: 1fr; }
+            .footer-top { padding: 48px 24px 32px; flex-direction: column; }
+            .footer-bottom { padding: 20px 24px; }
+            .footer-links { gap: 32px; }
+            blockquote.pull-quote { padding: 20px 24px; }
+            .callout-box { padding: 28px 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ NAV ═══ -->
+    <nav>
+    <div class="nav-brand"><a href="/" style="text-decoration:none;display:flex;align-items:center;gap:12px"><div class="nav-logo">ARIO</div><div class="nav-sub">Revenue OS</div></a></div>
+    <div class="nav-links" style="display:flex;align-items:center;gap:22px">
+
+        <div class="nav-item">
+            <span class="nav-trigger">Platform <span class="nav-chevron"></span></span>
+            <div class="megadrop" style="min-width:760px;left:0;transform:translateX(0) translateY(-10px)">
+                <div class="megadrop-cols" style="grid-template-columns:1fr 1fr 1.1fr">
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Pricing intelligence</span>
+                        <a href="/platform#forecast" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12l3-3.5 2.5 2L11 5l3 3" stroke="rgba(200,168,75,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 14h12" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Demand Forecasting</div><div class="drop-desc">Proprietary ensemble, confidence scoring, 365-day horizon</div></div></a>
+                        <a href="/intelligence" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M8 2v1.5M8 12.5V14M2 8h1.5M12.5 8H14M3.5 3.5l1.1 1.1M11.4 11.4l1.1 1.1M12.5 3.5l-1.1 1.1M4.6 11.4l-1.1 1.1" stroke="rgba(255,255,255,0.5)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Intelligence Engine</div><div class="drop-desc">How the forecasting architecture works</div></div></a>
+                        <a href="/platform#group" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13V6l5-3 5 3v7H3z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><rect x="6.5" y="9" width="3" height="4" rx="0.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><path d="M6 7h1M9 7h1" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Group Displacement</div><div class="drop-desc">Monte Carlo RFP evaluation — net displacement maths</div></div></a>
+                    </div>
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Distribution &amp; operations</span>
+                        <a href="/platform#autopilot" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.5 2.5L2 7l5 1.5L8.5 14l5-11.5z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><path d="M7 8.5l2.5-3" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Autopilot Distribution</div><div class="drop-desc">Rate pushes to all major channels — confirmed by read-back</div></div></a>
+                        <a href="/platform#journal" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="2" width="9" height="12" rx="1.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M6 5.5h4M6 8h4M6 10.5h2.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Decision Journal</div><div class="drop-desc">Every decision logged, attributed, and audit-ready</div></div></a>
+                        <a href="/implementation" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M4.5 6.5L8 3l3.5 3.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 13h9" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Implementation</div><div class="drop-desc">14-day deployment — gate-controlled, named manager</div></div></a>
+                    </div>
+                    <div class="megadrop-feature">
+                        <div><div class="megadrop-feature-tag">Full platform</div><div class="megadrop-feature-h">Institutional-grade revenue management. Independent scale.</div><p class="megadrop-feature-p">Ensemble forecasting. Tamper-evident audit trail. Full OTA distribution. Gate-controlled autonomy. Operational within 14 days.</p></div>
+                        <a href="/platform" class="megadrop-feature-cta">Explore the platform <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <span class="nav-trigger">Why ARIO <span class="nav-chevron"></span></span>
+            <div class="megadrop" style="min-width:600px">
+                <div class="megadrop-cols" style="grid-template-columns:1fr 1.15fr">
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">The case for ARIO</span>
+                        <a href="/why-ario" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=140&q=80" alt="Revenue management strategy"></div><div><div class="drop-label">Why ARIO</div><div class="drop-desc">The structural RMS market gap — and where we sit</div></div></a>
+                        <a href="/why-ario#compare" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=140&q=80" alt="Enterprise software comparison"></div><div><div class="drop-label">ARIO vs enterprise RMS</div><div class="drop-desc">Capability comparison — without the enterprise price</div></div></a>
+                        <a href="/roi" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12.5h12" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round"/><rect x="3" y="7.5" width="2.5" height="5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="6.75" y="4.5" width="2.5" height="8" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="10.5" y="6" width="2.5" height="6.5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/></svg></div><div><div class="drop-label">ROI Framework</div><div class="drop-desc">Build the business case for your property</div></div></a>
+                        <a href="/case-studies" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6a1 1 0 011-1h3l1.5 1.5H13a1 1 0 011 1v4.5a1 1 0 01-1 1H3a1 1 0 01-1-1V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div><div class="drop-label">Deployment Profiles</div><div class="drop-desc">Property types, PMS configurations, operating models</div></div></a>
+                    </div>
+                    <div class="megadrop-feature">
+                        <div><div class="megadrop-feature-tag">Deployment programme</div><div class="megadrop-feature-h">Enterprise-class deployment. Configured to your property within 14 days.</div><p class="megadrop-feature-p">Named implementation manager. Gate-controlled go-live. ARIO handles PMS integration, data validation, and channel configuration end to end.</p></div>
+                        <a href="/implementation" class="megadrop-feature-cta">View implementation <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <span class="nav-trigger">Resources <span class="nav-chevron"></span></span>
+            <div class="megadrop" style="min-width:800px">
+                <div class="megadrop-cols" style="grid-template-columns:1fr 1fr 1fr">
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Insights</span>
+                        <a href="/blog/overpaying-rms" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=140&q=80" alt="Revenue data analysis"></div><div><div class="drop-label">Why hotels overpay their RMS</div><div class="drop-desc">The real cost of ownership · 14 min</div></div></a>
+                        <a href="/blog/ota-commission" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=140&q=80" alt="Revenue analytics dashboard"></div><div><div class="drop-label">The OTA commission cliff</div><div class="drop-desc">When 18% becomes your largest cost · 11 min</div></div></a>
+                        <a href="/blog/group-displacement" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13V6l5-3 5 3v7H3z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><rect x="6.5" y="9" width="3" height="4" rx="0.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><path d="M6 7h1M9 7h1" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Group displacement explained</div><div class="drop-desc">Evaluate any RFP in 5 minutes · 8 min</div></div></a>
+                        <a href="/resources" class="drop-item" style="opacity:0.7"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6a1 1 0 011-1h3l1.5 1.5H13a1 1 0 011 1v4.5a1 1 0 01-1 1H3a1 1 0 01-1-1V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div><div class="drop-label">All articles →</div><div class="drop-desc">Full resource library</div></div></a>
+                    </div>
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Frameworks &amp; tools</span>
+                        <a href="/roi" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12.5h12" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round"/><rect x="3" y="7.5" width="2.5" height="5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="6.75" y="4.5" width="2.5" height="8" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="10.5" y="6" width="2.5" height="6.5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/></svg></div><div><div class="drop-label">ROI Framework</div><div class="drop-desc">Business case methodology for any property</div></div></a>
+                        <a href="/why-ario" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="12" width="12" height="1.5" rx="0.5" fill="rgba(200,168,75,0.8)"/><rect x="2" y="3" width="12" height="1.5" rx="0.5" fill="rgba(200,168,75,0.8)"/><rect x="4" y="4.5" width="1.5" height="7.5" rx="0.5" fill="rgba(255,255,255,0.55)"/><rect x="7.25" y="4.5" width="1.5" height="7.5" rx="0.5" fill="rgba(255,255,255,0.55)"/><rect x="10.5" y="4.5" width="1.5" height="7.5" rx="0.5" fill="rgba(255,255,255,0.55)"/></svg></div><div><div class="drop-label">Why ARIO</div><div class="drop-desc">Market positioning and competitive context</div></div></a>
+                        <a href="/implementation" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M4.5 6.5L8 3l3.5 3.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 13h9" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Implementation guide</div><div class="drop-desc">The full 4-phase deployment programme</div></div></a>
+                        <a href="/intelligence" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M8 2v1.5M8 12.5V14M2 8h1.5M12.5 8H14M3.5 3.5l1.1 1.1M11.4 11.4l1.1 1.1M12.5 3.5l-1.1 1.1M4.6 11.4l-1.1 1.1" stroke="rgba(255,255,255,0.5)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Intelligence Engine</div><div class="drop-desc">How the forecasting architecture works</div></div></a>
+                    </div>
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">About ARIO</span>
+                        <a href="/case-studies" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6a1 1 0 011-1h3l1.5 1.5H13a1 1 0 011 1v4.5a1 1 0 01-1 1H3a1 1 0 01-1-1V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div><div class="drop-label">Deployment profiles</div><div class="drop-desc">Property types and integration configurations</div></div></a>
+                        <a href="/security" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L3 4.5v4C3 11.5 5.5 14 8 14s5-2.5 5-5.5v-4L8 2z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><path d="M5.5 8.5l2 2 3-3" stroke="rgba(255,255,255,0.65)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="drop-label">Security &amp; compliance</div><div class="drop-desc">AES-256, GDPR, data architecture</div></div></a>
+                        <a href="/integrations" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10.5 2v4M5.5 2v4M3.5 6h9v2a4.5 4.5 0 01-9 0V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 12.5V15" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round"/></svg></div><div><div class="drop-label">Integrations</div><div class="drop-desc">Opera, Mews, SiteMinder, RateGain &amp; more</div></div></a>
+                        <a href="/contact" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="2" width="9" height="12" rx="1.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M6 5.5h4M6 8h4M6 10.5h2.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Contact</div><div class="drop-desc">Speak with our implementation team</div></div></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <span class="nav-trigger">Company <span class="nav-chevron"></span></span>
+            <div class="simpledrop">
+                <a href="/about" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">About ARIO</span></a>
+                <a href="/security" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Security &amp; compliance</span></a>
+                <div class="drop-simple-divider"></div>
+                <a href="/case-studies" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Deployment profiles</span></a>
+                <a href="/integrations" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Integrations</span></a>
+                <div class="drop-simple-divider"></div>
+                <a href="/contact" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Contact</span></a>
+            </div>
+        </div>
+
+        <a href="/pricing" style="font-size:13px;color:rgba(255,255,255,0.65);text-decoration:none;font-weight:500;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">Pricing</a>
+        <a href="/contact" class="nav-cta">Request a Demo →</a>
+    </div>
+</nav>
+
+    <!-- ═══ ARTICLE HERO ═══ -->
+    <header class="article-hero">
+        <div class="article-hero-grid"></div>
+        <div class="article-hero-glow"></div>
+        <div class="article-hero-inner">
+            <div class="article-category fade-up">Strategy</div>
+            <h1 class="article-title fade-up delay-1">
+                Why independent hotels overpay their RMS — and how to evaluate what you're actually buying
+            </h1>
+            <div class="article-byline fade-up delay-2">
+                <div class="byline-avatar">A</div>
+                <div class="byline-text">
+                    <div class="byline-name">ARIO Editorial</div>
+                    <div class="byline-meta">Founder &amp; CEO, ARIO</div>
+                </div>
+                <div class="byline-divider"></div>
+                <div class="byline-stat">April 2026</div>
+                <div class="byline-divider"></div>
+                <div class="byline-stat">14 min read</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══ ARTICLE BODY ═══ -->
+    <main>
+        <article class="article-body">
+
+            <p class="fade-up">The RMS vendor's pitch is almost always the same. A revenue uplift number — typically cited as a percentage of RevPAR — floats across the screen during the demo. The sales deck references a case study hotel that lifted revenue by 8%. The implementation timeline is presented as seamless. The contract, if you ask for it before the third call, is a 36-month term with an auto-renewal clause.</p>
+
+            <p class="fade-up">Nobody shows you the denominator.</p>
+
+            <p class="fade-up">The denominator — total cost of ownership — is where independent hotels consistently overpay. Not because the systems are necessarily poor, but because enterprise RMS pricing was architected for a different buyer profile entirely.</p>
+
+            <h2 class="fade-up">The pricing structure problem</h2>
+
+            <p class="fade-up">Enterprise RMS pricing, typically in the £4–£8 per room per month range, was designed for large chains. At 500 rooms, £6/room/month is £36,000 per year — a meaningful but manageable line item for a property generating £8–£12 million in annual room revenue. The math works for that buyer.</p>
+
+            <p class="fade-up">At 120 rooms, the same rate is £8,640 per year in software licensing alone. Add a typical implementation fee — which ranges from £15,000 to £40,000 depending on the PMS integration complexity and the vendor's professional services structure — and you are looking at £23,640 to £48,640 in year-one costs before a single rate has been pushed.</p>
+
+            <p class="fade-up">The RevPAR uplift story the sales rep told you assumed you would recoup that investment through improved pricing decisions. What it did not account for is that the cost-per-room doesn't amortise the same way when you have a tenth of the rooms. The economics of enterprise software only work at enterprise scale.</p>
+
+            <blockquote class="pull-quote fade-up">
+                <p>"The RevPAR uplift story only holds if you understand what uplift you're actually generating — and what it costs you to generate it."</p>
+            </blockquote>
+
+            <h2 class="fade-up">The three-layer cost most buyers miss</h2>
+
+            <p class="fade-up">Most independent hoteliers evaluate RMS on the visible cost: monthly licensing. That's the first layer. The second and third layers are where the real budget surprise lives.</p>
+
+            <p class="fade-up"><strong>Layer one: Software licensing.</strong> The headline number. Quoted per-room per-month or as an annual flat fee. This is the number you compare between vendors.</p>
+
+            <p class="fade-up"><strong>Layer two: Implementation and integration.</strong> PMS integration, channel manager configuration, historical data migration, and staff training. In complex environments — particularly where the PMS is on-premise or uses a non-standard API — implementation costs routinely match or exceed the first year of licensing. This cost is rarely disclosed in the initial proposal. Ask for it in writing before the second vendor meeting.</p>
+
+            <p class="fade-up"><strong>Layer three: The learning tax.</strong> This is the cost nobody names, but every revenue manager knows intuitively. In the first 60–90 days any new RMS is live in your property, it is learning your demand patterns, your booking window, your segment mix, your seasonal profile. It is not yet making good decisions — it is making calibration decisions. You are paying full subscription fees for a system that is, in effect, still in training school.</p>
+
+            <p class="fade-up">Enterprise vendors charge from day one. Some independent-focused tools offer a shadow period — running recommendations in the background before taking control of live rates. The difference between these two approaches is not trivial. Sixty days of licensing at £720/month is £1,440 you paid for advice you either ignored or couldn't yet trust.</p>
+
+            <blockquote class="pull-quote fade-up">
+                <p>"The learning tax is the cost nobody names — and the first 90 days of any RMS are, effectively, the system's training period at your expense."</p>
+            </blockquote>
+
+            <h2 class="fade-up">What you're actually buying</h2>
+
+            <p class="fade-up">Strip the product marketing away and an RMS is a decision-support system. It takes signals — historical demand, forward-looking pace, competitor rates, event calendars, market intelligence — and converts them into rate recommendations. Your revenue manager either accepts those recommendations, modifies them, or overrides them entirely.</p>
+
+            <p class="fade-up">The question to ask in any RMS evaluation is not "what's the uplift claim?" The question is: <strong>how does this system explain its decisions?</strong></p>
+
+            <p class="fade-up">A system you cannot interrogate is a system you cannot trust. A system you cannot trust is one you will override. And here is the critical problem: a revenue manager who overrides the system's recommendations more than 40% of the time has stopped using it as a decision-support tool. At that point, you are paying subscription fees for a system whose function has been reduced to a second opinion you habitually disagree with.</p>
+
+            <p class="fade-up">The override rate is the single most important metric a hotel can track in the first six months of any RMS deployment. It tells you not just whether your team trusts the system — it tells you whether the system was worth buying in the first place.</p>
+
+            <h2 class="fade-up">The forecast transparency problem</h2>
+
+            <p class="fade-up">Most enterprise RMS documentation refers to "proprietary forecasting models" with no further disclosure. This is presented as intellectual property protection. It is, more often, a commercial positioning strategy.</p>
+
+            <p class="fade-up">If the model is opaque and it produces a wrong forecast, the vendor controls the narrative. It is harder for you to challenge a black box than a disclosed algorithm. You cannot say "your unconstrained demand model failed to account for the school holiday compression in Week 32" if you do not know what model is running or what inputs it uses.</p>
+
+            <p class="fade-up">What you should demand in writing from any RMS vendor:</p>
+
+            <ul class="fade-up">
+                <li>What forecasting models are running — whether rule-based, statistical, machine learning, or ensemble — and what role each plays in the final rate recommendation.</li>
+                <li>What data feeds each model. Historical bookings going back how far? Competitor rates from which sources? Forward-looking signals from which providers?</li>
+                <li>What confidence score is assigned to each forecast, and how that confidence is presented to the revenue manager.</li>
+                <li>What happens when confidence is low — does the system hold rates, widen the band, or defer to your configured floor and ceiling constraints?</li>
+            </ul>
+
+            <p class="fade-up">A vendor who cannot answer these questions in clear language, either does not know the answers or does not want you to know them. Neither is acceptable.</p>
+
+            <h2 class="fade-up">How to evaluate your real cost</h2>
+
+            <p class="fade-up">The standard RMS evaluation compares headline licensing costs and RevPAR uplift claims. Neither figure tells you what the system actually costs you per useful decision. Here is a framework that does.</p>
+
+            <div class="callout-box fade-up">
+                <div class="callout-box-label">Key Formula</div>
+                <div class="callout-formula">Cost per acted-upon decision = Annual total cost ÷ (Decisions per year × (1 − Override rate))</div>
+                <p>A hotel paying <strong>£12,000/year</strong> in licensing, receiving approximately <strong>365 rate recommendations</strong> per year, and overriding <strong>50%</strong> of them is generating an effective cost per acted-upon decision of <strong>£65.75</strong>. Multiply by the number of rooms, and you get a clearer picture of the decision economics than any RevPAR uplift headline will give you.</p>
+            </div>
+
+            <p class="fade-up">Now add staff time. If a revenue manager spends 90 minutes per week reviewing, modifying, and documenting overrides — and that time could otherwise be spent on group contract analysis, competitive intelligence, or distribution strategy — that is a real cost, even if it doesn't appear on the vendor invoice.</p>
+
+            <p class="fade-up">The question becomes: what is the total annual cost divided by the number of rate decisions the system actually made for you — not the decisions it suggested, but the decisions your team used? That number, compared honestly across vendors, is the only metric that reveals which system delivers the best value for your operation.</p>
+
+            <h2 class="fade-up">What a fair RMS purchase looks like</h2>
+
+            <p class="fade-up">The structure of a fair RMS agreement for an independent property differs materially from the enterprise default. These are not negotiating tactics — they are reasonable contract terms that any vendor with genuine confidence in their product should accept.</p>
+
+            <ul class="fade-up">
+                <li><strong>Short contract terms.</strong> Month-to-month or quarterly commitments for independents. Not 3-year enterprise lock-ins. If the product delivers, you will renew. If it does not, you should not be contractually trapped into paying for it.</li>
+                <li><strong>Transparent model architecture.</strong> You should know, in plain English, whether the system is rule-based, statistical, machine learning, or a combination — and what data each component consumes to produce its recommendations.</li>
+                <li><strong>A documented shadow mode period.</strong> The system runs recommendations in the background, alongside your current process, before taking control of live rate pushes. This is not optional — it is how you validate the calibration is correct for your specific market before you commit fully.</li>
+                <li><strong>A clear onboarding SLA.</strong> A specific date by which you will be live. A defined list of what "live" means. If a vendor cannot tell you exactly when you will see your first rate recommendation and what it will look like, they have not thought through the implementation for a property like yours.</li>
+                <li><strong>Data portability.</strong> Your historical data, your override log, your configured constraints — all exportable. You should not need the vendor's permission to take your own pricing history with you if you decide to leave.</li>
+            </ul>
+
+            <div class="callout-box fade-up">
+                <div class="callout-box-label">Key Insight</div>
+                <p>The real cost of an RMS is not its licensing fee. It is the <strong>override rate multiplied by the subscription cost</strong>, plus implementation, plus the staff time absorbed by a system your team has partially stopped trusting. Evaluate that number — not the RevPAR headline — and the right decision usually becomes clear.</p>
+            </div>
+
+            <h2 class="fade-up">The evaluation you should run</h2>
+
+            <p class="fade-up">Before signing any RMS contract, run the following five-step evaluation. It takes less time than a third vendor demo, and it will tell you more.</p>
+
+            <ol class="fade-up">
+                <li>Calculate your true total year-one cost: licensing + implementation + estimated staff time for onboarding. Compare this against your total room revenue. If it exceeds 1.5% of annual room revenue, the math is working against you from day one.</li>
+                <li>Ask the vendor to demonstrate the explanation layer — not the forecast, but the reasoning behind it. If the system cannot tell your revenue manager why it recommended £175 on a Tuesday in November, it cannot be trusted without supervision.</li>
+                <li>Request references from properties of comparable size in comparable markets. Not chain-managed properties with dedicated RM teams. Properties where one person is responsible for revenue alongside four other operational functions.</li>
+                <li>Request the override rate data from those reference properties at six months. Any vendor who declines to provide this is protecting information that should inform your decision.</li>
+                <li>Ask what happens when the model is wrong — specifically, what recourse you have, what the escalation path is, and whether there is a service credit mechanism tied to system downtime or data failure.</li>
+            </ol>
+
+            <div class="article-closing fade-up">
+                <p>"The goal is not to find the cheapest RMS. The goal is to find the one whose cost-per-decision you can justify based on the decisions it actually makes — and to know, with precision, when to override it."</p>
+            </div>
+
+        </article>
+    </main>
+
+    <!-- ═══ CTA STRIP ═══ -->
+    <section class="article-cta">
+        <div class="article-cta-inner">
+            <div class="article-cta-eyebrow fade-up">ARIO · Revenue Operating System</div>
+            <h3 class="fade-up delay-1">Institutional-grade intelligence.<br>Independent hotel pricing.</h3>
+            <p class="fade-up delay-2">ARIO helps independent hotels make these decisions with transparent model architecture, disclosed confidence scores, and a shadow mode that earns trust before it takes control. Request your pilot and see the decision layer for your own property.</p>
+            <a href="/#pilot" class="btn-gold fade-up delay-3">Request Your Pilot →</a>
+        </div>
+    </section>
+
+    <!-- ═══ RELATED ARTICLES ═══ -->
+    <section class="related-section">
+        <div class="related-header">
+            <span>Continue reading</span>
+        </div>
+        <div class="related-grid">
+            <a href="/blog/ota-commission" class="related-card fade-up">
+                <div class="related-card-tag">Distribution</div>
+                <h4>The OTA commission cliff: when your distribution strategy starts working against you</h4>
+                <p>At 18% commission on £150 ADR, a 100-room hotel hands £690,000 per year to OTAs. The channel strategy decision is a revenue decision — and most hotels are making it wrong.</p>
+                <div class="related-card-read">11 min read →</div>
+            </a>
+            <a href="/resources" class="related-card fade-up delay-1">
+                <div class="related-card-tag">Forecasting</div>
+                <h4>What a good demand forecast actually looks like — and how to read one</h4>
+                <p>A forecast without a confidence interval is not a forecast; it is a guess dressed in data clothing. How to evaluate the signal quality behind any revenue recommendation.</p>
+                <div class="related-card-read">9 min read →</div>
+            </a>
+            <a href="/resources" class="related-card fade-up delay-2">
+                <div class="related-card-tag">Operations</div>
+                <h4>The override log: the most important revenue report your hotel isn't running</h4>
+                <p>Every time a revenue manager overrides a system recommendation, that decision contains information. Most hotels discard it. Here is why you should be capturing and reviewing it weekly.</p>
+                <div class="related-card-read">7 min read →</div>
+            </a>
+        </div>
+    </section>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer>
+        <div class="footer-top">
+            <div>
+                <div class="footer-rule"></div>
+                <div class="footer-brand">ARIO</div>
+                <div class="footer-tagline">Revenue Operating System · Institutional-grade intelligence for independent hotels</div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <a href="/platform">Capabilities</a>
+                    <a href="/#demo">Live Demo</a>
+                    <a href="/#how">How it works</a>
+                    <a href="/pricing">Pricing</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Trust</h4>
+                    <a href="/security">Security &amp; compliance</a>
+                    <a href="/about">About ARIO</a>
+                    <a href="/contact">Request Deployment</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <a href="/contact">Open contact form</a>
+                    <a href="mailto:hello@ariorms.com">hello@ariorms.com</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-copy">© 2026 ARIO Technologies Ltd. All rights reserved.</div>
+            <div class="footer-copy" style="letter-spacing:0.08em;font-size:10px;opacity:0.5">Every signal. A clear decision.</div>
+        </div>
+    </footer>
+
+    <script>
+        // ── SCROLL REVEAL ──
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // ── NAV SCROLL TINT ──
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 60) {
+                nav.style.borderBottomColor = 'rgba(200,168,75,0.3)';
+            } else {
+                nav.style.borderBottomColor = 'rgba(200,168,75,0.2)';
+            }
+        });
+    </script>
+
+    <script>
+    (function(){
+        document.querySelectorAll('.nav-item').forEach(function(item){
+            item.addEventListener('mouseenter', function(){
+                var drop = item.querySelector('.megadrop');
+                if(!drop) return;
+                // reset any previous correction
+                drop.style.left = '';
+                drop.style.right = '';
+                requestAnimationFrame(function(){
+                    var r = drop.getBoundingClientRect();
+                    var overflow = r.right - (window.innerWidth - 16);
+                    if(overflow > 0){
+                        // shift left by how much it overflows
+                        var curLeft = parseFloat(drop.style.left) || 0;
+                        drop.style.left = (curLeft - overflow) + 'px';
+                    }
+                });
+            });
+        });
+    })();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

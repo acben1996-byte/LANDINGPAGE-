@@ -1,0 +1,630 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="language" content="English">
+    <link rel="canonical" href="https://ariorms.com/about">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARIO — About</title>
+    <meta name="description" content="ARIO is built by a founder who believes independent and boutique hotels deserve revenue management software that's transparent, calibrated, and operator-grade.">    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box }
+        :root {
+            --navy: #0f1e3c; --navy2: #152d56; --navy3: #1e3a6e;
+            --gold: #c8a84b; --gold2: #e8c96b;
+            --white: #fff; --off: #f7f5f0; --cream: #faf8f4;
+            --border: #dde3ef; --text: #0f1e3c; --mid: #3d5080; --dim: #7a8aaa;
+            --green: #16a34a; --red: #dc2626;
+        }
+        html { scroll-behavior: smooth }
+        body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; -webkit-font-smoothing: antialiased }
+
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(15,30,60,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(200,168,75,0.2); padding: 0 48px; height: 64px; display: flex; align-items: center; justify-content: space-between }
+        .nav-brand a { display: flex; align-items: center; gap: 12px; text-decoration: none }
+        .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 31px; font-weight: 700; letter-spacing: 1px; line-height: 1; background: linear-gradient(158deg, #ffffff 0%, #fff4d6 18%, #f0d080 38%, #c8a84b 58%, #8a6200 82%, #4a3000 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.55)); }
+        .nav-sub { font-size: 9px; font-weight: 600; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; border-left: 1px solid rgba(200,168,75,0.4); padding-left: 12px; margin-left: 4px }
+        .nav-links { display: flex; align-items: center; gap: 28px }
+        .nav-links a { font-size: 13px; color: rgba(255,255,255,0.65); text-decoration: none; font-weight: 500; transition: color 0.2s }
+        .nav-links a:hover { color: var(--white) }
+        .nav-links a.active { color: var(--gold) }
+        .nav-cta { background: var(--gold); color: var(--navy) !important; font-weight: 700 !important; padding: 10px 22px; border-radius: 4px; font-size: 13px !important; transition: background 0.2s, transform 0.1s !important }
+        .nav-cta:hover { background: var(--gold2) !important; transform: translateY(-1px) }
+
+        /* ── Professional micro-animations ─── */
+        @keyframes ario-cta-shimmer {
+            0%   { background-position: -200% center }
+            100% { background-position: 200% center }
+        }
+        .nav-cta {
+            background: linear-gradient(90deg, #c8a84b 0%, #e8c96b 40%, #c8a84b 60%, #a07820 100%) !important;
+            background-size: 200% auto !important;
+            animation: ario-cta-shimmer 3.5s linear infinite !important;
+            color: #0f1e3c !important;
+            font-weight: 700 !important;
+            padding: 10px 22px;
+            border-radius: 4px;
+            font-size: 13px !important;
+            transition: opacity 0.15s ease, transform 0.12s ease !important;
+            text-decoration: none;
+        }
+        .nav-cta:hover {
+            opacity: 0.9 !important;
+            transform: translateY(-1px) !important;
+        }
+
+        /* Megadrop item stagger on open */
+        @keyframes ario-drop-item-in {
+            from { opacity: 0; transform: translateY(-4px) }
+            to   { opacity: 1; transform: translateY(0) }
+        }
+        .nav-item:hover .drop-item {
+            animation: ario-drop-item-in 0.18s ease both;
+        }
+        .nav-item:hover .drop-item:nth-child(2) { animation-delay: 0.04s }
+        .nav-item:hover .drop-item:nth-child(3) { animation-delay: 0.08s }
+        .nav-item:hover .drop-item:nth-child(4) { animation-delay: 0.12s }
+        .nav-item:hover .drop-item:nth-child(5) { animation-delay: 0.16s }
+
+        /* Nav trigger hover underline draw */
+        .nav-trigger {
+            position: relative;
+        }
+        .nav-trigger::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: -2px;
+            width: 0; height: 1px;
+            background: var(--gold, #c8a84b);
+            transition: width 0.2s ease;
+        }
+        .nav-item:hover .nav-trigger::after { width: 100% }
+
+        /* Drop item arrow on hover */
+        .drop-item::after {
+            content: '';
+            display: block;
+            width: 5px; height: 5px;
+            border-right: 1.5px solid rgba(200,168,75,0);
+            border-top: 1.5px solid rgba(200,168,75,0);
+            transform: rotate(45deg) translateX(-3px);
+            transition: transform 0.15s ease, border-color 0.15s ease;
+            margin-left: auto;
+            flex-shrink: 0;
+            align-self: center;
+        }
+        .drop-item:hover::after {
+            transform: rotate(45deg) translateX(0);
+            border-color: rgba(200,168,75,0.7);
+        }
+
+        /* Megadrop feature panel subtle gradient shift */
+        .megadrop-feature {
+            background: linear-gradient(160deg, #0f1e3c 0%, #152d56 100%);
+        }
+
+        /* ── MEGADROPDOWN SYSTEM ─────────────────────────── */
+        .nav-item { position: relative; display: flex; align-items: center }
+        .nav-item > .nav-trigger {
+            display: flex; align-items: center; gap: 5px;
+            font-size: 13px; color: rgba(255,255,255,0.65);
+            text-decoration: none; font-weight: 500;
+            transition: color 0.2s; cursor: pointer; background: none;
+            border: none; padding: 0; font-family: inherit;
+        }
+        .nav-item:hover > .nav-trigger { color: #fff }
+        .nav-chevron {
+            display: inline-block; width: 10px; height: 10px;
+            border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+            transform: rotate(45deg) translateY(-2px);
+            transition: transform 0.2s ease;
+        }
+        .nav-item:hover .nav-chevron { transform: rotate(225deg) translateY(2px) }
+        .megadrop {
+            position: absolute;
+            top: calc(100% + 14px);
+            left: 50%; transform: translateX(-50%) translateY(-10px);
+            background: #fff;
+            border: 1px solid rgba(15,30,60,0.09);
+            border-radius: 10px;
+            box-shadow: 0 24px 64px rgba(15,30,60,0.13), 0 4px 16px rgba(15,30,60,0.07);
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s;
+            pointer-events: none; z-index: 200; min-width: 560px; max-width: calc(100vw - 80px);
+        }
+        .megadrop::before { content: ''; position: absolute; top: -18px; left: 0; right: 0; height: 18px; }
+        .nav-item:hover .megadrop {
+            opacity: 1; visibility: visible;
+            transform: translateX(-50%) translateY(0); pointer-events: all;
+            transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0s;
+        }
+        .megadrop-inner { display: grid; gap: 0; border-radius: 10px; overflow: hidden }
+        .megadrop-cols { display: grid; grid-template-columns: 1fr 1fr; }
+        .megadrop-col { padding: 20px 4px }
+        .megadrop-col + .megadrop-col { border-left: 1px solid #eef0f6 }
+        .megadrop-col-label { font-size: 10px; font-weight: 700; color: #94a3b8; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 20px 10px; display: block; }
+        .drop-item { display: flex; align-items: flex-start; gap: 13px; padding: 10px 20px; text-decoration: none; border-radius: 6px; margin: 0 6px; transition: background 0.12s ease; }
+        .drop-item:hover { background: #f7f9fc }
+        .drop-icon { width: 34px; height: 34px; border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #0f1e3c; border: 1px solid rgba(200,168,75,0.18); transition: background 0.15s ease, border-color 0.15s ease; }
+        .drop-item:hover .drop-icon { background: #152d56; border-color: rgba(200,168,75,0.4); }
+        .drop-label { font-size: 13px; font-weight: 600; color: #0f1e3c; line-height: 1.3; margin-bottom: 3px; }
+        .drop-desc { font-size: 11.5px; color: #7a8aaa; line-height: 1.45 }
+        .megadrop-feature { background: #0f1e3c; padding: 24px; border-radius: 0 10px 10px 0; display: flex; flex-direction: column; justify-content: space-between; }
+        .megadrop-feature-tag { font-size: 9px; font-weight: 700; color: #c8a84b; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+        .megadrop-feature-h { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: #fff; line-height: 1.3; letter-spacing: -0.3px; margin-bottom: 10px; }
+        .megadrop-feature-p { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.55; margin-bottom: 18px; flex: 1 }
+        .megadrop-feature-cta { display: inline-flex; align-items: center; gap: 7px; background: #c8a84b; color: #0f1e3c; padding: 9px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; text-decoration: none; letter-spacing: 0.02em; align-self: flex-start; transition: background 0.15s, transform 0.12s; }
+        .megadrop-feature-cta:hover { background: #e8c96b; transform: translateY(-1px) }
+        .simpledrop { position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%) translateY(-10px); background: #fff; border: 1px solid rgba(15,30,60,0.09); border-radius: 8px; box-shadow: 0 20px 56px rgba(15,30,60,0.12); opacity: 0; visibility: hidden; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s; pointer-events: none; z-index: 200; min-width: 230px; padding: 8px; }
+        .simpledrop::before { content: ''; position: absolute; top: -18px; left: 0; right: 0; height: 18px; }
+        .nav-item:hover .simpledrop { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: all; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0s; }
+        .drop-simple-item { display: flex; align-items: center; gap: 10px; padding: 9px 14px; text-decoration: none; border-radius: 5px; transition: background 0.1s ease; }
+        .drop-simple-item:hover { background: #f7f9fc }
+        .drop-simple-dot { width: 6px; height: 6px; border-radius: 50%; background: #c8a84b; flex-shrink: 0 }
+        .drop-simple-label { font-size: 13px; font-weight: 500; color: #0f1e3c }
+        .drop-simple-divider { height: 1px; background: #eef0f6; margin: 4px 8px }
+        /* Drop item with photography */
+        .drop-photo { width: 68px; height: 50px; border-radius: 5px; overflow: hidden; flex-shrink: 0; background: #0f1e3c; }
+        .drop-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; }
+        .drop-item:hover .drop-photo img { transform: scale(1.06); }
+        .drop-simple-photo { width: 52px; height: 40px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+        .drop-simple-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .hero { min-height: 60vh; background: var(--navy); position: relative; padding: 140px 80px 80px; overflow: hidden }
+        .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(200,168,75,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.04) 1px,transparent 1px); background-size: 60px 60px; opacity: 0.5 }
+        .hero-glow { position: absolute; top: -200px; right: -200px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(200,168,75,0.15), transparent 70%); pointer-events: none }
+        .hero-glow2 { position: absolute; bottom: -200px; left: -200px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(30,58,110,0.4), transparent 70%); pointer-events: none }
+        .hero-content { max-width: 920px; margin: 0 auto; position: relative; z-index: 2 }
+        .hero-eyebrow { font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 22px }
+        .hero-h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 6vw, 78px); font-weight: 600; color: var(--white); line-height: 1.04; letter-spacing: -1.5px; margin-bottom: 24px }
+        .hero-h1 em { font-style: italic; color: var(--gold) }
+        .hero-p { font-size: 17px; line-height: 1.6; color: rgba(255,255,255,0.7); max-width: 720px }
+
+        section.content { padding: 100px 80px; max-width: 1280px; margin: 0 auto }
+        .section-eyebrow { font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 12px }
+        .section-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--gold) }
+        .section-h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 4.8vw, 56px); font-weight: 600; color: var(--text); line-height: 1.08; letter-spacing: -1px; margin-bottom: 18px; max-width: 720px }
+        .section-h2 em { font-style: italic; color: var(--navy3) }
+        .section-p { font-size: 16px; line-height: 1.65; color: var(--mid); max-width: 720px; margin-bottom: 16px }
+
+        /* MISSION BLOCK */
+        .mission-block { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px }
+        .mission-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 36px 32px; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease }
+        .mission-card:hover { transform: translateY(-4px); box-shadow: 0 24px 60px rgba(15,30,60,0.06); border-color: rgba(200,168,75,0.4) }
+        .mission-card-num { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 600; color: var(--gold); line-height: 1; margin-bottom: 18px; letter-spacing: -1px }
+        .mission-card-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; line-height: 1.25; letter-spacing: -0.4px; margin-bottom: 12px; color: var(--text) }
+        .mission-card-body { font-size: 14px; line-height: 1.65; color: var(--mid) }
+
+        /* QUOTE BLOCK */
+        .quote-block { margin-top: 64px; padding: 56px 64px; background: linear-gradient(135deg, var(--navy), var(--navy3)); color: var(--white); border-radius: 12px; position: relative; overflow: hidden }
+        .quote-block::after { content: ''; position: absolute; top: -50%; right: -10%; width: 480px; height: 480px; background: radial-gradient(circle, rgba(200,168,75,0.1), transparent 70%); pointer-events: none }
+        .quote-mark { font-family: 'Cormorant Garamond', serif; font-size: 100px; line-height: 1; color: var(--gold); margin-bottom: -20px; opacity: 0.5 }
+        .quote-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 2.4vw, 30px); font-style: italic; line-height: 1.45; color: rgba(255,255,255,0.95); max-width: 880px; position: relative }
+        .quote-source { font-size: 11px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-top: 24px; position: relative }
+
+        /* COMMITMENTS GRID */
+        .commitments { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px }
+        .commitment { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 32px 28px; border-top: 3px solid var(--gold) }
+        .commitment-icon { width: 40px; height: 40px; background: rgba(200,168,75,0.1); border: 1px solid rgba(200,168,75,0.25); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--gold); margin-bottom: 18px }
+        .commitment h4 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 10px; letter-spacing: -0.3px }
+        .commitment h4 em { font-style: italic; color: var(--navy3) }
+        .commitment p { font-size: 14px; line-height: 1.65; color: var(--mid) }
+
+        /* WHO ARIO IS FOR */
+        .audience-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 56px }
+        .audience-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease }
+        .audience-card:hover { transform: translateY(-4px); box-shadow: 0 24px 60px rgba(15,30,60,0.08) }
+        .audience-img { width: 100%; height: 200px; overflow: hidden; position: relative }
+        .audience-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease }
+        .audience-card:hover .audience-img img { transform: scale(1.05) }
+        .audience-body { padding: 24px }
+        .audience-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.3px }
+        .audience-detail { font-size: 13px; color: var(--mid); line-height: 1.55 }
+
+        /* DARK SECTION */
+        .dark-section { background: var(--navy); padding: 100px 80px; color: var(--white); position: relative; overflow: hidden }
+        .dark-section::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(200,168,75,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.025) 1px,transparent 1px); background-size: 80px 80px; pointer-events: none }
+        .dark-content { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1 }
+        .dark-section .section-h2 { color: var(--white) }
+        .dark-section .section-h2 em { color: var(--gold) }
+        .dark-section .section-p { color: rgba(255,255,255,0.65) }
+
+        /* PRINCIPLES */
+        .principle-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px }
+        .principle { padding: 28px; border-left: 3px solid var(--gold); background: rgba(255,255,255,0.02) }
+        .principle h4 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 12px; color: var(--white); letter-spacing: -0.3px }
+        .principle p { font-size: 13px; line-height: 1.65; color: rgba(255,255,255,0.6) }
+
+        /* ADVISORY */
+        .advisor-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px }
+        .advisor-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 28px }
+        .advisor-photo { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--navy), var(--navy3)); display: flex; align-items: center; justify-content: center; color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; margin-bottom: 18px }
+        .advisor-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; margin-bottom: 4px; letter-spacing: -0.3px }
+        .advisor-title { font-size: 11px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; font-weight: 600 }
+        .advisor-bio { font-size: 13px; line-height: 1.6; color: var(--mid) }
+        .advisor-pending { color: var(--dim); font-style: italic; font-size: 13px }
+
+        /* CTA STRIP */
+        .cta-strip { padding: 80px 48px; background: linear-gradient(135deg, var(--navy), var(--navy3)); color: var(--white); text-align: center; position: relative; overflow: hidden }
+        .cta-strip::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 800px; height: 800px; background: radial-gradient(circle, rgba(200,168,75,0.1), transparent 70%); pointer-events: none }
+        .cta-h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 48px); font-weight: 600; margin-bottom: 16px; letter-spacing: -0.5px; position: relative }
+        .cta-strip em { font-style: italic; color: var(--gold) }
+        .cta-strip p { font-size: 15px; color: rgba(255,255,255,0.65); margin-bottom: 32px; max-width: 540px; margin-left: auto; margin-right: auto; position: relative }
+        .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--navy); padding: 16px 32px; border-radius: 4px; text-decoration: none; font-size: 14px; font-weight: 700; letter-spacing: 0.3px; transition: background 0.2s, transform 0.1s; position: relative }
+        .btn-primary:hover { background: var(--gold2); transform: translateY(-1px) }
+
+        footer { background: #060d1c; color: rgba(255,255,255,0.5); padding: 64px 80px 32px }
+        .footer-top { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; margin-bottom: 48px }
+        .footer-rule { width: 32px; height: 1px; background: var(--gold); margin-bottom: 18px }
+        .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 32px; color: var(--white); font-weight: 700; margin-bottom: 8px }
+        .footer-tagline { font-size: 12px; line-height: 1.6; max-width: 320px }
+        .footer-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px }
+        .footer-col h4 { font-size: 11px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; font-weight: 600 }
+        .footer-col a { display: block; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; padding: 4px 0; transition: color 0.2s }
+        .footer-col a:hover { color: var(--white) }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px }
+        .footer-copy { font-size: 11px; color: rgba(255,255,255,0.4) }
+
+        @media (max-width: 1100px) {
+            .audience-grid { grid-template-columns: 1fr 1fr }
+            .principle-grid { grid-template-columns: 1fr }
+            .mission-block { grid-template-columns: 1fr } .commitments { grid-template-columns: 1fr }
+        }
+        @media (max-width: 900px) {
+            nav { padding: 0 20px }
+            .nav-links a:not(.nav-cta) { display: none }
+            .hero { padding: 120px 24px 60px }
+            section.content { padding: 60px 24px }
+            .dark-section { padding: 60px 24px }
+            .quote-block { padding: 36px 28px } .quote-text { font-size: 20px }
+            footer { padding: 48px 24px 24px }
+            .footer-top { grid-template-columns: 1fr; gap: 32px }
+            .footer-links { grid-template-columns: 1fr 1fr }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+    <div class="nav-brand"><a href="/" style="text-decoration:none;display:flex;align-items:center;gap:12px"><div class="nav-logo">ARIO</div><div class="nav-sub">Revenue OS</div></a></div>
+    <div class="nav-links" style="display:flex;align-items:center;gap:22px">
+
+        <div class="nav-item">
+            <span class="nav-trigger">Platform <span class="nav-chevron"></span></span>
+            <div class="megadrop" style="min-width:760px;left:0;transform:translateX(0) translateY(-10px)">
+                <div class="megadrop-cols" style="grid-template-columns:1fr 1fr 1.1fr">
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Pricing intelligence</span>
+                        <a href="/platform#forecast" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12l3-3.5 2.5 2L11 5l3 3" stroke="rgba(200,168,75,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 14h12" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Demand Forecasting</div><div class="drop-desc">Proprietary ensemble, confidence scoring, 365-day horizon</div></div></a>
+                        <a href="/intelligence" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M8 2v1.5M8 12.5V14M2 8h1.5M12.5 8H14M3.5 3.5l1.1 1.1M11.4 11.4l1.1 1.1M12.5 3.5l-1.1 1.1M4.6 11.4l-1.1 1.1" stroke="rgba(255,255,255,0.5)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Intelligence Engine</div><div class="drop-desc">How the forecasting architecture works</div></div></a>
+                        <a href="/platform#group" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13V6l5-3 5 3v7H3z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><rect x="6.5" y="9" width="3" height="4" rx="0.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><path d="M6 7h1M9 7h1" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Group Displacement</div><div class="drop-desc">Monte Carlo RFP evaluation — net displacement maths</div></div></a>
+                    </div>
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Distribution &amp; operations</span>
+                        <a href="/platform#autopilot" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.5 2.5L2 7l5 1.5L8.5 14l5-11.5z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><path d="M7 8.5l2.5-3" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Autopilot Distribution</div><div class="drop-desc">Rate pushes to all major channels — confirmed by read-back</div></div></a>
+                        <a href="/platform#journal" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="2" width="9" height="12" rx="1.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M6 5.5h4M6 8h4M6 10.5h2.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Decision Journal</div><div class="drop-desc">Every decision logged, attributed, and audit-ready</div></div></a>
+                        <a href="/implementation" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M4.5 6.5L8 3l3.5 3.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 13h9" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Implementation</div><div class="drop-desc">14-day deployment — gate-controlled, named manager</div></div></a>
+                    </div>
+                    <div class="megadrop-feature">
+                        <div><div class="megadrop-feature-tag">Full platform</div><div class="megadrop-feature-h">Institutional-grade revenue management. Independent scale.</div><p class="megadrop-feature-p">Ensemble forecasting. Tamper-evident audit trail. Full OTA distribution. Gate-controlled autonomy. Operational within 14 days.</p></div>
+                        <a href="/platform" class="megadrop-feature-cta">Explore the platform <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <span class="nav-trigger">Why ARIO <span class="nav-chevron"></span></span>
+            <div class="megadrop" style="min-width:600px">
+                <div class="megadrop-cols" style="grid-template-columns:1fr 1.15fr">
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">The case for ARIO</span>
+                        <a href="/why-ario" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=140&q=80" alt="Revenue management strategy"></div><div><div class="drop-label">Why ARIO</div><div class="drop-desc">The structural RMS market gap — and where we sit</div></div></a>
+                        <a href="/why-ario#compare" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=140&q=80" alt="Enterprise software comparison"></div><div><div class="drop-label">ARIO vs enterprise RMS</div><div class="drop-desc">Capability comparison — without the enterprise price</div></div></a>
+                        <a href="/roi" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12.5h12" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round"/><rect x="3" y="7.5" width="2.5" height="5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="6.75" y="4.5" width="2.5" height="8" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="10.5" y="6" width="2.5" height="6.5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/></svg></div><div><div class="drop-label">ROI Framework</div><div class="drop-desc">Build the business case for your property</div></div></a>
+                        <a href="/case-studies" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6a1 1 0 011-1h3l1.5 1.5H13a1 1 0 011 1v4.5a1 1 0 01-1 1H3a1 1 0 01-1-1V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div><div class="drop-label">Deployment Profiles</div><div class="drop-desc">Property types, PMS configurations, operating models</div></div></a>
+                    </div>
+                    <div class="megadrop-feature">
+                        <div><div class="megadrop-feature-tag">Deployment programme</div><div class="megadrop-feature-h">Enterprise-class deployment. Configured to your property within 14 days.</div><p class="megadrop-feature-p">Named implementation manager. Gate-controlled go-live. ARIO handles PMS integration, data validation, and channel configuration end to end.</p></div>
+                        <a href="/implementation" class="megadrop-feature-cta">View implementation <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <span class="nav-trigger">Resources <span class="nav-chevron"></span></span>
+            <div class="megadrop" style="min-width:800px">
+                <div class="megadrop-cols" style="grid-template-columns:1fr 1fr 1fr">
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Insights</span>
+                        <a href="/blog/overpaying-rms" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=140&q=80" alt="Revenue data analysis"></div><div><div class="drop-label">Why hotels overpay their RMS</div><div class="drop-desc">The real cost of ownership · 14 min</div></div></a>
+                        <a href="/blog/ota-commission" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=140&q=80" alt="Revenue analytics dashboard"></div><div><div class="drop-label">The OTA commission cliff</div><div class="drop-desc">When 18% becomes your largest cost · 11 min</div></div></a>
+                        <a href="/blog/group-displacement" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13V6l5-3 5 3v7H3z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><rect x="6.5" y="9" width="3" height="4" rx="0.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><path d="M6 7h1M9 7h1" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Group displacement explained</div><div class="drop-desc">Evaluate any RFP in 5 minutes · 8 min</div></div></a>
+                        <a href="/resources" class="drop-item" style="opacity:0.7"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6a1 1 0 011-1h3l1.5 1.5H13a1 1 0 011 1v4.5a1 1 0 01-1 1H3a1 1 0 01-1-1V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div><div class="drop-label">All articles →</div><div class="drop-desc">Full resource library</div></div></a>
+                    </div>
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Frameworks &amp; tools</span>
+                        <a href="/roi" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12.5h12" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round"/><rect x="3" y="7.5" width="2.5" height="5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="6.75" y="4.5" width="2.5" height="8" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="10.5" y="6" width="2.5" height="6.5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/></svg></div><div><div class="drop-label">ROI Framework</div><div class="drop-desc">Business case methodology for any property</div></div></a>
+                        <a href="/why-ario" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="12" width="12" height="1.5" rx="0.5" fill="rgba(200,168,75,0.8)"/><rect x="2" y="3" width="12" height="1.5" rx="0.5" fill="rgba(200,168,75,0.8)"/><rect x="4" y="4.5" width="1.5" height="7.5" rx="0.5" fill="rgba(255,255,255,0.55)"/><rect x="7.25" y="4.5" width="1.5" height="7.5" rx="0.5" fill="rgba(255,255,255,0.55)"/><rect x="10.5" y="4.5" width="1.5" height="7.5" rx="0.5" fill="rgba(255,255,255,0.55)"/></svg></div><div><div class="drop-label">Why ARIO</div><div class="drop-desc">Market positioning and competitive context</div></div></a>
+                        <a href="/implementation" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M4.5 6.5L8 3l3.5 3.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 13h9" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Implementation guide</div><div class="drop-desc">The full 4-phase deployment programme</div></div></a>
+                        <a href="/intelligence" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M8 2v1.5M8 12.5V14M2 8h1.5M12.5 8H14M3.5 3.5l1.1 1.1M11.4 11.4l1.1 1.1M12.5 3.5l-1.1 1.1M4.6 11.4l-1.1 1.1" stroke="rgba(255,255,255,0.5)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Intelligence Engine</div><div class="drop-desc">How the forecasting architecture works</div></div></a>
+                    </div>
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">About ARIO</span>
+                        <a href="/case-studies" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6a1 1 0 011-1h3l1.5 1.5H13a1 1 0 011 1v4.5a1 1 0 01-1 1H3a1 1 0 01-1-1V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div><div class="drop-label">Deployment profiles</div><div class="drop-desc">Property types and integration configurations</div></div></a>
+                        <a href="/security" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L3 4.5v4C3 11.5 5.5 14 8 14s5-2.5 5-5.5v-4L8 2z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><path d="M5.5 8.5l2 2 3-3" stroke="rgba(255,255,255,0.65)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="drop-label">Security &amp; compliance</div><div class="drop-desc">AES-256, GDPR, data architecture</div></div></a>
+                        <a href="/integrations" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10.5 2v4M5.5 2v4M3.5 6h9v2a4.5 4.5 0 01-9 0V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 12.5V15" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round"/></svg></div><div><div class="drop-label">Integrations</div><div class="drop-desc">Opera, Mews, SiteMinder, RateGain &amp; more</div></div></a>
+                        <a href="/contact" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="2" width="9" height="12" rx="1.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M6 5.5h4M6 8h4M6 10.5h2.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Contact</div><div class="drop-desc">Speak with our implementation team</div></div></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <span class="nav-trigger">Company <span class="nav-chevron"></span></span>
+            <div class="simpledrop">
+                <a href="/about" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">About ARIO</span></a>
+                <a href="/security" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Security &amp; compliance</span></a>
+                <div class="drop-simple-divider"></div>
+                <a href="/case-studies" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Deployment profiles</span></a>
+                <a href="/integrations" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Integrations</span></a>
+                <div class="drop-simple-divider"></div>
+                <a href="/contact" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Contact</span></a>
+            </div>
+        </div>
+
+        <a href="/pricing" style="font-size:13px;color:rgba(255,255,255,0.65);text-decoration:none;font-weight:500;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">Pricing</a>
+        <a href="/contact" class="nav-cta">Request a Demo →</a>
+    </div>
+</nav>
+
+    <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-glow"></div>
+        <div class="hero-glow2"></div>
+        <div class="hero-content">
+            <div class="hero-eyebrow">About ARIO</div>
+            <h1 class="hero-h1">Independent hotels deserve <em>institutional-grade</em> revenue science. Not a watered-down version of <em>someone else's</em> system.</h1>
+            <p class="hero-p">ARIO exists because the hospitality software market has a gap. Enterprise vendors sell to chains and price independents out. The independent-tier vendors price right but oversimplify the math. Nobody was building proper RM software for the independent hotel that runs Opera Cloud and takes revenue management seriously.</p>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="section-eyebrow">Why ARIO exists</div>
+        <h2 class="section-h2">A market <em>structurally underserved</em></h2>
+
+        <div class="mission-block">
+            <div class="mission-card">
+                <div class="mission-card-num">01</div>
+                <div class="mission-card-title">Enterprise vendors built for chains</div>
+                <div class="mission-card-body">Duetto, IDeaS, and the dimensional-depth tier price independents out — six-figure annual licences, six-month implementations, dedicated data-science teams to operate them. Built for properties that have a CFO signing the cheque.</div>
+            </div>
+            <div class="mission-card">
+                <div class="mission-card-num">02</div>
+                <div class="mission-card-title">Independent-tier vendors oversimplify</div>
+                <div class="mission-card-body">The £200/month tier prices right but treats every hotel as a 30-room B&amp;B with one room type and no group business. The maths is shallow, the audit trail is non-existent, and the "AI" is usually a moving average.</div>
+            </div>
+            <div class="mission-card">
+                <div class="mission-card-num">03</div>
+                <div class="mission-card-title">The middle is where the value sits</div>
+                <div class="mission-card-body">Boutique 50–250 room properties running Opera Cloud or Mews. Real revenue managers. Real comp sets. Real group business. Real ownership pressure. Nobody was building proper RM software for them — so we did.</div>
+            </div>
+        </div>
+
+        <div class="quote-block">
+            <div class="quote-mark">"</div>
+            <div class="quote-text">A hotel makes pricing decisions worth millions every year. The tools it makes them with should be honest about what they know — and disciplined enough to refuse a recommendation they can't justify.</div>
+            <div class="quote-source">ARIO operating principle, since day one</div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="section-eyebrow">Who ARIO is built for</div>
+        <h2 class="section-h2">Independent. Boutique. <em>Owner-operated.</em></h2>
+        <p class="section-p">If you're running 50–500 rooms, have a real revenue manager (or a GM who plays one part-time), and want institutional-grade decisions without an institutional contract — you're our customer. We're not for property aggregators or 1,000-room flagship chains; that's enterprise vendor territory.</p>
+
+        <div class="audience-grid">
+            <div class="audience-card">
+                <div class="audience-img"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80" alt="Independent Hotels"></div>
+                <div class="audience-body">
+                    <div class="audience-title">Independent</div>
+                    <div class="audience-detail">Single-property operators and boutique portfolios running Opera Cloud, Mews, or Cloudbeds. Want institutional-grade revenue management without enterprise-tier procurement.</div>
+                </div>
+            </div>
+            <div class="audience-card">
+                <div class="audience-img"><img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80" alt="Hotel Groups"></div>
+                <div class="audience-body">
+                    <div class="audience-title">Boutique groups</div>
+                    <div class="audience-detail">3–15 property collections with a head office RM team. Need chain features (cross-property roll-up, OHIP write-back) without a chain price tag.</div>
+                </div>
+            </div>
+            <div class="audience-card">
+                <div class="audience-img"><img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&q=80" alt="Branded Properties"></div>
+                <div class="audience-body">
+                    <div class="audience-title">Branded properties</div>
+                    <div class="audience-detail">Franchise operators inside larger flag who run their own revenue function. ARIO complements brand-mandated tools without replacing them.</div>
+                </div>
+            </div>
+            <div class="audience-card">
+                <div class="audience-img"><img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80" alt="Boutique Hotels"></div>
+                <div class="audience-body">
+                    <div class="audience-title">Boutique hotels</div>
+                    <div class="audience-detail">Owner-operated properties where the GM is also the RM and accountant. Want decisions explained in plain language they can defend to ownership.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="dark-section">
+        <div class="dark-content">
+            <div class="section-eyebrow" style="color: var(--gold)">How we operate</div>
+            <h2 class="section-h2">Three principles that <em>don't change</em>.</h2>
+            <p class="section-p">These principles drive every product decision, every pricing tier, every line of code. They're how a one-person shop today scales into a chain-grade vendor without losing what made it different.</p>
+
+            <div class="principle-grid">
+                <div class="principle">
+                    <h4>Honest defaults</h4>
+                    <p>Every "—" in the dashboard is a system telling the operator the truth: this metric isn't calibrated yet. No fabricated numbers. No "industry default" hiding behind a confidence percentage. If we don't know, we say so.</p>
+                </div>
+                <div class="principle">
+                    <h4>Audit-grade by construction</h4>
+                    <p>Every decision is content-hashed. Every push leaves a tamper-evident row. Every override carries operator email and timestamp. We don't ship features that bypass the audit chain — including for ourselves.</p>
+                </div>
+                <div class="principle">
+                    <h4>Operator intent wins</h4>
+                    <p>Per-date constraints, kill switch, shadow mode, founder release — all exist so the operator's decision overrides anything ARIO computes. The system serves the RM. Never the reverse.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="section-eyebrow">Our commitments</div>
+        <h2 class="section-h2">What we promise <em>every operator</em></h2>
+        <p class="section-p">Whatever the tier, whatever the property size, whatever the integration depth — every customer gets the same operating commitments. These are not aspirations; they are how the platform is built.</p>
+
+        <div class="commitments">
+            <div class="commitment">
+                <div class="commitment-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M10 5v5l3 2"/></svg></div>
+                <h4>Same-day <em>response</em></h4>
+                <p>Every inbound — sales, support, security review, integration — gets a substantive response from London the same business day. No ticket queues, no auto-responders, no offshore handoffs.</p>
+            </div>
+            <div class="commitment">
+                <div class="commitment-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17V8l7-5 7 5v9"/><path d="M3 13h14"/></svg></div>
+                <h4>Audit-traced <em>by construction</em></h4>
+                <p>Every recommendation, every override, every rate publish is logged in a tamper-evident journal. You can reconstruct any decision the platform has ever made — for ownership, for compliance, for your own peace of mind.</p>
+            </div>
+            <div class="commitment">
+                <div class="commitment-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l4 4 10-10"/></svg></div>
+                <h4>Honest <em>defaults</em></h4>
+                <p>If we don't have enough data to calibrate a number, we show "—" — not a fabricated default dressed up as a confident estimate. The platform refuses to push a recommendation it can't justify.</p>
+            </div>
+            <div class="commitment">
+                <div class="commitment-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M7 9h6M7 13h4"/></svg></div>
+                <h4>No <em>vendor lock-in</em></h4>
+                <p>Your decision journal, forecasts, and historical data export at any time, in any format. If you ever want to leave, you take everything with you. No hostage data, no exit fees, no commercial friction.</p>
+            </div>
+            <div class="commitment">
+                <div class="commitment-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l7-4 7 4v6c0 4-3 7-7 7s-7-3-7-7V7z"/><path d="M7 11l2 2 4-4"/></svg></div>
+                <h4>Operator <em>intent wins</em></h4>
+                <p>Every guardrail you set is respected. Every override you make is honoured. AutoPilot only runs inside the boundaries you define. The system serves the revenue manager — never the reverse.</p>
+            </div>
+            <div class="commitment">
+                <div class="commitment-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><circle cx="10" cy="10" r="4"/></svg></div>
+                <h4>Continuous <em>discipline</em></h4>
+                <p>Models retrain nightly. Forecasts back-test against your actuals every morning. Calibration drift triggers an alert. The platform earns its accuracy claim — every day, against your real data.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="section-eyebrow">Company facts</div>
+        <h2 class="section-h2">The <em>essentials</em></h2>
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px">
+            <div style="background:var(--white);border:1px solid var(--border);border-radius:8px;padding:28px">
+                <div style="font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;font-weight:600">Entity</div>
+                <div style="font-size:18px;font-weight:600;margin-bottom:6px">ARIO Technologies Ltd</div>
+                <div style="font-size:12px;color:var(--mid)">Registered in England &amp; Wales · United Kingdom</div>
+            </div>
+            <div style="background:var(--white);border:1px solid var(--border);border-radius:8px;padding:28px">
+                <div style="font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;font-weight:600">Founded</div>
+                <div style="font-size:18px;font-weight:600;margin-bottom:6px">2026</div>
+                <div style="font-size:12px;color:var(--mid)">Independent. Revenue-focused. Built for the operators we serve.</div>
+            </div>
+            <div style="background:var(--white);border:1px solid var(--border);border-radius:8px;padding:28px">
+                <div style="font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;font-weight:600">HQ</div>
+                <div style="font-size:18px;font-weight:600;margin-bottom:6px">London, United Kingdom</div>
+                <div style="font-size:12px;color:var(--mid)">UK and EU independent and boutique hotels</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-strip">
+        <h3 class="cta-h3">Revenue management at institutional standard. <em>Speak with our team.</em></h3>
+        <p>A structured deployment programme with direct executive oversight. ARIO handles PMS integration, data validation, and channel configuration — your Revenue Manager can focus on the data from day one.</p>
+        <a href="/#pilot" class="btn-primary">Request a Demo
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+    </section>
+
+    <footer>
+        <div class="footer-top">
+            <div>
+                <div class="footer-rule"></div>
+                <div class="footer-brand">ARIO</div>
+                <div class="footer-tagline">Revenue Operating System · Institutional-grade intelligence for independent hotels</div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <a href="/platform">Capabilities</a>
+                    <a href="/#demo">Live Demo</a>
+                    <a href="/#how">How it works</a>
+                    <a href="/pricing">Pricing</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Trust</h4>
+                    <a href="/security">Security &amp; compliance</a>
+                    <a href="/about">About ARIO</a>
+                    <a href="/contact">Request Deployment</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <a href="/contact">Open contact form</a>
+                    <a href="mailto:hello@ariorms.com">hello@ariorms.com</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-copy">© 2026 ARIO Technologies Ltd. All rights reserved.</div>
+            <div class="footer-copy" style="letter-spacing: 0.08em; font-size: 10px; opacity: 0.5">Every signal. A clear decision.</div>
+        </div>
+    </footer>
+
+    <script>
+    (function(){
+        document.querySelectorAll('.nav-item').forEach(function(item){
+            item.addEventListener('mouseenter', function(){
+                var drop = item.querySelector('.megadrop');
+                if(!drop) return;
+                // reset any previous correction
+                drop.style.left = '';
+                drop.style.right = '';
+                requestAnimationFrame(function(){
+                    var r = drop.getBoundingClientRect();
+                    var overflow = r.right - (window.innerWidth - 16);
+                    if(overflow > 0){
+                        // shift left by how much it overflows
+                        var curLeft = parseFloat(drop.style.left) || 0;
+                        drop.style.left = (curLeft - overflow) + 'px';
+                    }
+                });
+            });
+        });
+    })();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

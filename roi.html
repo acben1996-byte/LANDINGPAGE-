@@ -1,0 +1,774 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="language" content="English">
+    <link rel="canonical" href="https://ariorms.com/roi">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARIO — ROI Framework</title>
+    <meta name="description" content="An honest framework for independent hotel owners and GMs evaluating whether a Revenue Operating System pays for itself. Structured analysis, not marketing.">    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box }
+        :root {
+            --navy: #0f1e3c; --navy2: #152d56; --navy3: #1e3a6e;
+            --gold: #c8a84b; --gold2: #e8c96b;
+            --white: #fff; --off: #f7f5f0; --cream: #faf8f4;
+            --border: #dde3ef; --text: #0f1e3c; --mid: #3d5080; --dim: #7a8aaa;
+            --green: #16a34a; --red: #dc2626;
+        }
+        html { scroll-behavior: smooth }
+        body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; -webkit-font-smoothing: antialiased }
+
+        /* ─── NAV ─── */
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(15,30,60,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(200,168,75,0.2); padding: 0 48px; height: 64px; display: flex; align-items: center; justify-content: space-between }
+        .nav-brand a { display: flex; align-items: center; gap: 12px; text-decoration: none }
+        .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 31px; font-weight: 700; letter-spacing: 1px; line-height: 1; background: linear-gradient(158deg, #ffffff 0%, #fff4d6 18%, #f0d080 38%, #c8a84b 58%, #8a6200 82%, #4a3000 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.55)); }
+        .nav-sub { font-size: 9px; font-weight: 600; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; border-left: 1px solid rgba(200,168,75,0.4); padding-left: 12px; margin-left: 4px }
+        .nav-links { display: flex; align-items: center; gap: 24px }
+        .nav-links a { font-size: 13px; color: rgba(255,255,255,0.65); text-decoration: none; font-weight: 500; transition: color 0.2s }
+        .nav-links a:hover { color: var(--white) }
+        .nav-links a.active { color: var(--gold) }
+        .nav-cta { background: var(--gold); color: var(--navy) !important; font-weight: 700 !important; padding: 10px 22px; border-radius: 4px; font-size: 13px !important; transition: background 0.2s, transform 0.1s !important }
+        .nav-cta:hover { background: var(--gold2) !important; transform: translateY(-1px) }
+
+        /* ── Professional micro-animations ─── */
+        @keyframes ario-cta-shimmer {
+            0%   { background-position: -200% center }
+            100% { background-position: 200% center }
+        }
+        .nav-cta {
+            background: linear-gradient(90deg, #c8a84b 0%, #e8c96b 40%, #c8a84b 60%, #a07820 100%) !important;
+            background-size: 200% auto !important;
+            animation: ario-cta-shimmer 3.5s linear infinite !important;
+            color: #0f1e3c !important;
+            font-weight: 700 !important;
+            padding: 10px 22px;
+            border-radius: 4px;
+            font-size: 13px !important;
+            transition: opacity 0.15s ease, transform 0.12s ease !important;
+            text-decoration: none;
+        }
+        .nav-cta:hover {
+            opacity: 0.9 !important;
+            transform: translateY(-1px) !important;
+        }
+
+        /* Megadrop item stagger on open */
+        @keyframes ario-drop-item-in {
+            from { opacity: 0; transform: translateY(-4px) }
+            to   { opacity: 1; transform: translateY(0) }
+        }
+        .nav-item:hover .drop-item {
+            animation: ario-drop-item-in 0.18s ease both;
+        }
+        .nav-item:hover .drop-item:nth-child(2) { animation-delay: 0.04s }
+        .nav-item:hover .drop-item:nth-child(3) { animation-delay: 0.08s }
+        .nav-item:hover .drop-item:nth-child(4) { animation-delay: 0.12s }
+        .nav-item:hover .drop-item:nth-child(5) { animation-delay: 0.16s }
+
+        /* Nav trigger hover underline draw */
+        .nav-trigger {
+            position: relative;
+        }
+        .nav-trigger::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: -2px;
+            width: 0; height: 1px;
+            background: var(--gold, #c8a84b);
+            transition: width 0.2s ease;
+        }
+        .nav-item:hover .nav-trigger::after { width: 100% }
+
+        /* Drop item arrow on hover */
+        .drop-item::after {
+            content: '';
+            display: block;
+            width: 5px; height: 5px;
+            border-right: 1.5px solid rgba(200,168,75,0);
+            border-top: 1.5px solid rgba(200,168,75,0);
+            transform: rotate(45deg) translateX(-3px);
+            transition: transform 0.15s ease, border-color 0.15s ease;
+            margin-left: auto;
+            flex-shrink: 0;
+            align-self: center;
+        }
+        .drop-item:hover::after {
+            transform: rotate(45deg) translateX(0);
+            border-color: rgba(200,168,75,0.7);
+        }
+
+        /* Megadrop feature panel subtle gradient shift */
+        .megadrop-feature {
+            background: linear-gradient(160deg, #0f1e3c 0%, #152d56 100%);
+        }
+
+        /* ── MEGADROPDOWN SYSTEM ─────────────────────────── */
+        .nav-item { position: relative; display: flex; align-items: center }
+        .nav-item > .nav-trigger {
+            display: flex; align-items: center; gap: 5px;
+            font-size: 13px; color: rgba(255,255,255,0.65);
+            text-decoration: none; font-weight: 500;
+            transition: color 0.2s; cursor: pointer; background: none;
+            border: none; padding: 0; font-family: inherit;
+        }
+        .nav-item:hover > .nav-trigger { color: #fff }
+        .nav-chevron {
+            display: inline-block; width: 10px; height: 10px;
+            border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+            transform: rotate(45deg) translateY(-2px);
+            transition: transform 0.2s ease;
+        }
+        .nav-item:hover .nav-chevron { transform: rotate(225deg) translateY(2px) }
+        .megadrop {
+            position: absolute;
+            top: calc(100% + 14px);
+            left: 50%; transform: translateX(-50%) translateY(-10px);
+            background: #fff;
+            border: 1px solid rgba(15,30,60,0.09);
+            border-radius: 10px;
+            box-shadow: 0 24px 64px rgba(15,30,60,0.13), 0 4px 16px rgba(15,30,60,0.07);
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s;
+            pointer-events: none; z-index: 200; min-width: 560px; max-width: calc(100vw - 80px);
+        }
+        .megadrop::before { content: ''; position: absolute; top: -18px; left: 0; right: 0; height: 18px; }
+        .nav-item:hover .megadrop {
+            opacity: 1; visibility: visible;
+            transform: translateX(-50%) translateY(0); pointer-events: all;
+            transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0s;
+        }
+        .megadrop-inner { display: grid; gap: 0; border-radius: 10px; overflow: hidden }
+        .megadrop-cols { display: grid; grid-template-columns: 1fr 1fr; }
+        .megadrop-col { padding: 20px 4px }
+        .megadrop-col + .megadrop-col { border-left: 1px solid #eef0f6 }
+        .megadrop-col-label { font-size: 10px; font-weight: 700; color: #94a3b8; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 20px 10px; display: block; }
+        .drop-item { display: flex; align-items: flex-start; gap: 13px; padding: 10px 20px; text-decoration: none; border-radius: 6px; margin: 0 6px; transition: background 0.12s ease; }
+        .drop-item:hover { background: #f7f9fc }
+        .drop-icon { width: 34px; height: 34px; border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #0f1e3c; border: 1px solid rgba(200,168,75,0.18); transition: background 0.15s ease, border-color 0.15s ease; }
+        .drop-item:hover .drop-icon { background: #152d56; border-color: rgba(200,168,75,0.4); }
+        .drop-label { font-size: 13px; font-weight: 600; color: #0f1e3c; line-height: 1.3; margin-bottom: 3px; }
+        .drop-desc { font-size: 11.5px; color: #7a8aaa; line-height: 1.45 }
+        .megadrop-feature { background: #0f1e3c; padding: 24px; border-radius: 0 10px 10px 0; display: flex; flex-direction: column; justify-content: space-between; }
+        .megadrop-feature-tag { font-size: 9px; font-weight: 700; color: #c8a84b; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+        .megadrop-feature-h { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: #fff; line-height: 1.3; letter-spacing: -0.3px; margin-bottom: 10px; }
+        .megadrop-feature-p { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.55; margin-bottom: 18px; flex: 1 }
+        .megadrop-feature-cta { display: inline-flex; align-items: center; gap: 7px; background: #c8a84b; color: #0f1e3c; padding: 9px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; text-decoration: none; letter-spacing: 0.02em; align-self: flex-start; transition: background 0.15s, transform 0.12s; }
+        .megadrop-feature-cta:hover { background: #e8c96b; transform: translateY(-1px) }
+        .simpledrop { position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%) translateY(-10px); background: #fff; border: 1px solid rgba(15,30,60,0.09); border-radius: 8px; box-shadow: 0 20px 56px rgba(15,30,60,0.12); opacity: 0; visibility: hidden; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s; pointer-events: none; z-index: 200; min-width: 230px; padding: 8px; }
+        .simpledrop::before { content: ''; position: absolute; top: -18px; left: 0; right: 0; height: 18px; }
+        .nav-item:hover .simpledrop { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: all; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0s; }
+        .drop-simple-item { display: flex; align-items: center; gap: 10px; padding: 9px 14px; text-decoration: none; border-radius: 5px; transition: background 0.1s ease; }
+        .drop-simple-item:hover { background: #f7f9fc }
+        .drop-simple-dot { width: 6px; height: 6px; border-radius: 50%; background: #c8a84b; flex-shrink: 0 }
+        .drop-simple-label { font-size: 13px; font-weight: 500; color: #0f1e3c }
+        .drop-simple-divider { height: 1px; background: #eef0f6; margin: 4px 8px }
+        /* Drop item with photography */
+        .drop-photo { width: 68px; height: 50px; border-radius: 5px; overflow: hidden; flex-shrink: 0; background: #0f1e3c; }
+        .drop-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; }
+        .drop-item:hover .drop-photo img { transform: scale(1.06); }
+        .drop-simple-photo { width: 52px; height: 40px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+        .drop-simple-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* ─── HERO ─── */
+        .hero { min-height: 68vh; background: var(--navy); position: relative; padding: 148px 80px 96px; overflow: hidden; display: flex; align-items: center }
+        .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(200,168,75,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.04) 1px,transparent 1px); background-size: 60px 60px; opacity: 0.5 }
+        .hero-glow { position: absolute; top: -200px; right: -200px; width: 700px; height: 700px; background: radial-gradient(circle, rgba(200,168,75,0.12), transparent 70%); pointer-events: none }
+        .hero-glow2 { position: absolute; bottom: -200px; left: -200px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(30,58,110,0.5), transparent 70%); pointer-events: none }
+        .hero-content { max-width: 840px; position: relative; z-index: 2 }
+        .hero-eyebrow { font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 22px; display: flex; align-items: center; gap: 12px }
+        .hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--gold) }
+        .hero-h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5.2vw, 68px); font-weight: 600; color: var(--white); line-height: 1.05; letter-spacing: -1.5px; margin-bottom: 28px }
+        .hero-h1 em { font-style: italic; color: var(--gold) }
+        .hero-p { font-size: 17px; line-height: 1.65; color: rgba(255,255,255,0.7); max-width: 680px }
+
+        /* ─── LAYOUT ─── */
+        .section-wrap { padding: 96px 80px; max-width: 1280px; margin: 0 auto }
+        .section-eyebrow { font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 12px }
+        .section-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--gold) }
+        .section-h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4.5vw, 52px); font-weight: 600; color: var(--text); line-height: 1.08; letter-spacing: -1px; margin-bottom: 16px; max-width: 760px }
+        .section-h2 em { font-style: italic; color: var(--navy3) }
+        .section-lead { font-size: 16px; line-height: 1.65; color: var(--mid); max-width: 700px; margin-bottom: 56px }
+
+        /* ─── VALUE SOURCE CARDS ─── */
+        .value-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px }
+        .value-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 36px; position: relative; overflow: hidden; transition: transform 0.28s ease, box-shadow 0.28s ease }
+        .value-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)) }
+        .value-card:hover { transform: translateY(-3px); box-shadow: 0 18px 48px rgba(15,30,60,0.08) }
+        .value-num { font-family: 'Cormorant Garamond', serif; font-size: 56px; font-weight: 600; color: rgba(200,168,75,0.25); line-height: 1; margin-bottom: 16px }
+        .value-h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; color: var(--text); margin-bottom: 14px; letter-spacing: -0.3px; line-height: 1.2 }
+        .value-p { font-size: 14px; line-height: 1.65; color: var(--mid) }
+        .value-p strong { color: var(--text); font-weight: 600 }
+        .value-example { margin-top: 18px; padding: 14px 16px; background: var(--cream); border-radius: 4px; border-left: 3px solid var(--gold); font-size: 13px; line-height: 1.6; color: var(--mid) }
+        .value-example strong { color: var(--text) }
+
+        /* ─── DARK BAND ─── */
+        .dark-band { background: var(--navy); position: relative; overflow: hidden }
+        .dark-band::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(200,168,75,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.025) 1px,transparent 1px); background-size: 80px 80px; pointer-events: none }
+        .dark-band .section-wrap { position: relative; z-index: 1 }
+        .dark-band .section-h2 { color: var(--white) }
+        .dark-band .section-h2 em { color: var(--gold) }
+        .dark-band .section-lead { color: rgba(255,255,255,0.62) }
+
+        /* ─── WORKED EXAMPLE ─── */
+        .example-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start }
+        .example-inputs { }
+        .example-inputs-title { font-size: 12px; font-weight: 600; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px }
+        .input-row { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.07) }
+        .input-row:first-of-type { border-top: 1px solid rgba(255,255,255,0.07) }
+        .input-label { font-size: 13px; color: rgba(255,255,255,0.55); font-weight: 400 }
+        .input-value { font-size: 14px; color: var(--white); font-weight: 600; letter-spacing: -0.2px }
+        .example-calc { }
+        .calc-box { background: rgba(200,168,75,0.06); border: 1px solid rgba(200,168,75,0.2); border-radius: 8px; padding: 32px }
+        .calc-title { font-size: 12px; font-weight: 600; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 24px }
+        .calc-step { padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.07) }
+        .calc-step:last-of-type { border-bottom: none }
+        .calc-step-label { font-size: 12px; color: rgba(255,255,255,0.45); margin-bottom: 6px; letter-spacing: 0.3px }
+        .calc-step-value { font-size: 16px; font-weight: 600; color: var(--white); letter-spacing: -0.3px }
+        .calc-step-note { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 4px; line-height: 1.5 }
+        .calc-result { margin-top: 20px; padding: 20px; background: rgba(200,168,75,0.12); border-radius: 6px; border: 1px solid rgba(200,168,75,0.3); text-align: center }
+        .calc-result-label { font-size: 11px; color: rgba(200,168,75,0.7); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px }
+        .calc-result-figure { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 600; color: var(--gold); letter-spacing: -1px; line-height: 1 }
+        .calc-result-sub { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 8px; line-height: 1.5 }
+        .calc-disclaimer { margin-top: 20px; font-size: 12px; color: rgba(255,255,255,0.38); line-height: 1.6; font-style: italic }
+
+        /* ─── COST SECTION ─── */
+        .cost-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start }
+        .cost-table { background: var(--white); border: 1px solid var(--border); border-radius: 8px; overflow: hidden }
+        .cost-header { background: var(--navy); padding: 20px 28px }
+        .cost-header-title { font-size: 12px; font-weight: 600; color: var(--gold); letter-spacing: 3px; text-transform: uppercase }
+        .cost-row { display: flex; justify-content: space-between; align-items: baseline; padding: 16px 28px; border-top: 1px solid var(--border) }
+        .cost-row:first-of-type { border-top: none }
+        .cost-row-label { font-size: 14px; color: var(--mid) }
+        .cost-row-value { font-size: 14px; font-weight: 600; color: var(--text) }
+        .cost-row.total { background: rgba(200,168,75,0.05); border-top: 2px solid rgba(200,168,75,0.3) }
+        .cost-row.total .cost-row-label { font-weight: 600; color: var(--text) }
+        .cost-row.total .cost-row-value { color: var(--gold); font-size: 16px }
+        .breakeven-box { background: var(--navy); border-radius: 8px; padding: 32px; color: var(--white) }
+        .breakeven-title { font-size: 12px; font-weight: 600; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px }
+        .breakeven-figure { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 600; color: var(--gold); line-height: 1; margin-bottom: 12px; letter-spacing: -1px }
+        .breakeven-context { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.65 }
+        .breakeven-context strong { color: var(--white) }
+        .breakeven-math { margin-top: 20px; padding: 16px; background: rgba(255,255,255,0.04); border-radius: 6px; font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.7; font-family: 'DM Sans', sans-serif }
+        .breakeven-math strong { color: rgba(255,255,255,0.75) }
+
+        /* ─── HONEST SECTION ─── */
+        .honest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 0 }
+        .honest-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 32px; border-left: 4px solid var(--navy3); transition: transform 0.2s ease }
+        .honest-card:hover { transform: translateY(-2px) }
+        .honest-icon { width: 36px; height: 36px; border-radius: 50%; background: rgba(15,30,60,0.06); display: flex; align-items: center; justify-content: center; margin-bottom: 16px }
+        .honest-h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 10px; letter-spacing: -0.1px }
+        .honest-p { font-size: 14px; line-height: 1.65; color: var(--mid) }
+
+        /* ─── CTA ─── */
+        .cta-strip { padding: 88px 48px; background: linear-gradient(135deg, var(--navy), var(--navy3)); color: var(--white); text-align: center; position: relative; overflow: hidden }
+        .cta-strip::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 900px; height: 900px; background: radial-gradient(circle, rgba(200,168,75,0.1), transparent 70%); pointer-events: none }
+        .cta-h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(30px, 3.8vw, 46px); font-weight: 600; margin-bottom: 16px; letter-spacing: -0.5px; position: relative; max-width: 720px; margin-left: auto; margin-right: auto }
+        .cta-h3 em { font-style: italic; color: var(--gold) }
+        .cta-strip .cta-sub { font-size: 15px; color: rgba(255,255,255,0.62); margin-bottom: 12px; max-width: 540px; margin-left: auto; margin-right: auto; position: relative; line-height: 1.6 }
+        .cta-strip .cta-note { font-size: 13px; color: rgba(255,255,255,0.38); max-width: 440px; margin: 0 auto 36px; position: relative; line-height: 1.6; font-style: italic }
+        .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--navy); padding: 16px 34px; border-radius: 4px; text-decoration: none; font-size: 14px; font-weight: 700; letter-spacing: 0.3px; transition: background 0.2s, transform 0.1s; position: relative }
+        .btn-primary:hover { background: var(--gold2); transform: translateY(-1px) }
+
+        /* ─── FOOTER ─── */
+        footer { background: #060d1c; color: rgba(255,255,255,0.5); padding: 64px 80px 32px }
+        .footer-top { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; margin-bottom: 48px }
+        .footer-rule { width: 32px; height: 1px; background: var(--gold); margin-bottom: 18px }
+        .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 32px; color: var(--white); font-weight: 700; margin-bottom: 8px }
+        .footer-tagline { font-size: 12px; line-height: 1.6; max-width: 300px }
+        .footer-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px }
+        .footer-col h4 { font-size: 11px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; font-weight: 600 }
+        .footer-col a { display: block; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; padding: 4px 0; transition: color 0.2s }
+        .footer-col a:hover { color: var(--white) }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px }
+        .footer-copy { font-size: 11px; color: rgba(255,255,255,0.4) }
+
+        /* ─── SCROLL ANIMATIONS ─── */
+        .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease }
+        .fade-up.visible { opacity: 1; transform: translateY(0) }
+        .fade-up-delay-1 { transition-delay: 0.1s }
+        .fade-up-delay-2 { transition-delay: 0.2s }
+        .fade-up-delay-3 { transition-delay: 0.3s }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 960px) {
+            nav { padding: 0 20px }
+            .nav-links a:not(.nav-cta):not(:nth-last-child(2)) { display: none }
+            .hero { padding: 120px 24px 72px }
+            .section-wrap { padding: 64px 24px }
+            .value-grid { grid-template-columns: 1fr }
+            .example-layout { grid-template-columns: 1fr }
+            .cost-layout { grid-template-columns: 1fr }
+            .honest-grid { grid-template-columns: 1fr }
+            footer { padding: 48px 24px 24px }
+            .footer-top { grid-template-columns: 1fr; gap: 32px }
+            .footer-links { grid-template-columns: 1fr 1fr }
+            .cta-strip { padding: 64px 24px }
+        }
+        @media (max-width: 640px) {
+            .footer-links { grid-template-columns: 1fr }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+    <div class="nav-brand"><a href="/" style="text-decoration:none;display:flex;align-items:center;gap:12px"><div class="nav-logo">ARIO</div><div class="nav-sub">Revenue OS</div></a></div>
+    <div class="nav-links" style="display:flex;align-items:center;gap:22px">
+
+        <div class="nav-item">
+            <span class="nav-trigger">Platform <span class="nav-chevron"></span></span>
+            <div class="megadrop" style="min-width:760px;left:0;transform:translateX(0) translateY(-10px)">
+                <div class="megadrop-cols" style="grid-template-columns:1fr 1fr 1.1fr">
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Pricing intelligence</span>
+                        <a href="/platform#forecast" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12l3-3.5 2.5 2L11 5l3 3" stroke="rgba(200,168,75,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 14h12" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Demand Forecasting</div><div class="drop-desc">Proprietary ensemble, confidence scoring, 365-day horizon</div></div></a>
+                        <a href="/intelligence" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M8 2v1.5M8 12.5V14M2 8h1.5M12.5 8H14M3.5 3.5l1.1 1.1M11.4 11.4l1.1 1.1M12.5 3.5l-1.1 1.1M4.6 11.4l-1.1 1.1" stroke="rgba(255,255,255,0.5)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Intelligence Engine</div><div class="drop-desc">How the forecasting architecture works</div></div></a>
+                        <a href="/platform#group" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13V6l5-3 5 3v7H3z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><rect x="6.5" y="9" width="3" height="4" rx="0.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><path d="M6 7h1M9 7h1" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Group Displacement</div><div class="drop-desc">Monte Carlo RFP evaluation — net displacement maths</div></div></a>
+                    </div>
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Distribution &amp; operations</span>
+                        <a href="/platform#autopilot" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.5 2.5L2 7l5 1.5L8.5 14l5-11.5z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><path d="M7 8.5l2.5-3" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Autopilot Distribution</div><div class="drop-desc">Rate pushes to all major channels — confirmed by read-back</div></div></a>
+                        <a href="/platform#journal" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="2" width="9" height="12" rx="1.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M6 5.5h4M6 8h4M6 10.5h2.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Decision Journal</div><div class="drop-desc">Every decision logged, attributed, and audit-ready</div></div></a>
+                        <a href="/implementation" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M4.5 6.5L8 3l3.5 3.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 13h9" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Implementation</div><div class="drop-desc">14-day deployment — gate-controlled, named manager</div></div></a>
+                    </div>
+                    <div class="megadrop-feature">
+                        <div><div class="megadrop-feature-tag">Full platform</div><div class="megadrop-feature-h">Institutional-grade revenue management. Independent scale.</div><p class="megadrop-feature-p">Ensemble forecasting. Tamper-evident audit trail. Full OTA distribution. Gate-controlled autonomy. Operational within 14 days.</p></div>
+                        <a href="/platform" class="megadrop-feature-cta">Explore the platform <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <span class="nav-trigger">Why ARIO <span class="nav-chevron"></span></span>
+            <div class="megadrop" style="min-width:600px">
+                <div class="megadrop-cols" style="grid-template-columns:1fr 1.15fr">
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">The case for ARIO</span>
+                        <a href="/why-ario" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=140&q=80" alt="Revenue management strategy"></div><div><div class="drop-label">Why ARIO</div><div class="drop-desc">The structural RMS market gap — and where we sit</div></div></a>
+                        <a href="/why-ario#compare" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=140&q=80" alt="Enterprise software comparison"></div><div><div class="drop-label">ARIO vs enterprise RMS</div><div class="drop-desc">Capability comparison — without the enterprise price</div></div></a>
+                        <a href="/roi" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12.5h12" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round"/><rect x="3" y="7.5" width="2.5" height="5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="6.75" y="4.5" width="2.5" height="8" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="10.5" y="6" width="2.5" height="6.5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/></svg></div><div><div class="drop-label">ROI Framework</div><div class="drop-desc">Build the business case for your property</div></div></a>
+                        <a href="/case-studies" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6a1 1 0 011-1h3l1.5 1.5H13a1 1 0 011 1v4.5a1 1 0 01-1 1H3a1 1 0 01-1-1V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div><div class="drop-label">Deployment Profiles</div><div class="drop-desc">Property types, PMS configurations, operating models</div></div></a>
+                    </div>
+                    <div class="megadrop-feature">
+                        <div><div class="megadrop-feature-tag">Deployment programme</div><div class="megadrop-feature-h">Enterprise-class deployment. Configured to your property within 14 days.</div><p class="megadrop-feature-p">Named implementation manager. Gate-controlled go-live. ARIO handles PMS integration, data validation, and channel configuration end to end.</p></div>
+                        <a href="/implementation" class="megadrop-feature-cta">View implementation <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <span class="nav-trigger">Resources <span class="nav-chevron"></span></span>
+            <div class="megadrop" style="min-width:800px">
+                <div class="megadrop-cols" style="grid-template-columns:1fr 1fr 1fr">
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Insights</span>
+                        <a href="/blog/overpaying-rms" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=140&q=80" alt="Revenue data analysis"></div><div><div class="drop-label">Why hotels overpay their RMS</div><div class="drop-desc">The real cost of ownership · 14 min</div></div></a>
+                        <a href="/blog/ota-commission" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=140&q=80" alt="Revenue analytics dashboard"></div><div><div class="drop-label">The OTA commission cliff</div><div class="drop-desc">When 18% becomes your largest cost · 11 min</div></div></a>
+                        <a href="/blog/group-displacement" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13V6l5-3 5 3v7H3z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><rect x="6.5" y="9" width="3" height="4" rx="0.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><path d="M6 7h1M9 7h1" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Group displacement explained</div><div class="drop-desc">Evaluate any RFP in 5 minutes · 8 min</div></div></a>
+                        <a href="/resources" class="drop-item" style="opacity:0.7"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6a1 1 0 011-1h3l1.5 1.5H13a1 1 0 011 1v4.5a1 1 0 01-1 1H3a1 1 0 01-1-1V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div><div class="drop-label">All articles →</div><div class="drop-desc">Full resource library</div></div></a>
+                    </div>
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Frameworks &amp; tools</span>
+                        <a href="/roi" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12.5h12" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round"/><rect x="3" y="7.5" width="2.5" height="5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="6.75" y="4.5" width="2.5" height="8" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="10.5" y="6" width="2.5" height="6.5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/></svg></div><div><div class="drop-label">ROI Framework</div><div class="drop-desc">Business case methodology for any property</div></div></a>
+                        <a href="/why-ario" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="12" width="12" height="1.5" rx="0.5" fill="rgba(200,168,75,0.8)"/><rect x="2" y="3" width="12" height="1.5" rx="0.5" fill="rgba(200,168,75,0.8)"/><rect x="4" y="4.5" width="1.5" height="7.5" rx="0.5" fill="rgba(255,255,255,0.55)"/><rect x="7.25" y="4.5" width="1.5" height="7.5" rx="0.5" fill="rgba(255,255,255,0.55)"/><rect x="10.5" y="4.5" width="1.5" height="7.5" rx="0.5" fill="rgba(255,255,255,0.55)"/></svg></div><div><div class="drop-label">Why ARIO</div><div class="drop-desc">Market positioning and competitive context</div></div></a>
+                        <a href="/implementation" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M4.5 6.5L8 3l3.5 3.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 13h9" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Implementation guide</div><div class="drop-desc">The full 4-phase deployment programme</div></div></a>
+                        <a href="/intelligence" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M8 2v1.5M8 12.5V14M2 8h1.5M12.5 8H14M3.5 3.5l1.1 1.1M11.4 11.4l1.1 1.1M12.5 3.5l-1.1 1.1M4.6 11.4l-1.1 1.1" stroke="rgba(255,255,255,0.5)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Intelligence Engine</div><div class="drop-desc">How the forecasting architecture works</div></div></a>
+                    </div>
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">About ARIO</span>
+                        <a href="/case-studies" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6a1 1 0 011-1h3l1.5 1.5H13a1 1 0 011 1v4.5a1 1 0 01-1 1H3a1 1 0 01-1-1V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div><div class="drop-label">Deployment profiles</div><div class="drop-desc">Property types and integration configurations</div></div></a>
+                        <a href="/security" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L3 4.5v4C3 11.5 5.5 14 8 14s5-2.5 5-5.5v-4L8 2z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><path d="M5.5 8.5l2 2 3-3" stroke="rgba(255,255,255,0.65)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="drop-label">Security &amp; compliance</div><div class="drop-desc">AES-256, GDPR, data architecture</div></div></a>
+                        <a href="/integrations" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10.5 2v4M5.5 2v4M3.5 6h9v2a4.5 4.5 0 01-9 0V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 12.5V15" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round"/></svg></div><div><div class="drop-label">Integrations</div><div class="drop-desc">Opera, Mews, SiteMinder, RateGain &amp; more</div></div></a>
+                        <a href="/contact" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="2" width="9" height="12" rx="1.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M6 5.5h4M6 8h4M6 10.5h2.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Contact</div><div class="drop-desc">Speak with our implementation team</div></div></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <span class="nav-trigger">Company <span class="nav-chevron"></span></span>
+            <div class="simpledrop">
+                <a href="/about" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">About ARIO</span></a>
+                <a href="/security" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Security &amp; compliance</span></a>
+                <div class="drop-simple-divider"></div>
+                <a href="/case-studies" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Deployment profiles</span></a>
+                <a href="/integrations" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Integrations</span></a>
+                <div class="drop-simple-divider"></div>
+                <a href="/contact" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Contact</span></a>
+            </div>
+        </div>
+
+        <a href="/pricing" style="font-size:13px;color:rgba(255,255,255,0.65);text-decoration:none;font-weight:500;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">Pricing</a>
+        <a href="/contact" class="nav-cta">Request a Demo →</a>
+    </div>
+</nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-glow"></div>
+        <div class="hero-glow2"></div>
+        <div class="hero-content">
+            <div class="hero-eyebrow">ROI Framework · Business case</div>
+            <h1 class="hero-h1">Building the business case for<br><em>revenue strategy investment.</em></h1>
+            <p class="hero-p">An honest framework for independent hotel owners and GMs evaluating whether a Revenue Operating System pays for itself. The goal here is not to persuade you — it is to give you the tools to reach your own conclusion using your own numbers.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 1: Three sources of value -->
+    <div style="background: var(--cream)">
+        <div class="section-wrap">
+            <div class="section-eyebrow fade-up">Where the value comes from</div>
+            <h2 class="section-h2 fade-up fade-up-delay-1">The three sources of<br><em>RMS value.</em></h2>
+            <p class="section-lead fade-up fade-up-delay-2">Revenue management systems generate financial returns through three distinct mechanisms. Each operates independently — which means a property that is already strong on one dimension may have more or less headroom than its total revenue figure would suggest. Understanding which levers apply to your property is the first step in a credible business case.</p>
+
+            <div class="value-grid">
+                <div class="value-card fade-up">
+                    <div class="value-num">01</div>
+                    <h3 class="value-h3">Rate capture on high-demand nights</h3>
+                    <p class="value-p">Most independent hotels set rates through a weekly or twice-weekly manual review. On the 20–30 high-demand nights per year — bank holidays, local events, conference weekends — the gap between the rate set on Monday and the demand signal on Friday is where revenue is most frequently left on the table. The question is not what your average rate was. <strong>It is what it could have been on the specific dates where demand materially exceeded supply.</strong></p>
+                    <div class="value-example">
+                        <strong>Illustrative:</strong> A 100-room hotel with 12 high-demand nights per quarter where the rate was £30/room below optimal loses roughly <strong>£36,000/year</strong> from rate capture alone — before any other optimisation.
+                    </div>
+                </div>
+
+                <div class="value-card fade-up fade-up-delay-1">
+                    <div class="value-num">02</div>
+                    <h3 class="value-h3">Displacement accuracy on group business</h3>
+                    <p class="value-p">Group bookings that displace higher-value transient demand are one of the least visible sources of revenue leakage in independent hotels. Without a displacement model, most GMs accept group business based on total room revenue, without calculating what transient demand those dates would have generated if the block were not held. <strong>A miscalculated group block on a peak weekend can cost more in displaced transient revenue than the group itself generates.</strong> The calculation requires a reliable pickup forecast — which a manual process typically cannot produce.</p>
+                    <div class="value-example">
+                        <strong>Why it matters:</strong> A 30-room group at £95/room accepted on a date where unconstrained transient demand would have driven £145/room average rate costs the property £1,500 in net rate displacement for that single block — before ancillary spend differences are accounted for.
+                    </div>
+                </div>
+
+                <div class="value-card fade-up fade-up-delay-2">
+                    <div class="value-num">03</div>
+                    <h3 class="value-h3">Channel efficiency and commission leakage</h3>
+                    <p class="value-p">Rate parity violations, OTA over-reliance, and commission structure inefficiencies erode net revenue independently of occupancy performance. The commission delta between a hotel at 70% OTA mix and one at 50% OTA mix is not trivial at scale. Beyond commission rates, parity violations create price anchoring problems — guests who find inconsistent rates across channels develop lower price expectations that persist beyond the booking in question. <strong>Channel mix is a revenue management variable, not a distribution department concern.</strong></p>
+                    <div class="value-example">
+                        <strong>Illustrative:</strong> Moving from 70% to 50% OTA mix on £100k room revenue, at 18% average OTA commission versus 4% direct booking cost, saves approximately <strong>£1,800 in commission per £100k revenue</strong> — or roughly £63,000/year on a £3.5M property.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 2: Worked example -->
+    <div class="dark-band">
+        <div class="section-wrap">
+            <div class="section-eyebrow fade-up">A worked example</div>
+            <h2 class="section-h2 fade-up fade-up-delay-1">An 80-room UK independent.<br><em>Conservative numbers.</em></h2>
+            <p class="section-lead fade-up fade-up-delay-2">The property below is illustrative — constructed from figures that are representative of the UK independent hotel market, not from any single client. The assumptions are deliberately conservative. Where a range exists, we have used the lower bound.</p>
+
+            <div class="example-layout">
+                <div class="example-inputs fade-up">
+                    <div class="example-inputs-title">Property assumptions</div>
+                    <div class="input-row">
+                        <span class="input-label">Rooms</span>
+                        <span class="input-value">80</span>
+                    </div>
+                    <div class="input-row">
+                        <span class="input-label">Average daily rate (ADR)</span>
+                        <span class="input-value">£135</span>
+                    </div>
+                    <div class="input-row">
+                        <span class="input-label">Average annual occupancy</span>
+                        <span class="input-value">72%</span>
+                    </div>
+                    <div class="input-row">
+                        <span class="input-label">Annual room revenue</span>
+                        <span class="input-value">£3.5M</span>
+                    </div>
+                    <div class="input-row">
+                        <span class="input-label">OTA channel mix</span>
+                        <span class="input-value">65%</span>
+                    </div>
+                    <div class="input-row">
+                        <span class="input-label">Average OTA commission rate</span>
+                        <span class="input-value">17%</span>
+                    </div>
+                    <div class="input-row">
+                        <span class="input-label">High-demand event nights per year</span>
+                        <span class="input-value">28</span>
+                    </div>
+                    <div class="input-row">
+                        <span class="input-label">Current pricing process</span>
+                        <span class="input-value">Weekly manual review</span>
+                    </div>
+                    <div class="input-row">
+                        <span class="input-label">Demand model in use</span>
+                        <span class="input-value">None</span>
+                    </div>
+                    <div class="input-row" style="border-bottom: 1px solid rgba(255,255,255,0.07)">
+                        <span class="input-label">Estimated rate leakage on peak nights</span>
+                        <span class="input-value">15–20% below optimal</span>
+                    </div>
+
+                    <p style="font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 24px; line-height: 1.6">The 15–20% rate leakage estimate on high-demand nights is based on the difference between Monday-morning rate-setting and what calibrated demand modelling would have suggested by Thursday — where weekly manual review processes lose the most ground. This is a conservative assumption; some properties show wider gaps, particularly on short-lead-time demand spikes.</p>
+                </div>
+
+                <div class="example-calc fade-up fade-up-delay-1">
+                    <div class="calc-box">
+                        <div class="calc-title">Rate capture calculation</div>
+
+                        <div class="calc-step">
+                            <div class="calc-step-label">High-demand nights per year</div>
+                            <div class="calc-step-value">28 nights</div>
+                            <div class="calc-step-note">City events, conference weekends, bank holidays, holiday periods</div>
+                        </div>
+                        <div class="calc-step">
+                            <div class="calc-step-label">Rooms × ADR</div>
+                            <div class="calc-step-value">80 rooms × £135 = £10,800 per night at full occupancy</div>
+                        </div>
+                        <div class="calc-step">
+                            <div class="calc-step-label">Estimated rate gap (conservative mid-point: 17.5%)</div>
+                            <div class="calc-step-value">£10,800 × 17.5% = £1,890 per night</div>
+                            <div class="calc-step-note">Revenue left on the table per high-demand night due to sub-optimal rate-setting</div>
+                        </div>
+                        <div class="calc-step">
+                            <div class="calc-step-label">Annual rate leakage estimate</div>
+                            <div class="calc-step-value">28 × £1,890 = £52,920</div>
+                            <div class="calc-step-note">Conservative estimate using lower bound of rate gap range</div>
+                        </div>
+
+                        <div class="calc-result">
+                            <div class="calc-result-label">Revenue at stake (rate capture only)</div>
+                            <div class="calc-result-figure">~£53,000</div>
+                            <div class="calc-result-sub">per year · conservative estimate · 80 rooms · 28 peak nights</div>
+                        </div>
+
+                        <p class="calc-disclaimer">This calculation covers rate capture only — it excludes displacement savings and channel efficiency gains, which are additional to this figure. The estimate assumes rooms are sold (occupancy is not the variable here — rate is). Actual results depend on market conditions, the property's demand profile, and the quality and consistency of RM engagement with the system's recommendations.</p>
+                    </div>
+
+                    <div style="margin-top: 20px; padding: 20px 24px; background: rgba(200,168,75,0.06); border: 1px solid rgba(200,168,75,0.18); border-radius: 8px">
+                        <p style="font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.7">This is an <strong style="color: rgba(255,255,255,0.8)">illustrative model, not a guarantee.</strong> Actual results depend on your property's specific demand profile, local market conditions, data quality, and how actively the revenue manager engages with ARIO's recommendations during the Review phase. We present this calculation as a framework for thinking about order-of-magnitude, not as a performance commitment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 3: Cost side -->
+    <div style="background: var(--cream)">
+        <div class="section-wrap">
+            <div class="section-eyebrow fade-up">The cost side</div>
+            <h2 class="section-h2 fade-up fade-up-delay-1">What the investment looks like.<br><em>What it needs to recover.</em></h2>
+            <p class="section-lead fade-up fade-up-delay-2">Most RMS business cases focus exclusively on potential upside. The cost side is equally important. ARIO's pricing is based on property size and configuration — there are no per-room penalties, no implementation fees, and no multi-year lock-ins. <a href="/pricing" style="color:var(--navy);font-weight:600;text-decoration:none;border-bottom:1px solid var(--gold)">View our pricing structure →</a></p>
+
+            <div class="cost-layout">
+                <div class="fade-up">
+                    <div class="cost-table">
+                        <div class="cost-header">
+                            <div class="cost-header-title">ARIO — cost structure</div>
+                        </div>
+                        <div class="cost-row">
+                            <span class="cost-row-label">Subscription pricing</span>
+                            <span class="cost-row-value">Based on property size</span>
+                        </div>
+                        <div class="cost-row">
+                            <span class="cost-row-label">Implementation / setup fee</span>
+                            <span class="cost-row-value">£0</span>
+                        </div>
+                        <div class="cost-row">
+                            <span class="cost-row-label">Per-room pricing</span>
+                            <span class="cost-row-value">None</span>
+                        </div>
+                        <div class="cost-row">
+                            <span class="cost-row-label">Training / onboarding</span>
+                            <span class="cost-row-value">Included</span>
+                        </div>
+                        <div class="cost-row">
+                            <span class="cost-row-label">Contract structure</span>
+                            <span class="cost-row-value">Flexible terms</span>
+                        </div>
+                        <div class="cost-row total">
+                            <span class="cost-row-label">Compare with enterprise tier</span>
+                            <span class="cost-row-value">£4–8/room/month</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 13px; color: var(--dim); margin-top: 20px; line-height: 1.6">Enterprise RMS vendors price per room per month — on an 80-room property, that is <strong style="color: var(--text)">£3,840–7,680/year in licensing alone</strong>, before implementation fees (typically £15,000–40,000 for enterprise contracts). ARIO's structure is materially different. The cost comparison alone does not justify the investment — the right question is whether ARIO generates more value than the alternative.</p>
+                </div>
+
+                <div class="fade-up fade-up-delay-1">
+                    <div class="breakeven-box">
+                        <div class="breakeven-title">Break-even framework</div>
+                        <div class="breakeven-figure">&lt;10%</div>
+                        <p class="breakeven-context">For the 80-room property in our worked example, ARIO needs to capture <strong>less than 10% of the estimated £53,000 rate leakage</strong> to recover its annual subscription cost in full — at any price point in our range.</p>
+                        <div class="breakeven-math">
+                            Rate leakage estimate: <strong>£53,000</strong><br>
+                            Break-even: <strong>Your annual cost ÷ £53,000</strong><br>
+                            At any price in our range: <strong>&lt;10% capture required</strong>
+                        </div>
+                        <p class="breakeven-context" style="margin-top: 18px">Put differently: if ARIO improves rate-setting on a single high-demand night by a few pounds per room above what the manual process would have achieved, the investment recovers itself. Everything beyond that is net return.</p>
+                        <p class="breakeven-context" style="margin-top: 14px; font-size: 13px; color: rgba(255,255,255,0.45)">Channel efficiency gains and displacement savings are additive to this figure and reduce the effective break-even threshold further.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 4: What we cannot promise -->
+    <div style="background: #f0eee9; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border)">
+        <div class="section-wrap">
+            <div class="section-eyebrow fade-up">Implementation standards</div>
+            <h2 class="section-h2 fade-up fade-up-delay-1">How we ensure the investment performs.</h2>
+            <p class="section-lead fade-up fade-up-delay-2">Any vendor that offers a guaranteed RevPAR uplift before seeing your data is either guessing or selling. ARIO's implementation methodology is designed to produce a defensible, measured outcome — which requires the right conditions to be in place before live rate pushing begins.</p>
+
+            <div class="honest-grid">
+                <div class="honest-card fade-up">
+                    <div class="honest-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    </div>
+                    <h3 class="honest-h3">Property-specific assessment before commercial commitment.</h3>
+                    <p class="honest-p">ARIO reviews your PMS history before quoting an expected performance range. The framework above uses representative UK market assumptions — your property's actual demand profile, comp-set behaviour, and rate gap will be assessed specifically. Every performance discussion is grounded in your data, not a vendor's benchmark.</p>
+                </div>
+
+                <div class="honest-card fade-up fade-up-delay-1">
+                    <div class="honest-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+                    </div>
+                    <h3 class="honest-h3">Revenue Manager engagement drives compounding returns.</h3>
+                    <p class="honest-p">ARIO's demand model calibrates from booking outcomes — approvals, overrides, and the patterns behind them. Properties whose Revenue Managers engage actively with the Decision Journal during the Review phase build a more accurate property-specific model faster. The system learns from your operation. That learning accelerates with engagement.</p>
+                </div>
+
+                <div class="honest-card fade-up fade-up-delay-2">
+                    <div class="honest-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/><path d="M8 2v16M16 6v16"/></svg>
+                    </div>
+                    <h3 class="honest-h3">ARIO is calibrated to your market — not a generic model.</h3>
+                    <p class="honest-p">Demand signals are property-specific and market-specific. ARIO's ensemble updates continuously from your booking outcomes, your comp-set movements, and your market's event calendar. When market conditions shift — new supply, event changes, macroeconomic movements — ARIO detects and responds to those signals faster than a weekly manual review cycle.</p>
+                </div>
+
+                <div class="honest-card fade-up fade-up-delay-3">
+                    <div class="honest-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <h3 class="honest-h3">Shadow mode produces a verified baseline before any rate changes.</h3>
+                    <p class="honest-p">ARIO's Shadow mode runs the full pricing engine against live data without transmitting any rate changes. Running Shadow for 30 days against dates that subsequently close produces a verified comparison: ARIO's recommendations versus your actual rates. That comparison is the most credible revenue gap estimate available — built on your property's own data, not industry averages.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <section class="cta-strip">
+        <div style="position: relative; z-index: 1">
+            <div class="hero-eyebrow" style="justify-content: center; margin-bottom: 20px; color: rgba(200,168,75,0.7)">Next step</div>
+            <h3 class="cta-h3">Talk to us about your<br><em>property's specific position.</em></h3>
+            <p class="cta-sub">Bring your ADR, your occupancy figures, and your sense of how many high-demand nights your market generates each year. We will work through the numbers with you honestly.</p>
+            <p class="cta-note">We'll tell you honestly if ARIO isn't the right fit for where your property is right now.</p>
+            <a href="/#pilot" class="btn-primary">
+                Request a conversation
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-top">
+            <div>
+                <div class="footer-rule"></div>
+                <div class="footer-brand">ARIO</div>
+                <div class="footer-tagline">Revenue Operating System · Institutional-grade intelligence for independent hotels</div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <a href="/platform">Capabilities</a>
+                    <a href="/#demo">Live Demo</a>
+                    <a href="/#how">How it works</a>
+                    <a href="/pricing">Pricing</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <a href="/about">About ARIO</a>
+                    <a href="/why-ario">Why ARIO</a>
+                    <a href="/security">Security &amp; compliance</a>
+                    <a href="/case-studies">Case studies</a>
+                    <a href="/resources">Resources</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <a href="/contact">Request Deployment</a>
+                    <a href="/roi">ROI framework</a>
+                    <a href="/contact">Open contact form</a>
+                    <a href="mailto:hello@ariorms.com">hello@ariorms.com</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-copy">&copy; 2026 ARIO Technologies Ltd. All rights reserved.</div>
+            <div class="footer-copy" style="letter-spacing: 0.08em; font-size: 10px; opacity: 0.5">Every signal. A clear decision.</div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll-reveal: IntersectionObserver fade-up
+        (function () {
+            var els = document.querySelectorAll('.fade-up');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function (el) { el.classList.add('visible'); });
+                return;
+            }
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function (el) { observer.observe(el); });
+        })();
+    </script>
+
+
+    <script>
+    (function(){
+        document.querySelectorAll('.nav-item').forEach(function(item){
+            item.addEventListener('mouseenter', function(){
+                var drop = item.querySelector('.megadrop');
+                if(!drop) return;
+                // reset any previous correction
+                drop.style.left = '';
+                drop.style.right = '';
+                requestAnimationFrame(function(){
+                    var r = drop.getBoundingClientRect();
+                    var overflow = r.right - (window.innerWidth - 16);
+                    if(overflow > 0){
+                        // shift left by how much it overflows
+                        var curLeft = parseFloat(drop.style.left) || 0;
+                        drop.style.left = (curLeft - overflow) + 'px';
+                    }
+                });
+            });
+        });
+    })();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,1028 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="language" content="English">
+    <link rel="canonical" href="https://ariorms.com/blog/ota-commission">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The OTA commission cliff — ARIO</title>
+    <meta name="description" content="At 18% commission on £150 ADR, a 100-room hotel pays over £690,000 per year to OTAs. Channel mix is a revenue decision — and most hotels are making it wrong.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #0f1e3c;
+            --navy2: #152d56;
+            --navy3: #1e3a6e;
+            --gold: #c8a84b;
+            --gold2: #e8c96b;
+            --white: #ffffff;
+            --cream: #faf8f4;
+            --border: #dde3ef;
+            --text: #0f1e3c;
+            --mid: #3d5080;
+            --dim: #7a8aaa;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(15,30,60,0.96);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(200,168,75,0.2);
+            padding: 0 48px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-brand { display: flex; align-items: center; gap: 12px; }
+        .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 31px; font-weight: 700; letter-spacing: 1px; line-height: 1; background: linear-gradient(158deg, #ffffff 0%, #fff4d6 18%, #f0d080 38%, #c8a84b 58%, #8a6200 82%, #4a3000 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.55)); }
+        .nav-sub {
+            font-size: 9px; font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 3px; text-transform: uppercase;
+            border-left: 1px solid rgba(200,168,75,0.4);
+            padding-left: 12px; margin-left: 4px;
+        }
+        .nav-links { display: flex; align-items: center; gap: 28px; }
+        .nav-links a {
+            font-size: 13px;
+            color: rgba(255,255,255,0.65);
+            text-decoration: none; font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--white); }
+        .nav-cta {
+            background: var(--gold) !important;
+            color: var(--navy) !important;
+            font-weight: 700 !important;
+            padding: 10px 22px;
+            border-radius: 4px;
+            font-size: 13px !important;
+            transition: background 0.2s, transform 0.1s !important;
+        }
+        .nav-cta:hover { background: var(--gold2) !important; transform: translateY(-1px); }
+
+        /* ── Professional micro-animations ─── */
+        @keyframes ario-cta-shimmer {
+            0%   { background-position: -200% center }
+            100% { background-position: 200% center }
+        }
+        .nav-cta {
+            background: linear-gradient(90deg, #c8a84b 0%, #e8c96b 40%, #c8a84b 60%, #a07820 100%) !important;
+            background-size: 200% auto !important;
+            animation: ario-cta-shimmer 3.5s linear infinite !important;
+            color: #0f1e3c !important;
+            font-weight: 700 !important;
+            padding: 10px 22px;
+            border-radius: 4px;
+            font-size: 13px !important;
+            transition: opacity 0.15s ease, transform 0.12s ease !important;
+            text-decoration: none;
+        }
+        .nav-cta:hover {
+            opacity: 0.9 !important;
+            transform: translateY(-1px) !important;
+        }
+
+        /* Megadrop item stagger on open */
+        @keyframes ario-drop-item-in {
+            from { opacity: 0; transform: translateY(-4px) }
+            to   { opacity: 1; transform: translateY(0) }
+        }
+        .nav-item:hover .drop-item {
+            animation: ario-drop-item-in 0.18s ease both;
+        }
+        .nav-item:hover .drop-item:nth-child(2) { animation-delay: 0.04s }
+        .nav-item:hover .drop-item:nth-child(3) { animation-delay: 0.08s }
+        .nav-item:hover .drop-item:nth-child(4) { animation-delay: 0.12s }
+        .nav-item:hover .drop-item:nth-child(5) { animation-delay: 0.16s }
+
+        /* Nav trigger hover underline draw */
+        .nav-trigger {
+            position: relative;
+        }
+        .nav-trigger::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: -2px;
+            width: 0; height: 1px;
+            background: var(--gold, #c8a84b);
+            transition: width 0.2s ease;
+        }
+        .nav-item:hover .nav-trigger::after { width: 100% }
+
+        /* Drop item arrow on hover */
+        .drop-item::after {
+            content: '';
+            display: block;
+            width: 5px; height: 5px;
+            border-right: 1.5px solid rgba(200,168,75,0);
+            border-top: 1.5px solid rgba(200,168,75,0);
+            transform: rotate(45deg) translateX(-3px);
+            transition: transform 0.15s ease, border-color 0.15s ease;
+            margin-left: auto;
+            flex-shrink: 0;
+            align-self: center;
+        }
+        .drop-item:hover::after {
+            transform: rotate(45deg) translateX(0);
+            border-color: rgba(200,168,75,0.7);
+        }
+
+        /* Megadrop feature panel subtle gradient shift */
+        .megadrop-feature {
+            background: linear-gradient(160deg, #0f1e3c 0%, #152d56 100%);
+        }
+
+        /* ── MEGADROPDOWN SYSTEM ─────────────────────────── */
+        .nav-item { position: relative; display: flex; align-items: center }
+        .nav-item > .nav-trigger {
+            display: flex; align-items: center; gap: 5px;
+            font-size: 13px; color: rgba(255,255,255,0.65);
+            text-decoration: none; font-weight: 500;
+            transition: color 0.2s; cursor: pointer; background: none;
+            border: none; padding: 0; font-family: inherit;
+        }
+        .nav-item:hover > .nav-trigger { color: #fff }
+        .nav-chevron {
+            display: inline-block; width: 10px; height: 10px;
+            border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+            transform: rotate(45deg) translateY(-2px);
+            transition: transform 0.2s ease;
+        }
+        .nav-item:hover .nav-chevron { transform: rotate(225deg) translateY(2px) }
+        .megadrop {
+            position: absolute;
+            top: calc(100% + 14px);
+            left: 50%; transform: translateX(-50%) translateY(-10px);
+            background: #fff;
+            border: 1px solid rgba(15,30,60,0.09);
+            border-radius: 10px;
+            box-shadow: 0 24px 64px rgba(15,30,60,0.13), 0 4px 16px rgba(15,30,60,0.07);
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s;
+            pointer-events: none; z-index: 200; min-width: 560px; max-width: calc(100vw - 80px);
+        }
+        .megadrop::before { content: ''; position: absolute; top: -18px; left: 0; right: 0; height: 18px; }
+        .nav-item:hover .megadrop {
+            opacity: 1; visibility: visible;
+            transform: translateX(-50%) translateY(0); pointer-events: all;
+            transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0s;
+        }
+        .megadrop-inner { display: grid; gap: 0; border-radius: 10px; overflow: hidden }
+        .megadrop-cols { display: grid; grid-template-columns: 1fr 1fr; }
+        .megadrop-col { padding: 20px 4px }
+        .megadrop-col + .megadrop-col { border-left: 1px solid #eef0f6 }
+        .megadrop-col-label { font-size: 10px; font-weight: 700; color: #94a3b8; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 20px 10px; display: block; }
+        .drop-item { display: flex; align-items: flex-start; gap: 13px; padding: 10px 20px; text-decoration: none; border-radius: 6px; margin: 0 6px; transition: background 0.12s ease; }
+        .drop-item:hover { background: #f7f9fc }
+        .drop-icon { width: 34px; height: 34px; border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #0f1e3c; border: 1px solid rgba(200,168,75,0.18); transition: background 0.15s ease, border-color 0.15s ease; }
+        .drop-item:hover .drop-icon { background: #152d56; border-color: rgba(200,168,75,0.4); }
+        .drop-label { font-size: 13px; font-weight: 600; color: #0f1e3c; line-height: 1.3; margin-bottom: 3px; }
+        .drop-desc { font-size: 11.5px; color: #7a8aaa; line-height: 1.45 }
+        .megadrop-feature { background: #0f1e3c; padding: 24px; border-radius: 0 10px 10px 0; display: flex; flex-direction: column; justify-content: space-between; }
+        .megadrop-feature-tag { font-size: 9px; font-weight: 700; color: #c8a84b; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+        .megadrop-feature-h { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: #fff; line-height: 1.3; letter-spacing: -0.3px; margin-bottom: 10px; }
+        .megadrop-feature-p { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.55; margin-bottom: 18px; flex: 1 }
+        .megadrop-feature-cta { display: inline-flex; align-items: center; gap: 7px; background: #c8a84b; color: #0f1e3c; padding: 9px 16px; border-radius: 4px; font-size: 12px; font-weight: 700; text-decoration: none; letter-spacing: 0.02em; align-self: flex-start; transition: background 0.15s, transform 0.12s; }
+        .megadrop-feature-cta:hover { background: #e8c96b; transform: translateY(-1px) }
+        .simpledrop { position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%) translateY(-10px); background: #fff; border: 1px solid rgba(15,30,60,0.09); border-radius: 8px; box-shadow: 0 20px 56px rgba(15,30,60,0.12); opacity: 0; visibility: hidden; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s; pointer-events: none; z-index: 200; min-width: 230px; padding: 8px; }
+        .simpledrop::before { content: ''; position: absolute; top: -18px; left: 0; right: 0; height: 18px; }
+        .nav-item:hover .simpledrop { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: all; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0s; }
+        .drop-simple-item { display: flex; align-items: center; gap: 10px; padding: 9px 14px; text-decoration: none; border-radius: 5px; transition: background 0.1s ease; }
+        .drop-simple-item:hover { background: #f7f9fc }
+        .drop-simple-dot { width: 6px; height: 6px; border-radius: 50%; background: #c8a84b; flex-shrink: 0 }
+        .drop-simple-label { font-size: 13px; font-weight: 500; color: #0f1e3c }
+        .drop-simple-divider { height: 1px; background: #eef0f6; margin: 4px 8px }
+        /* Drop item with photography */
+        .drop-photo { width: 68px; height: 50px; border-radius: 5px; overflow: hidden; flex-shrink: 0; background: #0f1e3c; }
+        .drop-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; }
+        .drop-item:hover .drop-photo img { transform: scale(1.06); }
+        .drop-simple-photo { width: 52px; height: 40px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+        .drop-simple-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* ── ARTICLE HERO ── */
+        .article-hero {
+            background: var(--navy);
+            padding: 130px 24px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .article-hero-grid {
+            position: absolute; inset: 0;
+            background-image:
+                linear-gradient(rgba(200,168,75,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(200,168,75,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+        .article-hero-glow {
+            position: absolute; top: -150px; left: -100px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(200,168,75,0.06) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .article-hero-glow2 {
+            position: absolute; bottom: -80px; right: -80px;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(30,58,110,0.5) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .article-hero-inner {
+            position: relative; z-index: 2;
+            max-width: 720px; margin: 0 auto;
+        }
+        .article-category {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 10px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 24px;
+        }
+        .article-category::before {
+            content: ''; display: block;
+            width: 20px; height: 1px; background: var(--gold);
+        }
+        .article-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(34px, 5vw, 52px);
+            font-weight: 600; line-height: 1.1;
+            color: var(--white);
+            letter-spacing: -1px;
+            margin-bottom: 32px;
+        }
+        .article-byline {
+            display: flex; align-items: center; gap: 16px;
+            flex-wrap: wrap;
+        }
+        .byline-avatar {
+            width: 44px; height: 44px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--navy3), var(--gold));
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px; font-weight: 700; color: var(--white);
+            flex-shrink: 0;
+        }
+        .byline-text { display: flex; flex-direction: column; gap: 2px; }
+        .byline-name { font-size: 14px; font-weight: 600; color: var(--white); }
+        .byline-meta { font-size: 12px; color: var(--dim); }
+        .byline-divider {
+            width: 1px; height: 32px; background: rgba(200,168,75,0.3);
+            margin: 0 4px;
+        }
+        .byline-stat { font-size: 12px; color: var(--dim); }
+
+        /* ── ARTICLE BODY ── */
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 72px 24px 48px;
+        }
+
+        .article-body p {
+            font-size: 17px; line-height: 1.8;
+            color: #1e2f50;
+            margin-bottom: 24px;
+            font-weight: 400;
+        }
+
+        .article-body h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(24px, 3vw, 32px);
+            font-weight: 600;
+            color: var(--navy);
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            margin-top: 56px;
+            margin-bottom: 20px;
+        }
+
+        .article-body h2::before {
+            content: '';
+            display: block;
+            width: 32px; height: 2px;
+            background: var(--gold);
+            margin-bottom: 14px;
+        }
+
+        /* Pull quote */
+        blockquote.pull-quote {
+            border-left: 3px solid var(--gold);
+            padding: 24px 32px;
+            margin: 48px 0;
+            background: rgba(200,168,75,0.04);
+            border-radius: 0 8px 8px 0;
+        }
+        blockquote.pull-quote p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(20px, 2.5vw, 26px);
+            font-style: italic;
+            font-weight: 400;
+            color: var(--navy);
+            line-height: 1.5;
+            margin-bottom: 0;
+        }
+
+        /* Callout box */
+        .callout-box {
+            background: var(--navy);
+            border-radius: 10px;
+            padding: 36px 40px;
+            margin: 48px 0;
+            border: 1px solid rgba(200,168,75,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .callout-box::before {
+            content: '';
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--gold), transparent);
+        }
+        .callout-box-label {
+            font-size: 10px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 16px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .callout-box-label::before {
+            content: ''; display: block;
+            width: 16px; height: 1px; background: var(--gold);
+        }
+        .callout-box p {
+            font-size: 15px; line-height: 1.7;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 12px;
+        }
+        .callout-box p:last-child { margin-bottom: 0; }
+        .callout-box strong { color: var(--gold2); }
+        .callout-formula {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 17px; font-weight: 600;
+            color: var(--white);
+            text-align: center;
+            margin: 20px 0 12px;
+            padding: 16px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 6px;
+            border: 1px solid rgba(200,168,75,0.15);
+            letter-spacing: 0.01em;
+        }
+
+        /* Data comparison table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 36px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            font-size: 15px;
+        }
+        .comparison-table thead tr {
+            background: var(--navy);
+        }
+        .comparison-table thead th {
+            color: var(--gold);
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase;
+            padding: 16px 20px;
+            text-align: left;
+        }
+        .comparison-table tbody tr {
+            border-bottom: 1px solid var(--border);
+            background: var(--white);
+        }
+        .comparison-table tbody tr:last-child { border-bottom: none; }
+        .comparison-table tbody td {
+            padding: 14px 20px;
+            color: var(--text); line-height: 1.5;
+        }
+        .comparison-table tbody td:first-child { font-weight: 600; }
+        .comparison-table .highlight-row td { background: rgba(200,168,75,0.06); }
+        .comparison-table .net-match { color: var(--mid); font-style: italic; font-size: 13px; }
+
+        /* Article lists */
+        .article-body ul {
+            margin: 0 0 24px 0;
+            padding-left: 0;
+            list-style: none;
+        }
+        .article-body ul li {
+            font-size: 17px; line-height: 1.8;
+            color: #1e2f50;
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+        .article-body ul li::before {
+            content: '';
+            position: absolute; left: 0; top: 12px;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+
+        /* Article closing */
+        .article-closing {
+            border-top: 1px solid var(--border);
+            margin-top: 56px; padding-top: 40px;
+        }
+        .article-closing p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(20px, 2.5vw, 24px);
+            font-style: italic;
+            line-height: 1.6;
+            color: var(--navy);
+        }
+
+        /* ── CTA STRIP ── */
+        .article-cta {
+            background: var(--navy2);
+            border-top: 1px solid rgba(200,168,75,0.15);
+            border-bottom: 1px solid rgba(200,168,75,0.15);
+            padding: 72px 24px;
+            text-align: center;
+        }
+        .article-cta-inner { max-width: 600px; margin: 0 auto; }
+        .article-cta-eyebrow {
+            font-size: 10px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 20px;
+        }
+        .article-cta h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(28px, 4vw, 40px);
+            font-weight: 600; color: var(--white);
+            line-height: 1.15; letter-spacing: -0.5px;
+            margin-bottom: 16px;
+        }
+        .article-cta p {
+            font-size: 16px; color: rgba(255,255,255,0.6);
+            line-height: 1.6; margin-bottom: 36px;
+        }
+        .btn-gold {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--navy);
+            font-weight: 700; font-size: 14px;
+            padding: 16px 36px;
+            border-radius: 4px;
+            text-decoration: none;
+            letter-spacing: 0.02em;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+        }
+        .btn-gold:hover {
+            background: var(--gold2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(200,168,75,0.25);
+        }
+
+        /* ── RELATED ARTICLES ── */
+        .related-section {
+            padding: 80px 24px;
+            max-width: 1100px; margin: 0 auto;
+        }
+        .related-header {
+            display: flex; align-items: center; gap: 16px;
+            margin-bottom: 40px;
+        }
+        .related-header span {
+            font-size: 10px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--dim);
+        }
+        .related-header::after {
+            content: '';
+            flex: 1; height: 1px; background: var(--border);
+        }
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .related-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 32px;
+            text-decoration: none;
+            display: block;
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+        }
+        .related-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 8px 32px rgba(15,30,60,0.08);
+            transform: translateY(-3px);
+        }
+        .related-card-tag {
+            font-size: 9px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 12px;
+        }
+        .related-card h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px; font-weight: 600;
+            color: var(--navy); line-height: 1.3;
+            margin-bottom: 12px;
+        }
+        .related-card p {
+            font-size: 13px; color: var(--dim);
+            line-height: 1.6; margin-bottom: 20px;
+        }
+        .related-card-read {
+            font-size: 12px; font-weight: 600;
+            color: var(--mid);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: #060d1c;
+            border-top: 1px solid rgba(200,168,75,0.1);
+        }
+        .footer-top {
+            max-width: 1200px; margin: 0 auto;
+            padding: 64px 48px 48px;
+            display: flex; justify-content: space-between;
+            gap: 48px; flex-wrap: wrap;
+        }
+        .footer-rule { width: 32px; height: 2px; background: var(--gold); margin-bottom: 16px; }
+        .footer-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px; font-weight: 700;
+            color: var(--white); letter-spacing: -0.5px;
+        }
+        .footer-tagline {
+            font-size: 12px; color: var(--dim);
+            margin-top: 8px; max-width: 280px; line-height: 1.6;
+        }
+        .footer-links {
+            display: flex; gap: 64px; flex-wrap: wrap;
+        }
+        .footer-col { display: flex; flex-direction: column; gap: 10px; }
+        .footer-col h4 {
+            font-size: 10px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 6px;
+        }
+        .footer-col a {
+            font-size: 13px; color: var(--dim);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-col a:hover { color: var(--white); }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 24px 48px;
+            max-width: 1200px; margin: 0 auto;
+            display: flex; justify-content: space-between;
+            align-items: center; flex-wrap: wrap; gap: 12px;
+        }
+        .footer-copy { font-size: 12px; color: var(--dim); }
+
+        /* ── SCROLL ANIMATIONS ── */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.65s ease, transform 0.65s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            nav { padding: 0 20px; }
+            .nav-links a:not(.nav-cta) { display: none; }
+            .article-hero { padding: 110px 20px 60px; }
+            .article-body { padding: 48px 20px 32px; }
+            .related-grid { grid-template-columns: 1fr; }
+            .footer-top { padding: 48px 24px 32px; flex-direction: column; }
+            .footer-bottom { padding: 20px 24px; }
+            .footer-links { gap: 32px; }
+            blockquote.pull-quote { padding: 20px 24px; }
+            .callout-box { padding: 28px 24px; }
+            .comparison-table { font-size: 13px; }
+            .comparison-table thead th,
+            .comparison-table tbody td { padding: 12px 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ NAV ═══ -->
+    <nav>
+    <div class="nav-brand"><a href="/" style="text-decoration:none;display:flex;align-items:center;gap:12px"><div class="nav-logo">ARIO</div><div class="nav-sub">Revenue OS</div></a></div>
+    <div class="nav-links" style="display:flex;align-items:center;gap:22px">
+
+        <div class="nav-item">
+            <span class="nav-trigger">Platform <span class="nav-chevron"></span></span>
+            <div class="megadrop" style="min-width:760px;left:0;transform:translateX(0) translateY(-10px)">
+                <div class="megadrop-cols" style="grid-template-columns:1fr 1fr 1.1fr">
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Pricing intelligence</span>
+                        <a href="/platform#forecast" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12l3-3.5 2.5 2L11 5l3 3" stroke="rgba(200,168,75,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 14h12" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Demand Forecasting</div><div class="drop-desc">Proprietary ensemble, confidence scoring, 365-day horizon</div></div></a>
+                        <a href="/intelligence" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M8 2v1.5M8 12.5V14M2 8h1.5M12.5 8H14M3.5 3.5l1.1 1.1M11.4 11.4l1.1 1.1M12.5 3.5l-1.1 1.1M4.6 11.4l-1.1 1.1" stroke="rgba(255,255,255,0.5)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Intelligence Engine</div><div class="drop-desc">How the forecasting architecture works</div></div></a>
+                        <a href="/platform#group" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13V6l5-3 5 3v7H3z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><rect x="6.5" y="9" width="3" height="4" rx="0.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><path d="M6 7h1M9 7h1" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Group Displacement</div><div class="drop-desc">Monte Carlo RFP evaluation — net displacement maths</div></div></a>
+                    </div>
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Distribution &amp; operations</span>
+                        <a href="/platform#autopilot" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13.5 2.5L2 7l5 1.5L8.5 14l5-11.5z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><path d="M7 8.5l2.5-3" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Autopilot Distribution</div><div class="drop-desc">Rate pushes to all major channels — confirmed by read-back</div></div></a>
+                        <a href="/platform#journal" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="2" width="9" height="12" rx="1.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M6 5.5h4M6 8h4M6 10.5h2.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Decision Journal</div><div class="drop-desc">Every decision logged, attributed, and audit-ready</div></div></a>
+                        <a href="/implementation" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M4.5 6.5L8 3l3.5 3.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 13h9" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Implementation</div><div class="drop-desc">14-day deployment — gate-controlled, named manager</div></div></a>
+                    </div>
+                    <div class="megadrop-feature">
+                        <div><div class="megadrop-feature-tag">Full platform</div><div class="megadrop-feature-h">Institutional-grade revenue management. Independent scale.</div><p class="megadrop-feature-p">Ensemble forecasting. Tamper-evident audit trail. Full OTA distribution. Gate-controlled autonomy. Operational within 14 days.</p></div>
+                        <a href="/platform" class="megadrop-feature-cta">Explore the platform <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <span class="nav-trigger">Why ARIO <span class="nav-chevron"></span></span>
+            <div class="megadrop" style="min-width:600px">
+                <div class="megadrop-cols" style="grid-template-columns:1fr 1.15fr">
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">The case for ARIO</span>
+                        <a href="/why-ario" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=140&q=80" alt="Revenue management strategy"></div><div><div class="drop-label">Why ARIO</div><div class="drop-desc">The structural RMS market gap — and where we sit</div></div></a>
+                        <a href="/why-ario#compare" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=140&q=80" alt="Enterprise software comparison"></div><div><div class="drop-label">ARIO vs enterprise RMS</div><div class="drop-desc">Capability comparison — without the enterprise price</div></div></a>
+                        <a href="/roi" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12.5h12" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round"/><rect x="3" y="7.5" width="2.5" height="5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="6.75" y="4.5" width="2.5" height="8" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="10.5" y="6" width="2.5" height="6.5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/></svg></div><div><div class="drop-label">ROI Framework</div><div class="drop-desc">Build the business case for your property</div></div></a>
+                        <a href="/case-studies" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6a1 1 0 011-1h3l1.5 1.5H13a1 1 0 011 1v4.5a1 1 0 01-1 1H3a1 1 0 01-1-1V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div><div class="drop-label">Deployment Profiles</div><div class="drop-desc">Property types, PMS configurations, operating models</div></div></a>
+                    </div>
+                    <div class="megadrop-feature">
+                        <div><div class="megadrop-feature-tag">Deployment programme</div><div class="megadrop-feature-h">Enterprise-class deployment. Configured to your property within 14 days.</div><p class="megadrop-feature-p">Named implementation manager. Gate-controlled go-live. ARIO handles PMS integration, data validation, and channel configuration end to end.</p></div>
+                        <a href="/implementation" class="megadrop-feature-cta">View implementation <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <span class="nav-trigger">Resources <span class="nav-chevron"></span></span>
+            <div class="megadrop" style="min-width:800px">
+                <div class="megadrop-cols" style="grid-template-columns:1fr 1fr 1fr">
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Insights</span>
+                        <a href="/blog/overpaying-rms" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=140&q=80" alt="Revenue data analysis"></div><div><div class="drop-label">Why hotels overpay their RMS</div><div class="drop-desc">The real cost of ownership · 14 min</div></div></a>
+                        <a href="/blog/ota-commission" class="drop-item"><div class="drop-photo"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=140&q=80" alt="Revenue analytics dashboard"></div><div><div class="drop-label">The OTA commission cliff</div><div class="drop-desc">When 18% becomes your largest cost · 11 min</div></div></a>
+                        <a href="/blog/group-displacement" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13V6l5-3 5 3v7H3z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><rect x="6.5" y="9" width="3" height="4" rx="0.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><path d="M6 7h1M9 7h1" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" stroke-linecap="round"/></svg></div><div><div class="drop-label">Group displacement explained</div><div class="drop-desc">Evaluate any RFP in 5 minutes · 8 min</div></div></a>
+                        <a href="/resources" class="drop-item" style="opacity:0.7"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6a1 1 0 011-1h3l1.5 1.5H13a1 1 0 011 1v4.5a1 1 0 01-1 1H3a1 1 0 01-1-1V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div><div class="drop-label">All articles →</div><div class="drop-desc">Full resource library</div></div></a>
+                    </div>
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">Frameworks &amp; tools</span>
+                        <a href="/roi" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12.5h12" stroke="rgba(255,255,255,0.4)" stroke-width="1.2" stroke-linecap="round"/><rect x="3" y="7.5" width="2.5" height="5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="6.75" y="4.5" width="2.5" height="8" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/><rect x="10.5" y="6" width="2.5" height="6.5" rx="0.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.3"/></svg></div><div><div class="drop-label">ROI Framework</div><div class="drop-desc">Business case methodology for any property</div></div></a>
+                        <a href="/why-ario" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="12" width="12" height="1.5" rx="0.5" fill="rgba(200,168,75,0.8)"/><rect x="2" y="3" width="12" height="1.5" rx="0.5" fill="rgba(200,168,75,0.8)"/><rect x="4" y="4.5" width="1.5" height="7.5" rx="0.5" fill="rgba(255,255,255,0.55)"/><rect x="7.25" y="4.5" width="1.5" height="7.5" rx="0.5" fill="rgba(255,255,255,0.55)"/><rect x="10.5" y="4.5" width="1.5" height="7.5" rx="0.5" fill="rgba(255,255,255,0.55)"/></svg></div><div><div class="drop-label">Why ARIO</div><div class="drop-desc">Market positioning and competitive context</div></div></a>
+                        <a href="/implementation" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M4.5 6.5L8 3l3.5 3.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 13h9" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Implementation guide</div><div class="drop-desc">The full 4-phase deployment programme</div></div></a>
+                        <a href="/intelligence" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M8 2v1.5M8 12.5V14M2 8h1.5M12.5 8H14M3.5 3.5l1.1 1.1M11.4 11.4l1.1 1.1M12.5 3.5l-1.1 1.1M4.6 11.4l-1.1 1.1" stroke="rgba(255,255,255,0.5)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Intelligence Engine</div><div class="drop-desc">How the forecasting architecture works</div></div></a>
+                    </div>
+                    <div class="megadrop-col">
+                        <span class="megadrop-col-label">About ARIO</span>
+                        <a href="/case-studies" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 6a1 1 0 011-1h3l1.5 1.5H13a1 1 0 011 1v4.5a1 1 0 01-1 1H3a1 1 0 01-1-1V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div><div class="drop-label">Deployment profiles</div><div class="drop-desc">Property types and integration configurations</div></div></a>
+                        <a href="/security" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L3 4.5v4C3 11.5 5.5 14 8 14s5-2.5 5-5.5v-4L8 2z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linejoin="round"/><path d="M5.5 8.5l2 2 3-3" stroke="rgba(255,255,255,0.65)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="drop-label">Security &amp; compliance</div><div class="drop-desc">AES-256, GDPR, data architecture</div></div></a>
+                        <a href="/integrations" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10.5 2v4M5.5 2v4M3.5 6h9v2a4.5 4.5 0 01-9 0V6z" stroke="rgba(200,168,75,0.9)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 12.5V15" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round"/></svg></div><div><div class="drop-label">Integrations</div><div class="drop-desc">Opera, Mews, SiteMinder, RateGain &amp; more</div></div></a>
+                        <a href="/contact" class="drop-item"><div class="drop-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3.5" y="2" width="9" height="12" rx="1.5" stroke="rgba(200,168,75,0.9)" stroke-width="1.4"/><path d="M6 5.5h4M6 8h4M6 10.5h2.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.3" stroke-linecap="round"/></svg></div><div><div class="drop-label">Contact</div><div class="drop-desc">Speak with our implementation team</div></div></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <span class="nav-trigger">Company <span class="nav-chevron"></span></span>
+            <div class="simpledrop">
+                <a href="/about" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">About ARIO</span></a>
+                <a href="/security" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Security &amp; compliance</span></a>
+                <div class="drop-simple-divider"></div>
+                <a href="/case-studies" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Deployment profiles</span></a>
+                <a href="/integrations" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Integrations</span></a>
+                <div class="drop-simple-divider"></div>
+                <a href="/contact" class="drop-simple-item"><span class="drop-simple-dot"></span><span class="drop-simple-label">Contact</span></a>
+            </div>
+        </div>
+
+        <a href="/pricing" style="font-size:13px;color:rgba(255,255,255,0.65);text-decoration:none;font-weight:500;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">Pricing</a>
+        <a href="/contact" class="nav-cta">Request a Demo →</a>
+    </div>
+</nav>
+
+    <!-- ═══ ARTICLE HERO ═══ -->
+    <header class="article-hero">
+        <div class="article-hero-grid"></div>
+        <div class="article-hero-glow"></div>
+        <div class="article-hero-glow2"></div>
+        <div class="article-hero-inner">
+            <div class="article-category fade-up">Distribution</div>
+            <h1 class="article-title fade-up delay-1">
+                The OTA commission cliff: when your distribution strategy starts working against you
+            </h1>
+            <div class="article-byline fade-up delay-2">
+                <div class="byline-avatar">A</div>
+                <div class="byline-text">
+                    <div class="byline-name">ARIO Editorial</div>
+                    <div class="byline-meta">Founder &amp; CEO, ARIO</div>
+                </div>
+                <div class="byline-divider"></div>
+                <div class="byline-stat">April 2026</div>
+                <div class="byline-divider"></div>
+                <div class="byline-stat">11 min read</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══ ARTICLE BODY ═══ -->
+    <main>
+        <article class="article-body">
+
+            <p class="fade-up">Most independent hotels treat their OTA mix as a distribution metric. They track it in the same dashboard as occupancy and RevPAR, review it monthly, and discuss it occasionally in the context of a direct booking campaign. What they rarely do is treat it as a revenue metric — which is what it is.</p>
+
+            <p class="fade-up">OTA commission is not a marketing cost. It is not an acquisition cost in the traditional sense. It is a structural operating cost that scales linearly with your occupancy — and compounds in ways that become strategically significant above certain thresholds. Understanding where that threshold sits for your property is one of the more useful exercises a revenue manager can do with an afternoon and a spreadsheet.</p>
+
+            <h2 class="fade-up">The baseline arithmetic</h2>
+
+            <p class="fade-up">Start with the numbers that most hotels know but rarely aggregate into a single annual figure. At 18% commission — a typical Booking.com rate for a property without preferred status — on an ADR of £150, each room-night booked through the OTA costs £27 in commission.</p>
+
+            <div class="callout-box fade-up">
+                <div class="callout-box-label">The Annual Commission Calculation</div>
+                <div class="callout-formula">£27 commission × 70 rooms (OTA nights) × 365 = £690,690 per year</div>
+                <p>This is the annual OTA commission bill for a <strong>100-room hotel</strong> running at <strong>70% OTA occupancy</strong> with a <strong>£150 ADR</strong> and <strong>18% commission rate</strong>. It assumes no seasonality, no commission tier changes, and no preferred partner discounts — so the real figure at most properties is in this neighbourhood. This is not a rounding error. This is a structural cost.</p>
+            </div>
+
+            <p class="fade-up">For context: £690,000 per year in OTA commission is, at most 100-room independent properties, the second or third largest cost line in the P&amp;L — typically behind payroll and property finance. It is larger than energy. Larger than F&amp;B cost of goods. Larger than the entire sales and marketing budget. And yet it receives a fraction of the strategic attention applied to those other lines.</p>
+
+            <p class="fade-up">The reason is partly accounting convention — OTA commission is netted out of revenue rather than appearing as an explicit operating cost — and partly habit. But accounting convention is not strategy, and habit is not a reason to pay £690,000 per year without interrogating whether it has to be that number.</p>
+
+            <h2 class="fade-up">The commission cliff</h2>
+
+            <p class="fade-up">Commission cost is not simply linear with occupancy. Its opportunity cost is exponential above a certain threshold, because two things happen simultaneously when OTA occupancy exceeds approximately 65%.</p>
+
+            <p class="fade-up">The first is systemic underutilisation of your direct booking infrastructure. Your website, your booking engine, your loyalty programme, your email database — these assets have fixed costs that amortise across the direct bookings they generate. At 65% OTA occupancy, with perhaps 35% arriving through direct and other channels, those fixed-cost assets are carrying most of the revenue-generating work for 35% of your business. The cost-per-direct-booking climbs as volume falls.</p>
+
+            <p class="fade-up">The second effect is more subtle but financially significant: above 65% OTA occupancy, the marginal cost of acquiring the next booking through an OTA exceeds the marginal cost of acquiring it direct. Direct booking has high fixed costs — the website, the email programme, the booking engine integration — but very low marginal costs. Each additional direct booking costs almost nothing to acquire once the infrastructure is in place. OTA bookings have almost no fixed cost but a constant marginal cost of 18% applied to every single transaction.</p>
+
+            <blockquote class="pull-quote fade-up">
+                <p>"Above 65% OTA occupancy, the marginal cost of acquiring the next booking through an OTA exceeds the marginal cost of acquiring it direct. The cliff is invisible until you model it."</p>
+            </blockquote>
+
+            <p class="fade-up">This is the cliff. Not a sudden step-change in commission rates — the rates stay the same. The cliff is the point at which your distribution mix has crossed into a zone where the economics of your current channel allocation have flipped, and continuing to push bookings through OTAs is actively more expensive than converting them to direct. Most hotels cross this threshold and keep going, because nobody has drawn the graph.</p>
+
+            <h2 class="fade-up">The parity problem</h2>
+
+            <p class="fade-up">The obvious response to high OTA commission is to offer a lower rate direct. The problem is that rate parity clauses make this contractually difficult. Even narrow parity — which is now the standard in the EU following the Competition and Markets Authority guidance that effectively limited broad parity in the UK and most European markets — prevents you from displaying a lower rate on your own website than the rate visible on the OTA.</p>
+
+            <p class="fade-up">What narrow parity does not prevent is non-rate differentiation. You cannot show £140 on your website when Booking.com shows £150 for the same room on the same date. You can offer a complimentary breakfast to direct bookers. You can offer late checkout. You can offer a welcome drink, a room upgrade subject to availability, early check-in — any benefit that is not expressed as a discounted room rate.</p>
+
+            <p class="fade-up">The economics of this approach work at scale. A complimentary breakfast that costs the hotel £12 to deliver, offered to a direct booker at £150, produces a net ADR of £138 — still meaningfully better than the £123 net after 18% OTA commission on the same £150 rate. The direct booking also comes with the guest's email address, consent for future marketing, and the first data point in what could become a loyalty relationship. The OTA booking comes with none of these.</p>
+
+            <p class="fade-up">The constraint is that non-rate differentiation only works when the guest is aware of it before they book. A hotel that offers direct booking benefits but fails to surface them at the moment of search — when the guest is comparing options on Booking.com — captures none of the switching value. The benefit needs to be visible, specific, and quantifiable. "Best rate guaranteed" is not a benefit. "Complimentary breakfast — saving £24 per couple — when you book direct" is a benefit.</p>
+
+            <blockquote class="pull-quote fade-up">
+                <p>"Rate parity prevents you from discounting direct. It does not prevent you from being worth more direct. The distinction is everything."</p>
+            </blockquote>
+
+            <h2 class="fade-up">The real number to track</h2>
+
+            <p class="fade-up">The metric most hotels use to evaluate OTA performance is OTA commission percentage. This is almost entirely useless as a decision-making tool. It tells you your rate; it does not tell you your cost relative to the alternative.</p>
+
+            <p class="fade-up">The metric that tells you something actionable is net ADR by channel. This is the revenue per room-night after all channel costs, calculated for each distribution channel independently. When you run this calculation honestly, the comparison often looks like this:</p>
+
+            <table class="comparison-table fade-up">
+                <thead>
+                    <tr>
+                        <th>Channel</th>
+                        <th>Gross ADR</th>
+                        <th>Channel Cost</th>
+                        <th>Net ADR</th>
+                        <th>Additional Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight-row">
+                        <td>Direct (with breakfast)</td>
+                        <td>£150</td>
+                        <td>£12 (breakfast)</td>
+                        <td>£138</td>
+                        <td>Email, loyalty data, repeat</td>
+                    </tr>
+                    <tr>
+                        <td>OTA (18% commission)</td>
+                        <td>£150</td>
+                        <td>£27 (commission)</td>
+                        <td>£123</td>
+                        <td>None</td>
+                    </tr>
+                    <tr>
+                        <td>Direct (no benefit)</td>
+                        <td>£135</td>
+                        <td>~£2 (engine fee)</td>
+                        <td>£133</td>
+                        <td>Email, loyalty data, repeat</td>
+                    </tr>
+                    <tr>
+                        <td>GDS / Corporate</td>
+                        <td>£140</td>
+                        <td>£17–£22</td>
+                        <td>£118–£123</td>
+                        <td>Volume, predictability</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="fade-up">The direct booking with a complimentary breakfast generates £15 more net revenue per room-night than the OTA booking at the same gross rate. Across 1,000 room-nights, that is £15,000 in net revenue difference — without changing the rate the guest pays, without violating parity, and without spending anything on paid marketing to acquire those bookings.</p>
+
+            <p class="fade-up">More importantly: the direct booking is worth more than its net ADR suggests. The guest relationship, the email address, the consent for future marketing, the potential for a repeat booking without commission — these are real economic assets. They are not captured in net ADR, but they are captured in lifetime value calculations, and they are the reason direct booking programmes have positive returns even when the immediate net ADR difference looks modest.</p>
+
+            <h2 class="fade-up">When direct booking investment pays off</h2>
+
+            <p class="fade-up">The break-even on direct booking infrastructure investment is a calculation most hotels have never formally run. It is straightforward and the answer is almost always more favourable than expected.</p>
+
+            <div class="callout-box fade-up">
+                <div class="callout-box-label">Break-Even Formula</div>
+                <div class="callout-formula">Break-even nights = Direct infrastructure cost ÷ (Commission rate × ADR)</div>
+                <p>A hotel invests <strong>£8,000/year</strong> in a booking engine upgrade and <strong>£6,000/year</strong> in a direct email programme — total annual direct investment: <strong>£14,000</strong>. At 18% commission and £140 ADR, each room-night switched from OTA to direct saves <strong>£25.20</strong> in commission. Break-even requires switching <strong>556 room-nights</strong> from OTA to direct.</p>
+                <p>On a 100-room hotel running 70% OTA occupancy — <strong>25,550 OTA room-nights per year</strong> — switching 556 nights is <strong>2.2%</strong> of current OTA volume. At typical direct booking conversion rates for a mid-range independent property, that is achievable within the first quarter of a properly executed direct programme.</p>
+            </div>
+
+            <p class="fade-up">Put differently: a hotel at 70% OTA occupancy needs to shift 4.5 days of bookings from OTA to direct — across the entire year — to cover the full cost of its direct booking infrastructure investment. Everything beyond that threshold is pure margin improvement.</p>
+
+            <p class="fade-up">The reason more hotels do not reach this calculation is that direct booking is managed by marketing and OTA relationships are managed by revenue, and the two functions rarely share a P&amp;L view. The direct programme gets evaluated on conversion rate and email open rate. The OTA relationship gets evaluated on commission tier and ranking position. Neither team is looking at the metric that actually matters: net revenue per room-night by channel, trended over time.</p>
+
+            <h2 class="fade-up">What revenue management has to do with this</h2>
+
+            <p class="fade-up">Channel strategy and rate strategy are not separable decisions, even though most hotels treat them as if they are. A hotel that raises rates on high-demand dates through its channel manager is improving gross ADR across all channels simultaneously — but a hotel that does this without watching its OTA mix is leaving commission savings on the table.</p>
+
+            <p class="fade-up">The right model does not look at gross revenue by date. It looks at net revenue by channel, by date, with a view of what the channel mix looks like at each point in the booking window. On high-demand dates — where demand outstrips supply — the OTA's ranking algorithm becomes less important because guests are searching broadly rather than filtering by price. This is the moment to apply rate floor increases that price some OTA traffic out and create space for direct bookings at a marginally lower gross rate but higher net rate.</p>
+
+            <p class="fade-up">On low-demand dates — where filling rooms is the priority — the calculus changes. OTA visibility becomes genuinely valuable. The commission cost is real but the alternative is an empty room. Here, the question is not whether to use OTAs but how to ensure the incremental OTA bookings do not displace direct bookings that would have arrived anyway.</p>
+
+            <p class="fade-up">This kind of channel-aware pricing is what separates a sophisticated revenue management approach from a rate-only approach. It requires more data, more segmentation, and more daily attention than simply setting rates by occupancy. But the financial returns — measured in net ADR improvement and commission reduction — are consistent and substantial.</p>
+
+            <ul class="fade-up">
+                <li>Track net ADR by channel weekly, not monthly. The signal deteriorates with lag.</li>
+                <li>Model your OTA break-even before any direct booking programme investment. Know the threshold before you spend the budget.</li>
+                <li>On high-demand dates, set rate floors that price OTA traffic selectively — not to exclude OTAs, but to ensure the channel mix at peak periods reflects the actual cost structure of each channel.</li>
+                <li>Surface direct booking benefits at the moment of search, not only after the guest has already clicked through from an OTA. The switching decision happens early in the funnel.</li>
+                <li>Review your OTA commission tier annually. Most OTAs have preferred partner programmes that reduce commission rates in exchange for rate or availability commitments. The reduction is often worth the commitment at the right volume level.</li>
+            </ul>
+
+            <div class="article-closing fade-up">
+                <p>"Channel mix is not a marketing decision. It is a revenue decision. Treating it as anything less is how 18% commission becomes your largest single operating cost."</p>
+            </div>
+
+        </article>
+    </main>
+
+    <!-- ═══ CTA STRIP ═══ -->
+    <section class="article-cta">
+        <div class="article-cta-inner">
+            <div class="article-cta-eyebrow fade-up">ARIO · Revenue Operating System</div>
+            <h3 class="fade-up delay-1">Channel-aware pricing.<br>Net revenue clarity.</h3>
+            <p class="fade-up delay-2">ARIO tracks net ADR by channel in real time, models commission break-even against your direct booking investment, and flags when your OTA mix crosses into inefficient territory. See the decision layer for your own property.</p>
+            <a href="/#pilot" class="btn-gold fade-up delay-3">Request Your Pilot →</a>
+        </div>
+    </section>
+
+    <!-- ═══ RELATED ARTICLES ═══ -->
+    <section class="related-section">
+        <div class="related-header">
+            <span>Continue reading</span>
+        </div>
+        <div class="related-grid">
+            <a href="/blog/overpaying-rms" class="related-card fade-up">
+                <div class="related-card-tag">Strategy</div>
+                <h4>Why independent hotels overpay their RMS — and how to evaluate what you're actually buying</h4>
+                <p>Enterprise RMS pricing amortises across 500+ rooms. At 120 rooms, the economics work differently. A framework for calculating your real cost-per-decision.</p>
+                <div class="related-card-read">14 min read →</div>
+            </a>
+            <a href="/resources" class="related-card fade-up delay-1">
+                <div class="related-card-tag">Forecasting</div>
+                <h4>Reading forward demand: what booking pace actually tells you about the next 30 days</h4>
+                <p>Booking pace is the most widely tracked and most widely misread signal in hotel revenue management. How to interpret it correctly — and what to do when it deceives you.</p>
+                <div class="related-card-read">8 min read →</div>
+            </a>
+            <a href="/resources" class="related-card fade-up delay-2">
+                <div class="related-card-tag">Pricing</div>
+                <h4>Length-of-stay restrictions: the underused lever hiding in your channel manager</h4>
+                <p>MinLOS and MaxLOS restrictions are more powerful than most revenue managers realise — and riskier than most appreciate. When to apply them and when to leave them off.</p>
+                <div class="related-card-read">10 min read →</div>
+            </a>
+        </div>
+    </section>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer>
+        <div class="footer-top">
+            <div>
+                <div class="footer-rule"></div>
+                <div class="footer-brand">ARIO</div>
+                <div class="footer-tagline">Revenue Operating System · Institutional-grade intelligence for independent hotels</div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <a href="/platform">Capabilities</a>
+                    <a href="/#demo">Live Demo</a>
+                    <a href="/#how">How it works</a>
+                    <a href="/pricing">Pricing</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Trust</h4>
+                    <a href="/security">Security &amp; compliance</a>
+                    <a href="/about">About ARIO</a>
+                    <a href="/contact">Request Deployment</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <a href="/contact">Open contact form</a>
+                    <a href="mailto:hello@ariorms.com">hello@ariorms.com</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-copy">© 2026 ARIO Technologies Ltd. All rights reserved.</div>
+            <div class="footer-copy" style="letter-spacing:0.08em;font-size:10px;opacity:0.5">Every signal. A clear decision.</div>
+        </div>
+    </footer>
+
+    <script>
+        // ── SCROLL REVEAL ──
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // ── NAV SCROLL TINT ──
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 60) {
+                nav.style.borderBottomColor = 'rgba(200,168,75,0.3)';
+            } else {
+                nav.style.borderBottomColor = 'rgba(200,168,75,0.2)';
+            }
+        });
+    </script>
+
+    <script>
+    (function(){
+        document.querySelectorAll('.nav-item').forEach(function(item){
+            item.addEventListener('mouseenter', function(){
+                var drop = item.querySelector('.megadrop');
+                if(!drop) return;
+                // reset any previous correction
+                drop.style.left = '';
+                drop.style.right = '';
+                requestAnimationFrame(function(){
+                    var r = drop.getBoundingClientRect();
+                    var overflow = r.right - (window.innerWidth - 16);
+                    if(overflow > 0){
+                        // shift left by how much it overflows
+                        var curLeft = parseFloat(drop.style.left) || 0;
+                        drop.style.left = (curLeft - overflow) + 'px';
+                    }
+                });
+            });
+        });
+    })();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
